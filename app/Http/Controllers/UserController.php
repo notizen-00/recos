@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use App\Models\Unit;
 use Inertia\Inertia;
 use Illuminate\Support\Arr;
 use Illuminate\Http\Request;
@@ -43,6 +44,7 @@ class UserController extends Controller implements HasMiddleware
         }
         $perPage = $request->has('perPage') ? $request->perPage : 10;
         $role = auth()->user()->roles->pluck('name')[0];
+        $units = Unit::get();
         $roles = Role::get();
         if ($role != 'superadmin') {
             $users->whereHas('roles', function ($query) {
@@ -53,9 +55,9 @@ class UserController extends Controller implements HasMiddleware
         return Inertia::render('Users/Index', [
             'filters'       => $request->all(['search', 'field', 'order']),
             'perPage'       => (int) $perPage,
-            'users'         => $users->with('roles')->paginate($perPage),
+            'users'         => $users->with('roles','unit')->paginate($perPage),
             'roles'         => $roles,
-           
+            'units'         => $units,
         ]);
     }
 
@@ -82,6 +84,7 @@ class UserController extends Controller implements HasMiddleware
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
+                'unit_id' => $request->unit_id,
                 'password' => Hash::make($request->password),
             ]);
             $user->assignRole($request->role);

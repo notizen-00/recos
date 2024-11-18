@@ -9,11 +9,13 @@ class Role extends ModelsRole
 {
     use HasFactory;
 
-    public function getCreatedAtAttribute() {
+    public function getCreatedAtAttribute()
+    {
         return date('d-m-Y H:i', strtotime($this->attributes['created_at']));
     }
 
-    public function getUpdatedAtAttribute() {
+    public function getUpdatedAtAttribute()
+    {
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
     }
 }

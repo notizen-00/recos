@@ -2,6 +2,7 @@
 import { Link, usePage } from "@inertiajs/vue3";
 import { computed } from "vue";
 import NavLink from "./NavLink.vue";
+import PrimaryDropdown from "./SidebarNavigation/PrimaryDropdown.vue";
 
 const url = usePage().props.url;
 
@@ -28,7 +29,7 @@ const classes = computed(() =>
         :class="classes"
         aria-expanded="false"
     >
-        <div class="h-49">
+        <div class="h-auto">
             <i
                 class="absolute top-0 right-0 p-4 opacity-50 cursor-pointer fas fa-times dark:text-white text-slate-400 xl:hidden"
                 @click="handleSidebarClose"
@@ -62,7 +63,7 @@ const classes = computed(() =>
         />
 
         <div
-            class="items-center block w-auto max-h-screen overflow-auto h-sidenav grow basis-full"
+            class="items-center block w-auto max-h-screen overflow-auto h-auto grow basis-full"
         >
             <ul class="flex flex-col pl-0 mb-0">
                 <li class="mt-0.5 w-full">
@@ -86,6 +87,145 @@ const classes = computed(() =>
                         >
                     </NavLink>
                 </li>
+                <li class="w-full mt-4">
+                    <h6
+                        class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60"
+                    >
+                        Master Data
+                    </h6>
+                </li>
+
+                <li class="mt-0.5 w-full">
+                    <NavLink
+                        :active="$page.url.startsWith('/unit')"
+                        :href="route('unit.index')"
+                        v-show="can(['delete unit'])"
+                    >
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-building"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Unit</span
+                        >
+                    </NavLink>
+
+                    <NavLink
+                        :active="$page.url.startsWith('/type')"
+                        :href="route('type.index')"
+                        v-show="can(['delete type'])"
+                    >
+                        <div
+                            class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
+                        >
+                            <i
+                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-list"
+                            ></i>
+                        </div>
+                        <span
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            >Tipe Surat</span
+                        >
+                    </NavLink>
+                </li>
+
+                <!-- <li class="mt-2 w-full"> -->
+
+                <li class="w-full mt-4">
+                    <h6
+                        class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60"
+                    >
+                        Manajemen Persuratan
+                    </h6>
+                </li>
+
+                <li class="mt-0.5 w-full">
+                    <PrimaryDropdown
+                        title="Surat Masuk"
+                        iconClass="fa fa-sign-in"
+                        :links="[
+                            {
+                                title: 'Landing',
+                                href: '/landing',
+                                isActive: false,
+                            },
+                            {
+                                title: 'Virtual Reality',
+                                subLinks: [
+                                    {
+                                        title: 'VR Defaultss',
+                                        href: '/vr-default',
+                                        isActive: true,
+                                    },
+                                    {
+                                        title: 'VR Info',
+                                        href: '/vr-info',
+                                        isActive: false,
+                                    },
+                                    {
+                                        title: 'VR Infos',
+                                        href: '/vr-infos',
+                                        isActive: false,
+                                    },
+                                ],
+                            },
+                            {
+                                title: 'Smart Home',
+                                href: '/smart-home',
+                                isActive: false,
+                            },
+                        ]"
+                        :isActive="false"
+                    />
+
+                    <PrimaryDropdown
+                        title="Surat Keluar"
+                        class="mt-2"
+                        iconClass="fa fa-sign-out"
+                        :links="[
+                            {
+                                title: 'Surat Keluar Internal',
+                                href: '/landing',
+                                isActive: false,
+                            },
+                            {
+                                title: 'Surat Keluar Eksternal',
+                                subLinks: [
+                                    {
+                                        title: 'Surat Dinas Mengatur',
+                                        href: '/vr-default',
+                                        isActive: true,
+                                    },
+                                    {
+                                        title: 'VR Info',
+                                        href: '/vr-info',
+                                        isActive: false,
+                                    },
+                                    {
+                                        title: 'VR Infos',
+                                        href: '/vr-infos',
+                                        isActive: false,
+                                    },
+                                ],
+                            },
+                        ]"
+                        :isActive="false"
+                    />
+                </li>
+
+                <!-- </li> -->
+
+                <li class="w-full mt-4">
+                    <h6
+                        class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60"
+                    >
+                        Manajemen User
+                    </h6>
+                </li>
 
                 <li class="mt-0.5 w-full">
                     <NavLink
@@ -106,15 +246,6 @@ const classes = computed(() =>
                         >
                     </NavLink>
                 </li>
-
-                <li class="w-full mt-4">
-                    <h6
-                        class="pl-6 ml-2 text-xs font-bold leading-tight uppercase dark:text-white opacity-60"
-                    >
-                        Account pages
-                    </h6>
-                </li>
-
                 <li class="mt-0.5 w-full">
                     <NavLink
                         :active="$page.url.startsWith('/profile')"

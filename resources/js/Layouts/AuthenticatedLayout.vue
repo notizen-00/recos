@@ -32,7 +32,7 @@ watchEffect(() => {
             html: flashMessage.success,
             icon: "success",
             buttonsStyling: false,
-            confirmButtonText: "Ok, got it!",
+            confirmButtonText: "Oke !",
             customClass: {
                 confirmButton:
                     "inline-flex px-7 py-2.5 font-bold leading-normal text-center text-white align-middle transition-all bg-blue-500 border-0 rounded-lg cursor-pointer hover:-translate-y-px active:opacity-85 hover:shadow-xs text-sm ease-in tracking-tight-rem shadow-md bg-150 bg-x-25",
@@ -47,7 +47,7 @@ watchEffect(() => {
                 html: flashMessage.error,
                 icon: "error",
                 buttonsStyling: false,
-                confirmButtonText: "Ok, got it!",
+                confirmButtonText: "Oke !",
                 customClass: {
                     confirmButton:
                         "inline-flex mt-5 mb-10 items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150",
@@ -59,7 +59,7 @@ watchEffect(() => {
                 html: Object.keys(usePage().props.errors),
                 icon: "error",
                 buttonsStyling: false,
-                confirmButtonText: "Ok, got it!",
+                confirmButtonText: "Oke!",
                 customClass: {
                     confirmButton:
                         "inline-flex my-5 items-center px-4 py-2 bg-red-600 border border-transparent rounded-md font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 active:bg-red-700 focus:outline-none focus:ring-2 focus:ring-red-500 focus:ring-offset-2 transition ease-in-out duration-150",
@@ -71,7 +71,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div class="absolute w-full bg-blue-500 dark:hidden min-h-120"></div>
+    <div class="absolute w-full bg-blue-500 dark:hidden min-h-90"></div>
 
     <Sidebar v-model:isMobileSidebar="isActive" />
 

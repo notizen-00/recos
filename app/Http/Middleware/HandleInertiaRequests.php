@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Inertia\Middleware;
+use App\Models\Unit;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -34,6 +35,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
+                'unit' => Unit::find($request->user() ? $request->user()->unit_id : ''),
                 'can' => $request->user() ? $request->user()->getPermissionArray() : [],
             ],
             'route' => [

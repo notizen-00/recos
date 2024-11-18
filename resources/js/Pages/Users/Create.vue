@@ -1,26 +1,28 @@
 <script setup>
-import InputError from '@/Components/InputError.vue';
-import InputLabel from '@/Components/InputLabel.vue';
-import PrimaryButton from '@/Components/PrimaryButton.vue';
-import SecondaryButton from '@/Components/SecondaryButton.vue';
-import SelectInput from '@/Components/SelectInput.vue';
-import Modal from '@/Components/Modal.vue';
-import TextInput from '@/Components/TextInput.vue';
-import { useForm } from '@inertiajs/vue3';
-import { ref, watchEffect, watch } from 'vue';
+import InputError from "@/Components/InputError.vue";
+import InputLabel from "@/Components/InputLabel.vue";
+import PrimaryButton from "@/Components/PrimaryButton.vue";
+import SecondaryButton from "@/Components/SecondaryButton.vue";
+import SelectInput from "@/Components/SelectInput.vue";
+import Modal from "@/Components/Modal.vue";
+import TextInput from "@/Components/TextInput.vue";
+import { useForm } from "@inertiajs/vue3";
+import { ref, watchEffect, watch } from "vue";
 
 const isModalOpen = ref(false);
 
 const props = defineProps({
     roles: Object,
+    units: Object,
 });
 
 const form = useForm({
-    name: '',
-    email: '',
-    password: '',
-    password_confirmation: '',
-    role: 'admin',
+    name: "",
+    email: "",
+    password: "",
+    password_confirmation: "",
+    unit_id: "",
+    role: "admin",
 });
 
 const openModal = () => {
@@ -29,7 +31,7 @@ const openModal = () => {
 };
 
 const createNewUser = () => {
-    form.post(route('user.store'), {
+    form.post(route("user.store"), {
         preserveScroll: true,
         preserveState: true,
         onSuccess: () => {
@@ -49,6 +51,11 @@ const closeModal = () => {
 const roles = props.roles?.map((role) => ({
     label: role.name,
     value: role.name,
+}));
+
+const units = props.units?.map((unit) => ({
+    label: unit.name,
+    value: unit.id,
 }));
 </script>
 
@@ -148,6 +155,19 @@ const roles = props.roles?.map((role) => ({
                 >
                 </SelectInput>
                 <InputError class="mt-2" :message="form.errors.role" />
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="unit" value="Unit Kerja" :isRequired="true" />
+                <SelectInput
+                    id="unit"
+                    class="mt-1 block w-full"
+                    v-model="form.unit_id"
+                    required
+                    :dataSet="units"
+                >
+                </SelectInput>
+                <InputError class="mt-2" :message="form.errors.unit_id" />
             </div>
 
             <div class="mt-6 flex justify-start">

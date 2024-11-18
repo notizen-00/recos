@@ -18,6 +18,7 @@ return [
         'verify_email' => "Thanks for signing up! Before getting started, could you verify your email address by clicking on the link we just emailed to you? If you didn't receive the email, we will gladly send you another.",
         'data' => 'Data',
         'user' => 'User',
+        'unit' => 'Unit Kerja',
         'access' => 'Access',
         'role' => 'Role',
         'permission' => 'Permission',
@@ -72,7 +73,7 @@ return [
         'delete' => 'Delete',
         'prev' => 'Prev',
         'next' => 'Next',
-        'delete_account' => 'Delete Account'
+        'delete_account' => 'Delete Account',
     ],
     'placeholder' => [
         'search' => 'Search...',

@@ -11,12 +11,13 @@ import SearchBar from "@/Components/SearchBar.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Pagination from "@/Components/Pagination.vue";
-
+const page = usePage();
 const props = defineProps({
     users: Object,
     filters: Object,
     perPage: Number,
     roles: Object,
+    units: Object,
 });
 
 const data = reactive({
@@ -98,7 +99,11 @@ const select = () => {
                                 "
                                 :selectedId="data.selectedId"
                             />
-                            <Create v-else :roles="props.roles" />
+                            <Create
+                                v-else
+                                :roles="props.roles"
+                                :units="props.units"
+                            />
                         </div>
                     </div>
                     <div class="flex-auto px-5 pt-0 pb-2">
@@ -143,6 +148,12 @@ const select = () => {
                                         </th>
                                         <th
                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                            @click="order('unit_id')"
+                                        >
+                                            Unit Kerja
+                                        </th>
+                                        <th
+                                            class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                             @click="order('email')"
                                         >
                                             Email
@@ -163,6 +174,7 @@ const select = () => {
                                                 class="fas fa-angle-down ms-3"
                                             ></i>
                                         </th>
+
                                         <th
                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                             @click="order('email')"
@@ -240,6 +252,16 @@ const select = () => {
                                                 </div>
                                             </div>
                                         </td>
+                                        <td
+                                            class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
+                                        >
+                                            <p
+                                                class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80"
+                                            >
+                                                {{ user.unit.name }}
+                                            </p>
+                                        </td>
+
                                         <td
                                             class="p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
                                         >

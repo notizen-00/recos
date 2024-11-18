@@ -22,9 +22,9 @@ class UserIndexRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'field' => ['in:name,email,create_at,update_at'],
+            'field' => ['in:name,email,unit_id,create_at,update_at'],
             'order' => ['in:asc,desc'],
-            'perPage'=> ['numeric']
+            'perPage' => ['numeric'],
         ];
     }
 }

@@ -23,7 +23,9 @@ if (!aux.includes("pages")) {
 }
 
 loadStylesheet(to_build + "assets/css/perfect-scrollbar.css");
+
 loadJS(to_build + "assets/js/perfect-scrollbar.js", true);
+
 
 if (document.querySelector("[slider]")) {
   loadJS(to_build + "assets/js/carousel.js", true);
@@ -32,7 +34,14 @@ if (document.querySelector("[slider]")) {
 if (document.querySelector("nav [navbar-trigger]")) {
   loadJS(to_build + "assets/js/navbar-collapse.js", true);
 }
-
+if (document.querySelector("aside")) {
+  console.log('loaded')
+  alert('test')
+  loadJS(to_build + "assets/pro/js/sidenav.js", true);
+  if (current_page != "landing.html") {
+    loadJS(to_build + "assets/js/sidenav-burger.js", true);
+  }
+}
 if (document.querySelector("[data-target='tooltip']")) {
   loadJS(to_build + "assets/js/tooltips.js", true);
   loadStylesheet(to_build + "assets/css/tooltips.css");
