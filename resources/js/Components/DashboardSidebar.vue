@@ -77,9 +77,11 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-dashboard"
-                            ></i>
+                            <!-- <i class="ni ni-app"></i> -->
+                            <font-awesome-icon
+                                :icon="['fas', 'home']"
+                                class="relative top-0 text-sm leading-normal text-blue-700"
+                            />
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
@@ -123,7 +125,7 @@ const classes = computed(() =>
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
                             <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-list"
+                                class="relative top-0 text-sm leading-normal text-blue-700 ni ni-bullet-list-67"
                             ></i>
                         </div>
                         <span
