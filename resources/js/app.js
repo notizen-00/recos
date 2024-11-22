@@ -9,9 +9,9 @@ import { usePage } from '@inertiajs/vue3';
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPhone,faHome } from "@fortawesome/free-solid-svg-icons";
+import { faPhone,faHome,faCog,faBuilding,faList } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faPhone,faHome);
+library.add(faPhone,faHome,faCog,faBuilding,faList);
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
