@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\SubType\SubTypeStoreRequest;
 use App\Models\SubTypes;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SubTypeController extends Controller
 {
@@ -12,7 +14,7 @@ class SubTypeController extends Controller
      */
     public function index()
     {
-        
+
     }
 
     /**
@@ -26,9 +28,22 @@ class SubTypeController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(SubTypeStoreRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $subtype = SubTypes::create([
+                'name' => $request->name,
+                'type_id' => $request->type_id,
+                'letter_format' => $request->letter_format,
+            ]);
+
+            DB::commit();
+            return back()->with('success', __('app.label.created_successfully', ['name' => $subtype->name]));
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->with('error', __('app.label.created_error', ['name' => __('app.label.unit')]) . $th->getMessage());
+        }
     }
 
     /**

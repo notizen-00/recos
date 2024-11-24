@@ -32,6 +32,7 @@ class TypeController extends Controller
     public function index(TypeIndexRequest $request)
     {
             $type = Types::query();
+
         if ($request->has('search')) {
             $type->where('name', 'LIKE', "%" . $request->search . "%");
         }
@@ -43,7 +44,7 @@ class TypeController extends Controller
         return Inertia::render('Type/Index', [
             'filters' => $request->all(['search', 'field', 'order']),
             'perPage' => (int) $perPage,
-            'types' => $type->paginate($perPage),
+            'types' => $type->with('subTypes')->paginate($perPage),
 
         ]);
     }
@@ -78,14 +79,15 @@ class TypeController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        $type = Types::findOrFail($id);
+   public function show(string $id)
+{
 
-        return Inertia::render('Type/Show', [
-            'type' => $type->paginate($type),
-        ]);
-    }
+    $type = Types::with('subTypes')->findOrFail($id);
+    
+    return Inertia::render('Type/Show', [
+        'type' => $type,
+    ]);
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -114,7 +116,7 @@ class TypeController extends Controller
             
                return back()->with('success', __('app.label.deleted_successfully', ['name' => $type->name]));
            } catch (\Throwable $th) {
-               return back()->with('error', __('app.label.deleted_error', ['name' => $user->name]) . $th->getMessage());
+               return back()->with('error', __('app.label.deleted_error') . $th->getMessage());
            }
     }
 }

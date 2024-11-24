@@ -9,6 +9,14 @@ class SubTypes extends Model
 {
 
     protected $table = 'sub_types';
+
+    protected $fillable =
+        [
+        'type_id',
+        'name',
+        'letter_format',
+    ];
+
     public $timestamps = true;
 
     use SoftDeletes;
