@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Http\Requests\Type\TypeIndexRequest;
+use App\Http\Requests\Type\TypeStoreRequest;
 class TypeController extends Controller
 {
     /**
@@ -52,15 +53,26 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TypeStoreRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $type = Types::create([
+                'name' => $request->name,       
+            ]);
+            
+            DB::commit();
+            return back()->with('success', __('app.label.created_successfully', ['name' => $type->name]));
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->with('error', __('app.label.created_error', ['name' => __('app.label.unit')]) . $th->getMessage());
+        }
     }
 
     /**
@@ -68,7 +80,11 @@ class TypeController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $type = Types::findOrFail($id);
+
+        return Inertia::render('Type/Show', [
+            'type' => $type->paginate($type),
+        ]);
     }
 
     /**
@@ -92,6 +108,13 @@ class TypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $type = Types::findOrFail($id);
+            $type->delete();
+            
+               return back()->with('success', __('app.label.deleted_successfully', ['name' => $type->name]));
+           } catch (\Throwable $th) {
+               return back()->with('error', __('app.label.deleted_error', ['name' => $user->name]) . $th->getMessage());
+           }
     }
 }

@@ -12,6 +12,7 @@ class CreateSubTypesTable extends Migration
             $table->increments('id');
             $table->foreignId('type_id')->constrained('types')->onDelete('cascade')->onUpdate('cascade');
             $table->string('name');
+            $table->string('letter_format');
             $table->timestamps();
             $table->softDeletes();
         });

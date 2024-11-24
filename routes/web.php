@@ -21,6 +21,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/unit/destroy-bulk', [UnitController::class, 'destroyBulk'])->name('unit.destroy-bulk');
 
     Route::resource('/type', TypeController::class)->except('create', 'edit');
+    Route::post('/type/destroy-bulk', [TypeController::class,'destroyBulk'])->name('type.destroy-bulk');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
