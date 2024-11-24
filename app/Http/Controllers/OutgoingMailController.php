@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OutgoingMail\OutgoingMailShowRequest;
 use App\Models\OutgoingMail;
+use App\Models\SubTypes;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -38,21 +40,27 @@ class OutgoingMailController extends Controller
      */
     public function show(OutgoingMailShowRequest $request, string $subTypeId)
     {
-        $type = OutgoingMail::query();
+        $outgoing = OutgoingMail::query();
 
+        $outgoing->where('sub_type_id', $subTypeId);
+        $sub_type = SubTypes::findOrFail($subTypeId);
+        $unit = User::with('unit')->get();
         if ($request->has('search')) {
-            $type->where('name', 'LIKE', "%" . $request->search . "%");
+            $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
         }
+
         if ($request->has(['field', 'order'])) {
-            $type->orderBy($request->field, $request->order);
+            $outgoing->orderBy($request->field, $request->order);
         }
+
         $perPage = $request->has('perPage') ? $request->perPage : 10;
 
         return Inertia::render('OutgoingMail/Show', [
             'filters' => $request->all(['search', 'field', 'order']),
             'perPage' => (int) $perPage,
-            'types' => $type->with('subTypes')->paginate($perPage),
-
+            'outgoing_mail' => $outgoing->with('subTypes')->paginate($perPage),
+            'sub_type' => $sub_type,
+            'unit' => $unit,
         ]);
     }
 

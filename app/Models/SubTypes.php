@@ -28,4 +28,9 @@ class SubTypes extends Model
         return $this->belongsTo(Types::class, 'type_id');
     }
 
+    public function outgoing_mail()
+    {
+        return $this->hasMany(OutgoingMail::class);
+    }
+
 }

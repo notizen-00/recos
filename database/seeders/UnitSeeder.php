@@ -13,32 +13,40 @@ class UnitSeeder extends Seeder
     public function run(): void
     {
         $UPATIK = Unit::create([
-            'name' => 'UPATIK',
-            'code' => 'TIK001',
+            'name' => 'Kepala UPATIK',
+            'code' => 'TIK100',
             'level' => 1,
             'parent_id' => 0,
         ]
         );
 
+        $Wakor = Unit::create([
+            'name' => 'Wakor UPATIK',
+            'code' => 'TIK200',
+            'level' => 2,
+            'parent_id' => $UPATIK->id,
+        ]
+        );
+
         $Jaringan = Unit::create([
             'name' => 'Jaringan',
-            'code' => 'TIK002',
-            'level' => 2,
+            'code' => 'TIK301',
+            'level' => 3,
             'parent_id' => $UPATIK->id,
         ]
         );
 
         $Programmer = Unit::create([
             'name' => 'Programmer',
-            'code' => 'TIK003',
-            'level' => 2,
+            'code' => 'TIK302',
+            'level' => 3,
             'parent_id' => $UPATIK->id,
         ]
         );
 
         $KantorPusat = Unit::create([
             'name' => 'Kantor Pusat',
-            'code' => 'PUS001',
+            'code' => 'PUS100',
             'level' => 1,
             'parent_id' => 0,
         ]
@@ -46,7 +54,7 @@ class UnitSeeder extends Seeder
 
         $Kepegawaian = Unit::create([
             'name' => 'Kepegawaian',
-            'code' => 'PUS002',
+            'code' => 'PUS200',
             'level' => 2,
             'parent_id' => $KantorPusat->id,
         ]

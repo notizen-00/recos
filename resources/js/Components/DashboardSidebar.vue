@@ -19,6 +19,7 @@ const links_outgoing = typesData.map((type) => {
             title: subType.name,
             href: `/outgoing-mail/${subType.id}`,
             isActive: false,
+            id: subType.id,
         }));
     }
 

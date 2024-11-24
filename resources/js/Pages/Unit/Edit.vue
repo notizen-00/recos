@@ -125,7 +125,6 @@ watchEffect(() => {
                     id="parent_id"
                     class="mt-1 block w-full"
                     v-model="form.parent_id"
-                    required
                     :dataSet="unitParents"
                 >
                 </SelectInput>

@@ -12,12 +12,16 @@ class CreateOutgoingMailsTable extends Migration
         Schema::create('outgoing_mails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('sub_type_id')->constrained('sub_types');
+            $table->foreignId('classification_id')->constrained('classifications');
+            $table->foreignId('priority_id')->constrained('priorities');
             $table->string('no');
             $table->string('full_number');
             $table->string('subject');
-            $table->string('content');
+            $table->string('content')->nullable();
             $table->string('code');
+            $table->string('mail_place');
             $table->string('mail_date');
+            $table->string('sign_user');
             $table->foreignId('user_id')->constrained('users');
             $table->timestamps();
             $table->softDeletes();
