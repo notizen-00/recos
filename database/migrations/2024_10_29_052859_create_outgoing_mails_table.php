@@ -2,6 +2,7 @@
 
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class CreateOutgoingMailsTable extends Migration
 {
@@ -10,7 +11,7 @@ class CreateOutgoingMailsTable extends Migration
     {
         Schema::create('outgoing_mails', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('type_id')->constrained('types');
+            $table->foreignId('sub_type_id')->constrained('sub_types');
             $table->string('no');
             $table->string('full_number');
             $table->string('subject');

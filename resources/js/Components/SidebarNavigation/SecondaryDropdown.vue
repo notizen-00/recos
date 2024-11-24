@@ -53,7 +53,7 @@ watch(
             href="javascript:;"
             @click.prevent="toggleMenu"
             :class="[
-                'py-2.5 px-4 pl-6 ml-5 rounded-2  flex items-center text-sm transition-all',
+                'py-2.5 px-4 pl-6 ml-5 mt-0.75 rounded-2  flex items-center text-sm transition-all',
                 isExpanded
                     ? 'text-slate-800 dark:text-white font-semibold bg-blue-500/30'
                     : 'text-slate-600 dark:text-white/50',
@@ -69,9 +69,9 @@ watch(
         <div
             ref="subMenu"
             :style="{ maxHeight: isExpanded ? `${subMenuHeight}px` : '0px' }"
-            class="overflow-hidden transition-all duration-300 ease-in-out"
+            class="overflow-hidden pl-20 transition-all duration-300 ease-in-out"
         >
-            <ul class="list-none pl-10">
+            <ul class="list-none">
                 <li v-for="(link, index) in links" :key="index">
                     <a
                         :href="link.href"

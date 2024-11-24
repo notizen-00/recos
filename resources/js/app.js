@@ -15,6 +15,7 @@ library.add(faPhone,faHome,faCog,faBuilding,faList,faSignIn,faSignOut,faUser,faR
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
+
 createInertiaApp({
     title: (title) => `${title} - ${appName}`,
     resolve: (name) =>

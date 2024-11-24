@@ -1,8 +1,10 @@
 <?php
 
+use App\Http\Controllers\OutgoingMailController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
+use App\Http\Controllers\SubTypeController;
 use App\Http\Controllers\TypeController;
 use App\Http\Controllers\UnitController;
 use App\Http\Controllers\UserController;
@@ -21,7 +23,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/unit/destroy-bulk', [UnitController::class, 'destroyBulk'])->name('unit.destroy-bulk');
 
     Route::resource('/type', TypeController::class)->except('create', 'edit');
-    Route::post('/type/destroy-bulk', [TypeController::class,'destroyBulk'])->name('type.destroy-bulk');
+    Route::post('/type/destroy-bulk', [TypeController::class, 'destroyBulk'])->name('type.destroy-bulk');
+
+    Route::resource('/outgoing-mail', OutgoingMailController::class)->except('create', 'edit');
+
+    Route::resource('/sub-type', SubTypeController::class)->except('create', 'edit');
 
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
