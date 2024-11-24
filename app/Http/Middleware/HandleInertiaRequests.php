@@ -4,6 +4,7 @@ namespace App\Http\Middleware;
 
 use Inertia\Middleware;
 use App\Models\Unit;
+use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -31,6 +32,8 @@ class HandleInertiaRequests extends Middleware
      */
     public function share(Request $request): array
     {
+
+        $type = Types::with('subTypes')->get();
         return [
             ...parent::share($request),
             'auth' => [
@@ -55,6 +58,7 @@ class HandleInertiaRequests extends Middleware
                     ['label' => '100', 'value' => 100],
                 ],
             ],
+            'links' => $type,
             'locale' => function () {                
                 if(session()->has('locale')) {
                     app()->setLocale(session('locale'));
