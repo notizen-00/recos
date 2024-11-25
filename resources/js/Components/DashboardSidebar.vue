@@ -1,11 +1,15 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import NavLink from "./NavLink.vue";
 import PrimaryDropdown from "./SidebarNavigation/PrimaryDropdown.vue";
 
-const url = usePage().props.url;
+const isExpanded = ref(false);
 
+// Handle the event emitted by the PrimaryDropdown
+const handleIsExpandedChange = (newValue) => {
+    isExpanded.value = newValue;
+};
 const typesData = usePage().props.links;
 
 const links_outgoing = typesData.map((type) => {
@@ -35,7 +39,7 @@ const links_ingoing = typesData.map((type) => {
     if (type.sub_types.length > 0) {
         result.subLinks = type.sub_types.map((subType) => ({
             title: subType.name,
-            href: `/ingoing-mail/${subType.id}`,
+            href: `/incoming-mail/${subType.id}`,
             isActive: false,
         }));
     }
@@ -188,7 +192,7 @@ const classes = computed(() =>
                         title="Surat Masuk"
                         iconClass="envelope"
                         :links="links_ingoing"
-                        :isActive="false"
+                        :isActive="$page.url.startsWith('/incoming-mail')"
                     />
 
                     <PrimaryDropdown
@@ -196,7 +200,8 @@ const classes = computed(() =>
                         class="mt-2"
                         iconClass="paper-plane"
                         :links="links_outgoing"
-                        :isActive="true"
+                        :isActive="$page.url.startsWith('/outgoing-mail')"
+                        @update:isExpanded="handleIsExpandedChange"
                     />
                 </li>
 

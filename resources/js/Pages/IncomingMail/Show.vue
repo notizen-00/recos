@@ -6,6 +6,7 @@ import { cloneDeep, debounce, pickBy } from "lodash";
 import Create from "@/Pages/OutgoingMail/Create.vue";
 import Edit from "@/Pages/OutgoingMail/Edit.vue";
 import Delete from "@/Pages/OutgoingMail/Delete.vue";
+import Verifikasi from "@/Pages/IncomingMail/Verifikasi.vue";
 import Tracking from "@/Pages/OutgoingMail/Tracking.vue";
 import DeleteBulk from "@/Pages/OutgoingMail/DeleteBulk.vue";
 import SearchBar from "@/Components/SearchBar.vue";
@@ -300,6 +301,9 @@ const select = () => {
                                         <td
                                             class="flex gap-5 justify-center items-center p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
                                         >
+                                            <Verifikasi
+                                                :outgoing_mail="Outgoing_mail"
+                                            ></Verifikasi>
                                             <Tracking
                                                 :outgoing_mail="Outgoing_mail"
                                             />

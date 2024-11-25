@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class IncomingMail extends Model
 {
 
-    protected $table = 'incoming_mail';
+    protected $table = 'incoming_mails';
     public $timestamps = true;
 
     use SoftDeletes;

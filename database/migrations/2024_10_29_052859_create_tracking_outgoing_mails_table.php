@@ -13,12 +13,12 @@ class CreateTrackingOutgoingMailsTable extends Migration
             $table->id();
             $table->foreignId('outgoing_mail_id')->constrained('outgoing_mails');
             $table->foreignId('unit_id')->constrained('units');
-            $table->foreignId('user_id')->constrained('users');
-            $table->string('to');
+            $table->foreignId('sender_id')->constrained('users');
+            $table->foreignId('to')->constrained('users');
             $table->string('status');
-            $table->string('note');
-            $table->string('read_at');
-            $table->string('forward_date');
+            $table->string('note')->nullable();
+            $table->timestamp('read_at');
+            $table->timestamp('forward_date');
             $table->timestamps();
             $table->softDeletes();
         });

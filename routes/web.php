@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\OutgoingMailController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
@@ -26,6 +27,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/type/destroy-bulk', [TypeController::class, 'destroyBulk'])->name('type.destroy-bulk');
 
     Route::resource('/outgoing-mail', OutgoingMailController::class)->except('create', 'edit');
+
+    Route::resource('/incoming-mail', IncomingMailController::class)->except('create', 'edit');
 
     Route::resource('/sub-type', SubTypeController::class)->except('create', 'edit');
 

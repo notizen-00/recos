@@ -13,12 +13,16 @@ class OutgoingMail extends Model
 
     public $fillable = [
         'sub_type_id',
+        'priority_id',
+        'classification_id',
         'no',
         'full_number',
         'subject',
         'content',
         'code',
         'mail_date',
+        'mail_place',
+        'sign_user',
         'user_id',
     ];
 
@@ -29,6 +33,11 @@ class OutgoingMail extends Model
     public function subTypes()
     {
         return $this->belongsTo(SubTypes::class);
+    }
+
+    public function trackingOutgoingMails()
+    {
+        return $this->hasMany(TrackingOutgoingMail::class);
     }
 
 }

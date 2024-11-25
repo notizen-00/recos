@@ -9,22 +9,27 @@ import TextInput from "@/Components/TextInput.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
 import { ref, watchEffect, watch } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
-
+import Multiselect from "vue-multiselect";
 const isModalOpen = ref(false);
 
 const props = defineProps({
     sub_types: Object,
     unit: Object,
+    priority: Object,
+    classification: Object,
 });
 
 const form = useForm({
     subject: "",
+    sub_type_id: props.sub_types.id,
     nomor: "Nomor Generate Otomatis !",
     mail_place: "",
     mail_date: "",
     unit_id: usePage().props.auth.unit.name,
     to: "",
-    sign_user: "UPATIK",
+    priority: "",
+    classification: "",
+    sign_user: "",
 });
 
 const openModal = () => {
@@ -32,7 +37,10 @@ const openModal = () => {
     form.reset();
 };
 
-console.log(props.unit);
+const onPriorityChange = (selectedOption) => {
+    console.log(selectedOption);
+    this.form.priority_id = selectedOption ? selectedOption.id : null;
+};
 
 const createNewUnit = () => {
     form.post(route("outgoing-mail.store"), {
@@ -52,9 +60,29 @@ const closeModal = () => {
     isModalOpen.value = false;
 };
 
-const unitParents = props.unit?.map((unit) => ({
+const customLabel = ({ name, id }) => {
+    return name;
+};
+const units = props.unit?.map((unit) => ({
     label: unit.name + " -- (" + unit.unit.name + ")",
-    value: unit.id,
+    id: unit.id,
+}));
+
+const unitParents = props.unit
+    ?.filter((unit) => unit.unit.parent_id == 0)
+    .map((unit) => ({
+        label: unit.name + " -- (" + unit.unit.name + ")",
+        id: unit.id,
+    }));
+
+const priority = props.priority?.map((p) => ({
+    name: p.name,
+    id: p.id,
+}));
+
+const classification = props.classification?.map((classification) => ({
+    name: classification.name,
+    id: classification.id,
 }));
 </script>
 
@@ -83,7 +111,7 @@ const unitParents = props.unit?.map((unit) => ({
                     readonly
                     disabled
                     type="text"
-                    class="mt-1 cursor-not-allowed bg-slate-500/80 block w-1/2 text-white"
+                    class="mt-1 cursor-not-allowed bg-slate-500 block w-1/2 text-white"
                     autofocus
                     autocomplete="nomor"
                     v-model="form.nomor"
@@ -164,7 +192,7 @@ const unitParents = props.unit?.map((unit) => ({
                         id="Dibuat Oleh"
                         type="text"
                         readonly
-                        class="mt-1 block w-full bg-slate-500/80 text-white cursor-not-allowed"
+                        class="mt-1 block w-full bg-slate-500 text-white cursor-not-allowed"
                         v-model="form.unit_id"
                         autofocus
                         autocomplete="Dibuat Oleh"
@@ -172,26 +200,77 @@ const unitParents = props.unit?.map((unit) => ({
 
                     <InputError class="mt-2" :message="form.errors.unit_id" />
                 </div>
+            </div>
+
+            <div>
+                <InputLabel
+                    for="TTD Oleh"
+                    value="TTD Oleh"
+                    class="mt-2"
+                    :isRequired="true"
+                />
+
+                <multiselect
+                    v-model="form.sign_user"
+                    :options="unitParents"
+                    :searchable="true"
+                    :show-labels="true"
+                    :allow-empty="false"
+                    label="label"
+                    track-by="label"
+                    placeholder="-- Pilih Unit TTD OLeh --"
+                ></multiselect>
+
+                <InputError class="mt-2" :message="form.errors.sign_user" />
+            </div>
+
+            <div class="w-full flex justify-between mt-2">
+                <div class="w-1/2">
+                    <InputLabel
+                        for="Derajat"
+                        value="Derajat"
+                        :isRequired="true"
+                    />
+
+                    <multiselect
+                        v-model="form.priority"
+                        :options="priority"
+                        :searchable="true"
+                        :show-labels="true"
+                        :allow-empty="false"
+                        :modelValue="id"
+                        label="name"
+                        track-by="name"
+                        placeholder="-- Pilih Prioritas --"
+                    ></multiselect>
+
+                    <InputError class="mt-2" :message="form.errors.priority" />
+                </div>
 
                 <div class="w-1/2">
                     <InputLabel
-                        for="TTD Oleh"
-                        value="TTD Oleh"
+                        for=""
+                        value="Klasifikasi"
                         class="mx-3"
                         :isRequired="true"
                     />
 
-                    <TextInput
-                        id="TTD Oleh"
-                        type="text"
-                        class="mt-1 block w-full mx-3"
-                        v-model="form.sign_user"
-                        autofocus
-                        autocomplete="tgl_ditetapkan"
-                        placeholder="UPATIK"
-                    />
+                    <multiselect
+                        v-model="form.classification"
+                        :options="classification"
+                        :searchable="true"
+                        :show-labels="true"
+                        :allow-empty="false"
+                        label="name"
+                        track-by="name"
+                        class="mx-3"
+                        placeholder="-- Pilih Klasifikasi --"
+                    ></multiselect>
 
-                    <InputError class="mt-2" :message="form.errors.sign_user" />
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.classification"
+                    />
                 </div>
             </div>
 
@@ -200,14 +279,16 @@ const unitParents = props.unit?.map((unit) => ({
                     <template #default>Di Kirim Ke </template>
                 </InputLabel>
 
-                <SelectInput
-                    id="to"
-                    class="mt-1 block w-full"
+                <multiselect
                     v-model="form.to"
-                    required
-                    :dataSet="unitParents"
-                >
-                </SelectInput>
+                    :options="units"
+                    :searchable="true"
+                    :show-labels="true"
+                    :allow-empty="false"
+                    label="label"
+                    track-by="label"
+                    placeholder="-- Pilih User/Unit --"
+                ></multiselect>
                 <InputError class="mt-2" :message="form.errors.to" />
             </div>
 
@@ -224,3 +305,5 @@ const unitParents = props.unit?.map((unit) => ({
         </form>
     </Modal>
 </template>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
