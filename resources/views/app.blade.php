@@ -52,6 +52,7 @@
     <!-- plugin for scrollbar  -->
 
     <!-- main script file  -->
+    <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
     <script src="{{ asset('assets/js/argon-dashboard-tailwind.js?v=1.0.1') }}" async></script>
 
 </html>

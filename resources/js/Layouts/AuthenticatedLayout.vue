@@ -1,13 +1,15 @@
 <script setup>
 import { ref, watchEffect } from "vue";
-import { usePage } from "@inertiajs/vue3";
+import { Head, usePage } from "@inertiajs/vue3";
 import Sidebar from "@/Components/DashboardSidebar.vue";
 import Header from "@/Components/DashboardHeader.vue";
 import Footer from "@/Components/DashboardFooter.vue";
 import Configurator from "@/Components/DashboardConfigurator.vue";
 import Swal from "sweetalert2";
 import { onClickOutside } from "@vueuse/core";
-
+const props = defineProps({
+    title: String,
+});
 //Mobile Sidebar
 const isActive = ref(false);
 const handleMobileSidebar = () => {
@@ -71,6 +73,9 @@ watchEffect(() => {
 </script>
 
 <template>
+    <Head v-if="props.title">
+        <title>{{props.title}}</title>
+    </Head>
     <div class="absolute w-full bg-blue-500 dark:hidden min-h-90"></div>
 
     <Sidebar v-model:isMobileSidebar="isActive" />

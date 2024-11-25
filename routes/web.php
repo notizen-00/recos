@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\InboxController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -31,6 +32,10 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
     Route::post('/permission/destroy-bulk', [PermissionController::class, 'destroyBulk'])->name('permission.destroy-bulk');
+
+    Route::prefix('inbox')->name('inbox.')->controller(InboxController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+    });
 });
 
 require __DIR__ . '/auth.php';
