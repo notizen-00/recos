@@ -88,10 +88,11 @@ const user = computed(() => page.props.auth.user);
                             class="p-0 text-sm text-white transition-all ease-nav-brand"
                             @click="emit('toggleConfig')"
                         >
-                            <i
+                            <font-awesome-icon
                                 fixed-plugin-button-nav
-                                class="cursor-pointer fa fa-cog"
-                            ></i>
+                                class="cursor-pointer"
+                                :icon="['fas', 'cog']"
+                            />
                             <!-- fixed-plugin-button-nav  -->
                         </a>
                     </li>
@@ -105,7 +106,10 @@ const user = computed(() => page.props.auth.user);
                             @click="handleNotificationMenu"
                             class="block p-0 text-sm text-white transition-all ease-nav-brand"
                         >
-                            <i class="cursor-pointer fa fa-bell"></i>
+                            <font-awesome-icon
+                                class="cursor-pointer"
+                                :icon="['fas', 'bell']"
+                            ></font-awesome-icon>
                         </a>
 
                         <ul
@@ -121,7 +125,7 @@ const user = computed(() => page.props.auth.user);
                                     <div class="flex py-1">
                                         <div class="my-auto">
                                             <img
-                                                src="assets/img/team-2.jpg"
+                                                src="'/assets/img/team-2.jpg"
                                                 class="inline-flex items-center justify-center mr-4 text-sm text-white h-9 w-9 max-w-none rounded-xl"
                                             />
                                         </div>
@@ -155,7 +159,7 @@ const user = computed(() => page.props.auth.user);
                                     <div class="flex py-1">
                                         <div class="my-auto">
                                             <img
-                                                src="assets/img/small-logos/logo-spotify.svg"
+                                                src="/assets/img/small-logos/logo-spotify.svg"
                                                 class="inline-flex items-center justify-center mr-4 text-sm text-white bg-gradient-to-tl from-zinc-800 to-zinc-700 dark:bg-gradient-to-tl dark:from-slate-750 dark:to-gray-850 h-9 w-9 max-w-none rounded-xl"
                                             />
                                         </div>

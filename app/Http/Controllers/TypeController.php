@@ -12,6 +12,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Http\Requests\Type\TypeIndexRequest;
+use App\Http\Requests\Type\TypeStoreRequest;
 class TypeController extends Controller
 {
     /**
@@ -31,6 +32,7 @@ class TypeController extends Controller
     public function index(TypeIndexRequest $request)
     {
             $type = Types::query();
+
         if ($request->has('search')) {
             $type->where('name', 'LIKE', "%" . $request->search . "%");
         }
@@ -42,7 +44,7 @@ class TypeController extends Controller
         return Inertia::render('Type/Index', [
             'filters' => $request->all(['search', 'field', 'order']),
             'perPage' => (int) $perPage,
-            'types' => $type->paginate($perPage),
+            'types' => $type->with('subTypes')->paginate($perPage),
 
         ]);
     }
@@ -52,24 +54,40 @@ class TypeController extends Controller
      */
     public function create()
     {
-        //
+        
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(TypeStoreRequest $request)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $type = Types::create([
+                'name' => $request->name,       
+            ]);
+            
+            DB::commit();
+            return back()->with('success', __('app.label.created_successfully', ['name' => $type->name]));
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->with('error', __('app.label.created_error', ['name' => __('app.label.unit')]) . $th->getMessage());
+        }
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
-    {
-        //
-    }
+   public function show(string $id)
+{
+
+    $type = Types::with('subTypes')->findOrFail($id);
+    
+    return Inertia::render('Type/Show', [
+        'type' => $type,
+    ]);
+}
 
     /**
      * Show the form for editing the specified resource.
@@ -92,6 +110,13 @@ class TypeController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        try {
+            $type = Types::findOrFail($id);
+            $type->delete();
+            
+               return back()->with('success', __('app.label.deleted_successfully', ['name' => $type->name]));
+           } catch (\Throwable $th) {
+               return back()->with('error', __('app.label.deleted_error') . $th->getMessage());
+           }
     }
 }

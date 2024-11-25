@@ -5,6 +5,7 @@ import { computed, reactive, watch } from "vue";
 import { cloneDeep, debounce, pickBy } from "lodash";
 import Create from "@/Pages/Type/Create.vue";
 import Edit from "@/Pages/Type/Edit.vue";
+import Show from "@/Pages/Type/Show.vue";
 import Delete from "@/Pages/Type/Delete.vue";
 import DeleteBulk from "@/Pages/Type/DeleteBulk.vue";
 import SearchBar from "@/Components/SearchBar.vue";
@@ -140,6 +141,11 @@ const select = () => {
                                                 class="fas fa-angle-down ms-3"
                                             ></i>
                                         </th>
+                                        <th
+                                            class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                        >
+                                            Subtype
+                                        </th>
 
                                         <th
                                             class="px-6 py-3 font-bold text-center uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
@@ -203,6 +209,24 @@ const select = () => {
                                                 </div>
                                             </div>
                                         </td>
+                                        <td
+                                            class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent"
+                                        >
+                                            <div class="flex px-2 py-1">
+                                                <div
+                                                    class="flex flex-col justify-center"
+                                                >
+                                                    <h6
+                                                        class="mb-0 text-sm leading-normal dark:text-white"
+                                                    >
+                                                        {{
+                                                            type.sub_types
+                                                                .length
+                                                        }}
+                                                    </h6>
+                                                </div>
+                                            </div>
+                                        </td>
 
                                         <td
                                             class="p-2 text-xs leading-normal text-center align-middle bg-transparent whitespace-nowrap shadow-transparent"
@@ -212,12 +236,16 @@ const select = () => {
                                         <td
                                             class="flex gap-5 justify-center items-center p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
                                         >
-                                            <Edit
-                                                :Type="(data.type = type)"
-                                                :TypeParents="props.TypeParents"
-                                            />
+                                            <a
+                                                class="text-green-400 text-sm cursor-pointer"
+                                                :href="
+                                                    route('type.show', type.id)
+                                                "
+                                                >Lihat</a
+                                            >
+                                            <Edit :type="(data.type = type)" />
                                             <Delete
-                                                :Type="(data.type = type)"
+                                                :type="(data.type = type)"
                                             />
                                         </td>
                                     </tr>

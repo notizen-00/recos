@@ -75,4 +75,5 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Unit::class, 'unit_id');
     }
+
 }

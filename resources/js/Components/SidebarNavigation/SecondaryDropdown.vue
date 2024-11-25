@@ -1,6 +1,8 @@
 <script setup>
-import { ref, watch } from "vue";
-
+import { ref, watch, computed } from "vue";
+import NavLink from "@/Components/SecondaryNavLink.vue";
+const { url } = usePage();
+import { Link, usePage } from "@inertiajs/vue3";
 const props = defineProps({
     title: {
         type: String,
@@ -10,6 +12,11 @@ const props = defineProps({
         type: String,
         default: "",
     },
+    id: {
+        type: Number,
+        default: 0,
+    },
+
     links: {
         type: Array,
         default: () => [],
@@ -34,6 +41,13 @@ const toggleMenu = () => {
     subMenuHeight.value = isExpanded.value ? subMenu.value.scrollHeight : 0;
 };
 
+const isActive = (id) => {
+    const currentId = url.split("/").pop();
+
+    const test = id == currentId;
+    return test;
+};
+
 watch(
     () => props.parentIsExpanded,
     (newValue) => {
@@ -53,9 +67,9 @@ watch(
             href="javascript:;"
             @click.prevent="toggleMenu"
             :class="[
-                'py-2.5 px-4 pl-6 ml-5 rounded-2  flex items-center text-sm transition-all',
+                'py-2.5 px-4 pl-6 ml-5 mt-0.75 rounded-2  flex items-center text-sm transition-all',
                 isExpanded
-                    ? 'text-slate-800 dark:text-white font-semibold bg-blue-500/30'
+                    ? 'text-slate-800 dark:text-white font-semibold bg-blue-500/20'
                     : 'text-slate-600 dark:text-white/50',
             ]"
         >
@@ -69,12 +83,13 @@ watch(
         <div
             ref="subMenu"
             :style="{ maxHeight: isExpanded ? `${subMenuHeight}px` : '0px' }"
-            class="overflow-hidden transition-all duration-300 ease-in-out"
+            class="overflow-hidden pl-16 mt-0.75 transition-all duration-300 ease-in-out"
         >
-            <ul class="list-none pl-10">
+            <ul class="list-none">
                 <li v-for="(link, index) in links" :key="index">
-                    <a
+                    <nav-link
                         :href="link.href"
+                        :active="isActive(link.id)"
                         :class="[
                             'py-2.7 text-sm transition-all ',
                             link.isActive
@@ -83,7 +98,7 @@ watch(
                         ]"
                     >
                         {{ link.title }}
-                    </a>
+                    </nav-link>
                 </li>
             </ul>
         </div>

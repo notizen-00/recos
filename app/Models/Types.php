@@ -24,4 +24,15 @@ class Types extends Model
         return $this->hasMany(SubTypes::class, 'type_id');
     }
 
+    
+    public function getCreatedAtAttribute()
+    {
+        return date('d F Y, H:i', strtotime($this->attributes['created_at']));
+    }
+
+    public function getUpdatedAtAttribute()
+    {
+        return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
+    }
+
 }

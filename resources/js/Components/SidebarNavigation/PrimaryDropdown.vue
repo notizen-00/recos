@@ -1,6 +1,7 @@
 <script setup>
 import { ref, watch } from "vue";
 import SecondaryDropdown from "./SecondaryDropdown.vue";
+import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
 const props = defineProps({
     title: {
@@ -32,8 +33,16 @@ const toggleMenu = () => {
     isExpanded.value = !isExpanded.value;
     subMenuHeight.value = isExpanded.value ? subMenus.value.scrollHeight : 0;
 };
+watch(
+    () => props.isActive,
+    (newValue) => {
+        console.log(newValue);
+        isExpanded.value = newValue;
+    }
+);
 
 watch(isExpanded, (newValue) => {
+    console.log("update baryu");
     emit("update:isExpanded", newValue);
 });
 </script>
@@ -55,7 +64,10 @@ watch(isExpanded, (newValue) => {
                 v-if="iconClass"
                 class="flex h-8 w-8 items-center justify-center rounded-lg text-center"
             >
-                <i :class="[iconClass, 'text-blue-700 text-sm']"></i>
+                <font-awesome-icon
+                    :icon="['fas', iconClass]"
+                    class="relative top-0 text-sm leading-normal text-blue-700"
+                />
             </div>
 
             <span class="ml-1 text-slate-700 dark:text-white">

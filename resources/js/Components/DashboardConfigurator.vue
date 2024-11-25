@@ -1,6 +1,6 @@
 <script setup>
-import { computed, ref, watchEffect } from 'vue';
-import { useDark, useToggle } from '@vueuse/core';
+import { computed, ref, watchEffect } from "vue";
+import { useDark, useToggle } from "@vueuse/core";
 
 // Dark Mode
 const isDarkChecked = ref(false);
@@ -10,11 +10,11 @@ const toggleDark = useToggle(isDark);
 watchEffect(() => {
     if (isDark.value === true) {
         isDarkChecked.value = true;
-        localStorage.setItem('data-theme', 'dark');
+        localStorage.setItem("data-theme", "dark");
     }
 });
 
-const isConfiguratorActive = defineModel('isConfiguratorActive', {
+const isConfiguratorActive = defineModel("isConfiguratorActive", {
     type: Boolean,
     default: false,
 });
@@ -24,7 +24,7 @@ const handleToggleConfig = () => {
 };
 
 const configuratorClasses = computed(() =>
-    isConfiguratorActive.value ? 'right-0' : '-right-90'
+    isConfiguratorActive.value ? "right-0" : "-right-90"
 );
 </script>
 
@@ -34,7 +34,11 @@ const configuratorClasses = computed(() =>
             @click="handleToggleConfig"
             class="fixed px-4 py-2 text-xl bg-white shadow-lg cursor-pointer bottom-8 right-8 z-990 rounded-circle text-slate-700"
         >
-            <i class="py-2 pointer-events-none fa fa-cog"> </i>
+            <!-- <i class=" fa fa-cog"> </i> -->
+            <font-awesome-icon
+                icon="cog"
+                class="py-2 pointer-events-none"
+            ></font-awesome-icon>
         </a>
         <!-- -right-90 in loc de 0-->
         <div

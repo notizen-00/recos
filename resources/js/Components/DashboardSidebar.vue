@@ -1,10 +1,51 @@
 <script setup>
 import { Link, usePage } from "@inertiajs/vue3";
-import { computed } from "vue";
+import { computed, ref } from "vue";
 import NavLink from "./NavLink.vue";
 import PrimaryDropdown from "./SidebarNavigation/PrimaryDropdown.vue";
 
-const url = usePage().props.url;
+const isExpanded = ref(false);
+
+// Handle the event emitted by the PrimaryDropdown
+const handleIsExpandedChange = (newValue) => {
+    isExpanded.value = newValue;
+};
+const typesData = usePage().props.links;
+
+const links_outgoing = typesData.map((type) => {
+    const result = {
+        title: type.name,
+        href: "#",
+        isActive: false,
+    };
+    if (type.sub_types.length > 0) {
+        result.subLinks = type.sub_types.map((subType) => ({
+            title: subType.name,
+            href: `/outgoing-mail/${subType.id}`,
+            isActive: false,
+            id: subType.id,
+        }));
+    }
+
+    return result;
+});
+
+const links_ingoing = typesData.map((type) => {
+    const result = {
+        title: type.name,
+        href: "#",
+        isActive: false,
+    };
+    if (type.sub_types.length > 0) {
+        result.subLinks = type.sub_types.map((subType) => ({
+            title: subType.name,
+            href: `/incoming-mail/${subType.id}`,
+            isActive: false,
+        }));
+    }
+
+    return result;
+});
 
 const isMobileSidebar = defineModel("isMobileSidebar", {
     type: Boolean,
@@ -40,13 +81,13 @@ const classes = computed(() =>
                 class="flex flex-col items-center justify-center mb-10 mt-3"
             >
                 <img
-                    src="assets/img/logo-recos.png"
+                    src="/assets/img/logo-recos.png"
                     class="inline h-full max-w-full transition-all duration-200 dark:hidden ease-nav-brand max-h-14"
                     alt="main_logo"
                 />
 
                 <img
-                    src="assets/img/logo-recos.png"
+                    src="/assets/img/logo-recos.png"
                     class="hidden h-full max-w-full transition-all duration-200 dark:inline ease-nav-brand max-h-14"
                     alt="main_logo"
                 />
@@ -77,9 +118,10 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-dashboard"
-                            ></i>
+                            <font-awesome-icon
+                                :icon="['fas', 'home']"
+                                class="relative top-0 text-sm leading-normal text-blue-700"
+                            />
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
@@ -104,9 +146,10 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-building"
-                            ></i>
+                            <font-awesome-icon
+                                :icon="['fas', 'building']"
+                                class="relative top-0 text-sm leading-normal text-blue-700"
+                            />
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
@@ -122,9 +165,10 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-list"
-                            ></i>
+                            <font-awesome-icon
+                                :icon="['fas', 'list']"
+                                class="relative top-0 text-sm leading-normal text-blue-700"
+                            />
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
@@ -146,74 +190,18 @@ const classes = computed(() =>
                 <li class="mt-0.5 w-full">
                     <PrimaryDropdown
                         title="Surat Masuk"
-                        iconClass="fa fa-sign-in"
-                        :links="[
-                            {
-                                title: 'Landing',
-                                href: '/landing',
-                                isActive: false,
-                            },
-                            {
-                                title: 'Virtual Reality',
-                                subLinks: [
-                                    {
-                                        title: 'VR Defaultss',
-                                        href: '/vr-default',
-                                        isActive: true,
-                                    },
-                                    {
-                                        title: 'VR Info',
-                                        href: '/vr-info',
-                                        isActive: false,
-                                    },
-                                    {
-                                        title: 'VR Infos',
-                                        href: '/vr-infos',
-                                        isActive: false,
-                                    },
-                                ],
-                            },
-                            {
-                                title: 'Smart Home',
-                                href: '/smart-home',
-                                isActive: false,
-                            },
-                        ]"
-                        :isActive="false"
+                        iconClass="envelope"
+                        :links="links_ingoing"
+                        :isActive="$page.url.startsWith('/incoming-mail')"
                     />
 
                     <PrimaryDropdown
                         title="Surat Keluar"
                         class="mt-2"
-                        iconClass="fa fa-sign-out"
-                        :links="[
-                            {
-                                title: 'Surat Keluar Internal',
-                                href: '/landing',
-                                isActive: false,
-                            },
-                            {
-                                title: 'Surat Keluar Eksternal',
-                                subLinks: [
-                                    {
-                                        title: 'Surat Dinas Mengatur',
-                                        href: '/vr-default',
-                                        isActive: true,
-                                    },
-                                    {
-                                        title: 'VR Info',
-                                        href: '/vr-info',
-                                        isActive: false,
-                                    },
-                                    {
-                                        title: 'VR Infos',
-                                        href: '/vr-infos',
-                                        isActive: false,
-                                    },
-                                ],
-                            },
-                        ]"
-                        :isActive="false"
+                        iconClass="paper-plane"
+                        :links="links_outgoing"
+                        :isActive="$page.url.startsWith('/outgoing-mail')"
+                        @update:isExpanded="handleIsExpandedChange"
                     />
                 </li>
 
@@ -236,9 +224,10 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-users"
-                            ></i>
+                            <font-awesome-icon
+                                :icon="['fas', 'users']"
+                                class="relative top-0 text-sm leading-normal text-blue-700"
+                            />
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
@@ -254,9 +243,10 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-blue-700 fa fa-user"
-                            ></i>
+                            <font-awesome-icon
+                                :icon="['fas', 'user']"
+                                class="relative top-0 text-sm leading-normal text-blue-700"
+                            />
                         </div>
                         <span
                             class="ml-1 duration-300 opacity-100 pointer-events-none ease"
@@ -275,12 +265,13 @@ const classes = computed(() =>
                         <div
                             class="mr-2 flex h-8 w-8 items-center justify-center rounded-lg bg-center stroke-0 text-center xl:p-2.5"
                         >
-                            <i
-                                class="relative top-0 text-sm leading-normal text-red-500 fa fa-power-off"
-                            ></i>
+                            <font-awesome-icon
+                                :icon="['fas', 'right-from-bracket']"
+                                class="relative top-0 text-sm leading-normal text-red-700"
+                            />
                         </div>
                         <span
-                            class="ml-1 duration-300 opacity-100 pointer-events-none ease"
+                            class="ml-1 duration-300 opacity-100 pointer-events-none ease text-red-500"
                             >Sign Out</span
                         >
                     </Link>

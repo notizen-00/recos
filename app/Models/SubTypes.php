@@ -9,6 +9,14 @@ class SubTypes extends Model
 {
 
     protected $table = 'sub_types';
+
+    protected $fillable =
+        [
+        'type_id',
+        'name',
+        'letter_format',
+    ];
+
     public $timestamps = true;
 
     use SoftDeletes;
@@ -18,6 +26,11 @@ class SubTypes extends Model
     public function types()
     {
         return $this->belongsTo(Types::class, 'type_id');
+    }
+
+    public function outgoing_mail()
+    {
+        return $this->hasMany(OutgoingMail::class);
     }
 
 }
