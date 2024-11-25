@@ -88,7 +88,7 @@ const classification = props.classification?.map((classification) => ({
 
 <template>
     <div
-        class="cursor-pointer text-sm uppercase font-semibold bg-slate-700 px-5 py-2 text-slate-50 rounded-lg"
+        class="cursor-pointer text-sm uppercase font-semibold dark:bg-slate-700 bg-slate-500 px-5 py-2 text-slate-50 rounded-lg"
         @click="openModal"
     >
         <i class="fa fa-plus mr-1"></i>
@@ -111,7 +111,7 @@ const classification = props.classification?.map((classification) => ({
                     readonly
                     disabled
                     type="text"
-                    class="mt-1 cursor-not-allowed bg-slate-500 block w-1/2 text-white"
+                    class="mt-1 cursor-not-allowed dark:bg-slate-500 bg-slate-800 block w-1/2 text-white"
                     autofocus
                     autocomplete="nomor"
                     v-model="form.nomor"
@@ -192,7 +192,7 @@ const classification = props.classification?.map((classification) => ({
                         id="Dibuat Oleh"
                         type="text"
                         readonly
-                        class="mt-1 block w-full bg-slate-500 text-white cursor-not-allowed"
+                        class="mt-1 block w-full dark:bg-slate-500 bg-slate-800 text-white cursor-not-allowed"
                         v-model="form.unit_id"
                         autofocus
                         autocomplete="Dibuat Oleh"
