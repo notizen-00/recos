@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -21,6 +22,13 @@ class TrackingOutgoingMail extends Model
         'read_at',
         'forward_date',
     ];
+
+    protected static function booted()
+    {
+        static::addGlobalScope('defaultOrder', function (Builder $builder) {
+            $builder->orderBy('created_at', 'desc'); // Default order by `created_at` descending
+        });
+    }
 
     public function outgoing_mail()
     {

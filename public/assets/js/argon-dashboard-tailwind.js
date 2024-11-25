@@ -35,8 +35,7 @@ if (document.querySelector("nav [navbar-trigger]")) {
   loadJS(to_build + "assets/js/navbar-collapse.js", true);
 }
 if (document.querySelector("aside")) {
-  console.log('loaded')
-  alert('test')
+  
   loadJS(to_build + "assets/pro/js/sidenav.js", true);
   if (current_page != "landing.html") {
     loadJS(to_build + "assets/js/sidenav-burger.js", true);

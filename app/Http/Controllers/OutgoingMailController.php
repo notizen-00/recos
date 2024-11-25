@@ -4,12 +4,14 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\OutgoingMail\OutgoingMailShowRequest;
 use App\Http\Requests\OutgoingMail\OutgoingMailStoreRequest;
+use App\Http\Requests\OutgoingMail\OutgoingMailVerifikasiRequest;
 use App\Models\Classification;
 use App\Models\OutgoingMail;
 use App\Models\Priority;
 use App\Models\SubTypes;
 use App\Models\TrackingOutgoingMail;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Inertia\Inertia;
@@ -158,5 +160,32 @@ class OutgoingMailController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function verifikasi(OutgoingMailVerifikasiRequest $request)
+    {
+        DB::beginTransaction();
+        try {
+
+            $latest = TrackingOutgoingMail::where('outgoing_mail_id', $request->outgoing_mail_id)->latest()->first();
+
+            if ($latest) {
+                $latest->update(['read_at' => Carbon::now()]);
+            }
+            TrackingOutgoingMail::create([
+                'outgoing_mail_id' => $request->outgoing_mail_id,
+                'unit_id' => auth()->user()->unit_id,
+                'sender_id' => auth()->user()->id,
+                'to' => $request->to['id'],
+                'status' => $request->status['value'],
+                'note' => $request->note,
+            ]);
+
+            DB::commit();
+            return back()->with('success', __('app.label.created_successfully', ['name' => 'Verifikasi']));
+        } catch (\Throwable $th) {
+            DB::rollback();
+            return back()->with('error', __('app.label.created_error', ['name' => __('app.label.role')]) . $th->getMessage());
+        }
     }
 }

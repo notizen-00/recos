@@ -104,6 +104,11 @@ watchEffect(() => {
                             <th
                                 class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                             >
+                                Status
+                            </th>
+                            <th
+                                class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                            >
                                 Catatan
                             </th>
                             <th
@@ -163,7 +168,29 @@ watchEffect(() => {
                                 <div class="flex px-2 py-1">
                                     <div class="flex flex-col justify-center">
                                         <h6
-                                            class="mb-0 text-sm leading-normal dark:text-white"
+                                            class="mb-0 text-xs leading-normal dark:text-white"
+                                            :class="
+                                                tracking.status == 1
+                                                    ? 'text-green-400'
+                                                    : 'text-red-400'
+                                            "
+                                        >
+                                            {{
+                                                tracking.status == 1
+                                                    ? "Diteruskan"
+                                                    : "Revisi"
+                                            }}
+                                        </h6>
+                                    </div>
+                                </div>
+                            </td>
+                            <td
+                                class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent"
+                            >
+                                <div class="flex px-2 py-1">
+                                    <div class="flex flex-col justify-center">
+                                        <h6
+                                            class="mb-0 text-xs leading-normal dark:text-white"
                                         >
                                             {{
                                                 tracking.note

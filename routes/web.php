@@ -27,6 +27,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/type/destroy-bulk', [TypeController::class, 'destroyBulk'])->name('type.destroy-bulk');
 
     Route::resource('/outgoing-mail', OutgoingMailController::class)->except('create', 'edit');
+    Route::post('/outgoing_mail/verifikasi', [OutgoingMailController::class, 'verifikasi'])->name('outgoing-mail.verifikasi');
 
     Route::resource('/incoming-mail', IncomingMailController::class)->except('create', 'edit');
 

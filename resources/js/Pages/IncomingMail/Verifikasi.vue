@@ -5,6 +5,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Modal from "@/Components/Modal.vue";
+import Multiselect from "vue-multiselect";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref, watchEffect } from "vue";
@@ -13,10 +14,14 @@ const isModalEditOpen = ref(false);
 
 const props = defineProps({
     outgoing_mail: Object,
+    unit: Object,
 });
 
 const form = useForm({
-    name: "",
+    outgoing_mail_id: props.outgoing_mail.id,
+    note: "",
+    status: "",
+    to: "",
 });
 
 const openModal = () => {
@@ -24,13 +29,16 @@ const openModal = () => {
     form.errors = {};
 };
 
-const updateType = () => {
-    form.put(route("type.update", props.type?.id), {
+const verifikasiSurat = () => {
+    form.post(route("outgoing-mail.verifikasi"), {
         preserveScroll: true,
+        preserveState: true,
         onSuccess: () => {
             closeModal();
             form.reset();
         },
+
+        onFinish: () => form.reset(),
     });
 };
 
@@ -45,6 +53,16 @@ watchEffect(() => {
         form.name = props.type?.name;
     }
 });
+
+const units = props.unit?.map((unit) => ({
+    label: unit.name + " -- (" + unit.unit.name + ")",
+    id: unit.id,
+}));
+
+const status = [
+    { name: "Acc", value: 1 },
+    { name: "Revisi", value: 0 },
+];
 </script>
 
 <template>
@@ -61,20 +79,62 @@ watchEffect(() => {
                 Verifikasi Surat : {{ props.outgoing_mail.full_number }}
             </h5>
         </div>
-        <form @submit.prevent="updateType" class="m-5">
+        <form @submit.prevent="verifikasiSurat" class="m-5">
             <div>
-                <InputLabel for="name" value="Name" :isRequired="true" />
+                <InputLabel for="catatan" value="Catatan " :isRequired="true" />
 
-                <TextInput
-                    id="name"
+                <textarea
+                    id="catatan"
                     type="text"
                     class="mt-1 block w-full"
-                    v-model="form.name"
+                    v-model="form.note"
                     autofocus
-                    autocomplete="name"
+                    autocomplete="catatan"
                 />
 
-                <InputError class="mt-2" :message="form.errors.name" />
+                <InputError class="mt-2" :message="form.errors.note" />
+            </div>
+
+            <div class="w-full flex justify-between mt-2">
+                <div class="w-4/12">
+                    <InputLabel
+                        for="Status"
+                        value="Status"
+                        :isRequired="true"
+                    />
+
+                    <multiselect
+                        v-model="form.status"
+                        :options="status"
+                        :searchable="true"
+                        :show-labels="true"
+                        :allow-empty="false"
+                        label="name"
+                        id="Status"
+                        track-by="name"
+                        placeholder="-- Pilih Status --"
+                    ></multiselect>
+
+                    <InputError class="mt-2" :message="form.errors.status" />
+                </div>
+            </div>
+
+            <div class="mt-4">
+                <InputLabel for="to" :isRequired="false">
+                    <template #default>Dikirim / Dikembalikan Ke </template>
+                </InputLabel>
+
+                <multiselect
+                    v-model="form.to"
+                    :options="units"
+                    :searchable="true"
+                    :show-labels="true"
+                    :allow-empty="false"
+                    label="label"
+                    track-by="label"
+                    placeholder="-- Pilih User/Unit --"
+                ></multiselect>
+                <InputError class="mt-2" :message="form.errors.to" />
             </div>
 
             <div class="mt-6 flex justify-start">

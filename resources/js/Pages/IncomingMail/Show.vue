@@ -38,8 +38,6 @@ const data = reactive({
     isMultiple: false,
 });
 
-console.log(data.outgoing_mail);
-
 const order = (request) => {
     data.params.field = request;
     data.params.order = data.params.order === "asc" ? "desc" : "asc";
@@ -302,7 +300,14 @@ const select = () => {
                                             class="flex gap-5 justify-center items-center p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
                                         >
                                             <Verifikasi
+                                                v-if="
+                                                    Outgoing_mail
+                                                        .tracking_outgoing_mails[0]
+                                                        .to.id ==
+                                                    $page.props.auth.user.id
+                                                "
                                                 :outgoing_mail="Outgoing_mail"
+                                                :unit="props.unit"
                                             ></Verifikasi>
                                             <Tracking
                                                 :outgoing_mail="Outgoing_mail"
