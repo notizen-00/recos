@@ -16,12 +16,11 @@
 */
 var page = window.location.pathname.split("/").pop().split(".")[0];
 var aux = window.location.pathname.split("/");
-var to_build = (aux.includes('pages') || aux.includes('docs') ?'../':'./');
+var to_build = (aux.includes('pages') || aux.includes('docs') ?'../':'../');
 var root = window.location.pathname.split("/")
 if (!aux.includes("pages")) {
   page = "dashboard";
 }
-
 loadStylesheet(to_build + "assets/css/perfect-scrollbar.css");
 
 loadJS(to_build + "assets/js/perfect-scrollbar.js", true);

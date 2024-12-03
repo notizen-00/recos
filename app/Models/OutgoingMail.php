@@ -8,9 +8,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class OutgoingMail extends Model
 {
 
-    protected $table = 'outgoing_mails';
     public $timestamps = true;
-
     public $fillable = [
         'sub_type_id',
         'priority_id',
@@ -24,7 +22,11 @@ class OutgoingMail extends Model
         'mail_place',
         'sign_user',
         'user_id',
+        'attachment',
+        'attachment_file',
+        'org_subject_id'
     ];
+    protected $table = 'outgoing_mails';
 
     use SoftDeletes;
 

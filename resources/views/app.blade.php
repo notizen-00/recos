@@ -54,6 +54,6 @@
 
     <!-- main script file  -->
     <script src="{{ asset('assets/js/plugins/perfect-scrollbar.min.js')}}"></script>
-    <script src="{{ asset('assets/js/argon-dashboard-tailwind.js?v=1.0.1') }}" async></script>
+    <script src="{{ asset('assets/pro/js/argon-dashboard-pro-tailwind.js?   '.time()) }}" async></script>
 
 </html>
