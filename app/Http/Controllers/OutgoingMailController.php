@@ -23,44 +23,6 @@ use Throwable;
 class OutgoingMailController extends Controller
 {
 
-    private function fetch_sign_by_bod(SubTypes $subType)
-    {
-        $bod_rule = $subType->bod;
-
-        $sign_bod = User::with('detail_department')->whereIn('detail_department_id', $bod_rule)->get();
-        return $sign_bod;
-    }
-
-    private function get_nomor_surat($sub_type_id)
-    {
-        $latest_mail = OutgoingMail::where('sub_type_id', $sub_type_id)
-            ->orderBy('id', 'desc')
-            ->first();
-
-        if (!$latest_mail) {
-            return 1;
-        }
-
-        return $latest_mail->no + 1;
-    }
-
-    private function generate_nomor_surat($sub_type_id, $kode = '')
-    {
-        $subtype = SubTypes::findOrFail($sub_type_id);
-
-        $kode_surat = $subtype->letter_format;
-        if ($kode == '') {
-            return $kode_surat . '-' . $this->get_nomor_surat($sub_type_id) . '/RNM000000/' . date('Y') . '-SO';
-        } else {
-            if ($kode == 'get_kode') {
-                return $kode_surat;
-            } else {
-                return '';
-            }
-        }
-
-    }
-
     public function index()
     {
         //
@@ -187,7 +149,8 @@ class OutgoingMailController extends Controller
     public function show(OutgoingMailShowRequest $request, OutgoingMailService $service, string $subTypeId)
     {
 
-        dd($service);
+        dd($service->generate_nomor_surat());
+
         $outgoing = OutgoingMail::query();
 
         $outgoing->where('sub_type_id', $subTypeId);
@@ -203,7 +166,6 @@ class OutgoingMailController extends Controller
 
         $detail_department_sign = $this->fetch_sign_by_bod($sub_type);
 
-        dd($detail_department_sign);
         if ($request->has('search')) {
             $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
         }
