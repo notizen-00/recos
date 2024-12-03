@@ -24,15 +24,16 @@ class DatabaseSeeder extends Seeder
         );
 
         $this->call(RoleSeeder::class);
-
+        $this->call(BodSeeder::class);
         $this->call(UnitSeeder::class);
+        $this->call(FunctionDepartmentSeeder::class);
+        $this->call(DetailDepartmentSeeder::class);
+
         $this->call(UserSeeder::class);
         $this->call(ClassificationSeeder::class);
         $this->call(PrioritySeeder::class);
         $this->call(TypeSeeder::class);
         $this->call(OrgSubjectsSeeder::class);
-        $this->call(BodSeeder::class);
-        $this->call(FunctionDepartmentSeeder::class);
-        $this->call(DetailDepartmentSeeder::class);
+     
     }
 }

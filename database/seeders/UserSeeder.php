@@ -15,7 +15,7 @@ class UserSeeder extends Seeder
         $superadmin = User::create([
             'name'              => 'Superadmin',
             'email'             => 'superadmin@superadmin.com',
-            'unit_id'           => 1,
+            'detail_department_id'=> 1,
             'password'          => bcrypt('superadmin'),
             'email_verified_at' => date('Y-m-d H:i'),
         ]);
@@ -24,15 +24,15 @@ class UserSeeder extends Seeder
         $admin = User::create([
             'name'              => 'Admin',
             'email'             => 'admin@admin.com',
-            'unit_id'           => 1,
+            'detail_department_id'=> 1,
             'password'          => bcrypt('admin'),
             'email_verified_at' => date('Y-m-d H:i'),
         ]);
         $admin->assignRole('admin');
 
         $operator = User::create([
-            'name'              => 'Operator',
-            'unit_id'           => 2,
+            'name'              => 'Corporate Secreate',
+            'detail_department_id'=> 2,
             'email'             => 'operator@operator.com',
             'password'          => bcrypt('operator'),
             'email_verified_at' => date('Y-m-d H:i'),

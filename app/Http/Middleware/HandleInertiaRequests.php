@@ -3,7 +3,7 @@
 namespace App\Http\Middleware;
 
 use Inertia\Middleware;
-use App\Models\Unit;
+use App\Models\DetailDepartment;
 use App\Models\Types;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
-                'unit' => Unit::find($request->user() ? $request->user()->unit_id : ''),
+                'detail_department' => DetailDepartment::find($request->user() ? $request->user()->detail_department_id : ''),
                 'can' => $request->user() ? $request->user()->getPermissionArray() : [],
             ],
             'route' => [

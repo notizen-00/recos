@@ -16,4 +16,9 @@ class DetailDepartment extends Model
         'parent_id',
         'kode_organisasi',
     ];
+
+    public function user()
+    {
+        return $this->hasMany(User::class);
+    }
 }
