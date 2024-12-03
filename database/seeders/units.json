@@ -1,0 +1,92 @@
+[
+    {
+        "id": "1",
+        "title": "Head Office",
+        "created_at": "2024-06-13 08:03:30",
+        "updated_at": "2024-06-19 07:28:42",
+        "address": "Jl. Gajah Mada No.15, Kaliwates Kidul, Kaliwates, Kec. Kaliwates, Kabupaten Jember, Jawa Timur",
+        "latitude": "-8.1745269",
+        "longitude": "113.6867502",
+        "radius": "500"
+    },
+    {
+        "id": "2",
+        "title": "RSU Kaliwates",
+        "created_at": "2024-06-13 08:03:30",
+        "updated_at": "2024-06-26 17:11:40",
+        "address": "Jl. Diah Pitaloka No.4a, Kaliwates Kidul, Kaliwates, Kec. Kaliwates, Kabupaten Jember, Jawa Timur",
+        "latitude": "-8.182126082017712",
+        "longitude": "113.67556929588318",
+        "radius": "1500"
+    },
+    {
+        "id": "3",
+        "title": "RSU Bhakti Husada",
+        "created_at": "2024-06-13 08:03:30",
+        "updated_at": "2024-06-19 07:31:33",
+        "address": "Jl. RS Bhakti Husada No.11, Dsn. Krajan, Tegalharjo, Kec. Glenmore, Kabupaten Banyuwangi, Jawa Timur",
+        "latitude": "-8.294648927833906",
+        "longitude": "114.02874112129211",
+        "radius": "1500"
+    },
+    {
+        "id": "4",
+        "title": "KSO dan EHC",
+        "created_at": "2024-06-13 08:03:30",
+        "updated_at": "2024-08-27 06:53:46",
+        "address": "Jl. Gajah Mada No.15, Kaliwates Kidul, Kaliwates, Kec. Kaliwates, Kabupaten Jember, Jawa Timur",
+        "latitude": "-8.1745269",
+        "longitude": "113.6867502",
+        "radius": "500"
+    },
+    {
+        "id": "5",
+        "title": "Klinik Rolas Medika Jember",
+        "created_at": "2024-06-14 14:31:19",
+        "updated_at": "2024-06-19 07:32:36",
+        "address": "Jl. Gajah Mada No.15, Kaliwates Kidul, Kaliwates, Kec. Kaliwates, Kabupaten Jember, Jawa Timur",
+        "latitude": "-8.17470230589293",
+        "longitude": "113.68671655654909",
+        "radius": "500"
+    },
+    {
+        "id": "6",
+        "title": "Klinik Rolas Medika Kalikempit",
+        "created_at": "2024-06-14 14:31:19",
+        "updated_at": "2024-06-19 07:38:18",
+        "address": "Jl. Jember, Wadungpal, Tulungrejo, Kec. Glenmore, Kabupaten Banyuwangi, Jawa Timur",
+        "latitude": "-8.32144491306724",
+        "longitude": "114.07516479492188",
+        "radius": "1000"
+    },
+    {
+        "id": "7",
+        "title": "Klinik Rolas Medika Banjarsari",
+        "created_at": "2024-06-14 14:31:19",
+        "updated_at": "2024-06-19 07:35:36",
+        "address": "Krajan, Petung, Kec. Bangsalsari, Kabupaten Jember",
+        "latitude": "-8.20489040657553",
+        "longitude": "113.58427575354352",
+        "radius": "500"
+    },
+    {
+        "id": "8",
+        "title": "Klinik Rolas Medika Siliragung",
+        "created_at": "2024-06-14 14:31:19",
+        "updated_at": "2024-06-19 07:40:19",
+        "address": "Jl. Bhayangkara No.111, Dusun Seloagung, Siliragung, Kec. Siliragung, Kabupaten Banyuwangi, Jawa Timur",
+        "latitude": "-8.562340162973841",
+        "longitude": "114.1088787522674",
+        "radius": "500"
+    },
+    {
+        "id": "9",
+        "title": "Klinik Rolas Medika DPP Kalibaru",
+        "created_at": "2024-06-14 14:31:19",
+        "updated_at": "2024-06-19 07:42:41",
+        "address": "Jl. Jember No.157, Dusun Tegal Pakis, Kalibaruwetan, Kec. Kalibaru, Kabupaten Banyuwangi, Jawa Timur 68467",
+        "latitude": "-8.288580185839036",
+        "longitude": "113.9796647636396",
+        "radius": "500"
+    }
+]

@@ -8,16 +8,17 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class Unit extends Model
 {
 
-    protected $table = 'units';
     public $timestamps = true;
+    protected $table = 'units';
 
     use SoftDeletes;
 
     protected $fillable = [
-        'name',
-        'code',
-        'level',
-        'parent_id',
+        'title',
+        'address',
+        'latitude',
+        'longitude',
+        'radius',
     ];
 
     protected $appends = ['parentname'];
@@ -45,6 +46,7 @@ class Unit extends Model
     {
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
     }
+
     public function user()
     {
         return $this->hasMany(User::class, 'unit_id');
