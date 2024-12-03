@@ -84,7 +84,7 @@ class UserController extends Controller implements HasMiddleware
             $user = User::create([
                 'name' => $request->name,
                 'email' => $request->email,
-                'unit_id' => $request->unit_id,
+                'detail_department_id' => $request->unit_id,
                 'password' => Hash::make($request->password),
             ]);
             $user->assignRole($request->role);

@@ -23,7 +23,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'unit_id',
+        'detail_department_id',
     ];
 
     /**
@@ -71,9 +71,9 @@ class User extends Authenticatable
         });
     }
 
-    public function unit()
+    public function detail_department()
     {
-        return $this->belongsTo(Unit::class, 'unit_id');
+        return $this->belongsTo(DetailDepartment::class, 'detail_department_id');
     }
 
 }
