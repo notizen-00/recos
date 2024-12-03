@@ -17,7 +17,7 @@ const props = defineProps({
     filters: Object,
     perPage: Number,
     roles: Object,
-    units: Object,
+    detail_departments: Object,
 });
 
 const data = reactive({
@@ -148,9 +148,11 @@ const select = () => {
                                         </th>
                                         <th
                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
-                                            @click="order('unit_id')"
+                                            @click="
+                                                order('detail_department_id')
+                                            "
                                         >
-                                            Unit Kerja
+                                            Department Kerja
                                         </th>
                                         <th
                                             class="px-6 py-3 pl-2 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
@@ -258,7 +260,9 @@ const select = () => {
                                             <p
                                                 class="mb-0 text-xs font-semibold leading-tight dark:text-white dark:opacity-80"
                                             >
-                                                {{ user.unit.name }}
+                                                {{
+                                                    user.detail_department.title
+                                                }}
                                             </p>
                                         </td>
 

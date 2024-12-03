@@ -47,8 +47,4 @@ class Unit extends Model
         return date('d-m-Y H:i', strtotime($this->attributes['updated_at']));
     }
 
-    public function user()
-    {
-        return $this->hasMany(User::class, 'unit_id');
-    }
 }

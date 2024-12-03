@@ -15,6 +15,7 @@ use App\Http\Requests\User\UserIndexRequest;
 use App\Http\Requests\User\UserStoreRequest;
 use App\Http\Requests\User\UserUpdateRequest;
 use App\Http\Requests\User\UserDestroyRequest;
+use App\Models\DetailDepartment;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Routing\Controllers\Middleware;
 use Illuminate\Routing\Controllers\HasMiddleware;
@@ -44,7 +45,7 @@ class UserController extends Controller implements HasMiddleware
         }
         $perPage = $request->has('perPage') ? $request->perPage : 10;
         $role = auth()->user()->roles->pluck('name')[0];
-        $units = Unit::get();
+        $detail_departments = DetailDepartment::get();
         $roles = Role::get();
         if ($role != 'superadmin') {
             $users->whereHas('roles', function ($query) {
@@ -55,9 +56,9 @@ class UserController extends Controller implements HasMiddleware
         return Inertia::render('Users/Index', [
             'filters'       => $request->all(['search', 'field', 'order']),
             'perPage'       => (int) $perPage,
-            'users'         => $users->with('roles','unit')->paginate($perPage),
+            'users'         => $users->with('roles','detail_department')->paginate($perPage),
             'roles'         => $roles,
-            'units'         => $units,
+            'detail_departments'         => $detail_departments,
         ]);
     }
 
@@ -141,7 +142,7 @@ class UserController extends Controller implements HasMiddleware
             return back()->with('success', __('app.label.updated_successfully', ['name' => $user->name]));
         } catch (\Throwable $th) {
             DB::rollback();
-            return back()->with('error', __('app.label.updated_error', ['name' => $user->name]) . $th->getMessage());
+            return back()->with('error', __('app.label.updated_error') . $th->getMessage());
         }
 
     }
