@@ -185,7 +185,7 @@ class OutgoingMailController extends Controller
         $priority = Priority::get();
         $classification = Classification::get();
         $orgSubjects = OrgSubject::get();
-        $unit = User::with('unit')
+        $detail_department = User::with('detail_department')
             ->get();
         if ($request->has('search')) {
             $outgoing->where('name', 'LIKE', "%".$request->search."%");
@@ -207,11 +207,11 @@ class OutgoingMailController extends Controller
                 'order'
             ]),
             'perPage'        => (int) $perPage,
-            'outgoing_mail'  => $outgoing->with('subTypes', 'trackingOutgoingMails.to.unit',
-                'trackingOutgoingMails.sender.unit')
+            'outgoing_mail'  => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department',
+                'trackingOutgoingMails.sender.detail_department')
                 ->paginate($perPage),
             'sub_type'       => $sub_type,
-            'unit'           => $unit,
+            'detail_department'=> $detail_department,
             'priority'       => $priority,
             'classification' => $classification,
             'orgSubjects'    => $orgSubjects,
@@ -248,7 +248,7 @@ class OutgoingMailController extends Controller
             }
             TrackingOutgoingMail::create([
                 'outgoing_mail_id' => $request->outgoing_mail_id,
-                'unit_id'          => auth()->user()->unit_id,
+                'detail_department_id'=> auth()->user()->detail_department_pid,
                 'sender_id'        => auth()->user()->id,
                 'to'               => $request->to['id'],
                 'status'           => $request->status['value'],
@@ -257,7 +257,7 @@ class OutgoingMailController extends Controller
 
             DB::commit();
             return back()->with('success', __('app.label.created_successfully', ['name' => 'Verifikasi']));
-        } catch (Throwable $th) {
+        } catch (Throwable $th) {   
             DB::rollback();
             return back()->with('error',
                 __('app.label.created_error', ['name' => __('app.label.role')]).$th->getMessage());

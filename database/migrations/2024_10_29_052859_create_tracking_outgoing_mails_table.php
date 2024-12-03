@@ -12,7 +12,7 @@ class CreateTrackingOutgoingMailsTable extends Migration
         Schema::create('tracking_outgoing_mails', function (Blueprint $table) {
             $table->id();
             $table->foreignId('outgoing_mail_id')->constrained('outgoing_mails');
-            $table->foreignId('unit_id')->constrained('units');
+            $table->foreignId('detail_department_id')->constrained('detail_departments');
             $table->foreignId('sender_id')->constrained('users');
             $table->foreignId('to')->constrained('users');
             $table->string('status');

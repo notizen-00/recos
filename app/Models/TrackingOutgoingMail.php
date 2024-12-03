@@ -14,7 +14,7 @@ class TrackingOutgoingMail extends Model
 
     protected $fillable = [
         'outgoing_mail_id',
-        'unit_id',
+        'detail_department_id',
         'sender_id',
         'to',
         'status',
@@ -45,8 +45,8 @@ class TrackingOutgoingMail extends Model
         return $this->belongsTo(User::class, 'to');
     }
 
-    public function unit()
+    public function detail_department()
     {
-        return $this->belongsTo(Unit::class);
+        return $this->belongsTo(DetailDepartment::class);
     }
 }
