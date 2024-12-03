@@ -1,0 +1,1172 @@
+[
+    {
+        "id": "1",
+        "title": "Director",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "2",
+        "title": "Corporate Secretary",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "3",
+        "title": "Head Of Internal Audit",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "4",
+        "title": "SEVP Operational",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "5",
+        "title": "SEVP Business Support",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "6",
+        "title": "Vice President Medis",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "7",
+        "title": "Vice President Operasi",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "8",
+        "title": "Vice President Finance And Risk Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "9",
+        "title": "Vice President Human Capital And General Affairs (HC And GA)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "10",
+        "title": "Director Rumah Sakit Umum",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "11",
+        "title": "Officer Sales and Promotion",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "12",
+        "title": "Director KSO And Eksternal Hospital Care (EHC)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "13",
+        "title": "Manager Legal Governance And Compliance",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "14",
+        "title": "Manager BOD Support And Corporate Comunication",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "15",
+        "title": "Manager Audit Finance And Development",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "16",
+        "title": "Manager Audit Operation, Investigation And Legal",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "17",
+        "title": "Manager Medical Service",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "18",
+        "title": "Manager Medical Support",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "19",
+        "title": "Manajer Product Development And Marketing",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "20",
+        "title": "Manajer Corporate Planning And Investment",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "21",
+        "title": "Manager Account And Risk Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "22",
+        "title": "Manager Treasury",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "23",
+        "title": "Manager Information And Communication Technology",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "24",
+        "title": "Vice Director Finance ",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "25",
+        "title": "Vice Director Finance KSO And External Hospital Care (EHC)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "26",
+        "title": "Manager Human Capital Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "27",
+        "title": "Manager Human Capital Operation ",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "28",
+        "title": "Manager General Affairs",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "29",
+        "title": "Manager Procurement",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "30",
+        "title": "Vice Director Medic ",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "31",
+        "title": "Vice Director Nursing",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "32",
+        "title": "Vice Director Operational, Development KSO And EHC",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "33",
+        "title": "Director RS Type D\/ Klinik Utama Operatorship",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "34",
+        "title": "Asst. Man. Legal Governance And Compliance",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "35",
+        "title": "Asst. Man.Corporate Comunication",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "36",
+        "title": "Asst. Man. BOD Support",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "37",
+        "title": "Chief Internal Audit",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "38",
+        "title": "Asst. Man Medical And Nursing",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "39",
+        "title": "Asst. Man Drugs And Medical Device Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "40",
+        "title": "Asst. Man Medical Operational And OHIH, HHHC, Telemedicine And Casemix",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "41",
+        "title": "Asst. Man Medical Quality",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "42",
+        "title": "Asst. Man HSE",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "43",
+        "title": "Asst. Man Product Development",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "44",
+        "title": "Chief Sales And Promotion",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "45",
+        "title": "Asst. Man Corporate Planning And Investment",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "46",
+        "title": "Asst. Man Financial Account",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "47",
+        "title": "Asst. Man Risk Manajemen",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "48",
+        "title": "Asst. Man Treasury And Tax",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "49",
+        "title": "Asst. Man Account Receivable (AR) And Account Payable (AP)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "50",
+        "title": "Asst. Man. Information And Communication Technology (ICT)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "51",
+        "title": "Chief Receivable",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "52",
+        "title": "Chief Controller",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "53",
+        "title": "Asst. Man Human Capital Strategic And Development",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "54",
+        "title": "Asst. Man Human Capital Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "55",
+        "title": "Asst. Man Culture And Change Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "56",
+        "title": "Asst. Man Human Capital Operation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "57",
+        "title": "Asst. Man. General Affairs",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "58",
+        "title": "Chief Human Capital",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "59",
+        "title": "Case Manager On Duty ",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "60",
+        "title": "Chief HSE",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "61",
+        "title": "Chief Quality manajemen",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "62",
+        "title": "Chief General Affair",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "63",
+        "title": "Chief Logistic",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "64",
+        "title": "Chief Medical Support Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "65",
+        "title": "Chief Medical Record Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "66",
+        "title": "Chief Hemodialysis",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "67",
+        "title": "Chief Emergency",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "68",
+        "title": "Chief Surgery, Anesthesia, Intensive And CSSD Instalation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "69",
+        "title": "Chief Pharmacy Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "70",
+        "title": "Chief Inpatient",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "71",
+        "title": "Chief Outpatient ",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "72",
+        "title": "Chief Operational And Development KSO",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "73",
+        "title": "Chief Operational And Development External Hospital Care (EHC)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "74",
+        "title": "Penanggung Jawab Klinik Rawat Jalan Operatorship",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "75",
+        "title": "Penanggung Jawab Klinik Rawat Inap Operatorships",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "76",
+        "title": "Penanggung Jawab DPP Operatorships",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "77",
+        "title": "Penanggung Jawab Apotik, Faskes Pratama\/Faskes Lainnya Operatorship",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "78",
+        "title": "Supervisor Planning And Monitoring",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "79",
+        "title": "Secretary Hospital",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "80",
+        "title": "Supervisor Cleaning Services",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "81",
+        "title": "Supervisor Driver And Security",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "82",
+        "title": "Supervisor Laundry",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "83",
+        "title": "Supervisor Technique",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "84",
+        "title": "Supervisor Asset, Warehouse And Public Fasilities",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "85",
+        "title": "Supervisor Penerimaan",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "86",
+        "title": "Supervisor Pengadaan",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "87",
+        "title": "Supervisor Laboratory",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "88",
+        "title": "Supervisor Radiology",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "89",
+        "title": "Supervisor Rehab Medik",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "90",
+        "title": "Supervisor Nutrient",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "91",
+        "title": "Supervisor Medical Record",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "92",
+        "title": "Supervisor Medical Corresp. And Health Info",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "93",
+        "title": "Supervisor Administration Hospital",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "94",
+        "title": "Supervisor Casemix",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "95",
+        "title": "Supervisor Non Casemix",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "96",
+        "title": "Supervisor Hemodialysis",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "97",
+        "title": "Supervisor Emergency",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "98",
+        "title": "Supervisor Intensive Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "99",
+        "title": "Supervisor Surgery And Anesthesia Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "100",
+        "title": "Supervisor CSSD Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "101",
+        "title": "Supervisor Pharmacy Installation Outpatient",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "102",
+        "title": "Supervisor Pharmacy Installation Inpatient",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "103",
+        "title": "Supervisor Pharmacy Planning",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "104",
+        "title": "Supervisor Pharmacy Warehouse",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "105",
+        "title": "Supervisor Nursing Care",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "106",
+        "title": "Supervisor IPCN",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "107",
+        "title": "Supervisor Inpatient",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "108",
+        "title": "Supervisor Outpatient Clinics, Telemedicine And Home Health Care (HHC)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "109",
+        "title": "Supervisor Outpatient Executive Clinics",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "110",
+        "title": "Supervisor Medical Check Up And Pediatric Clinic",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "111",
+        "title": "Supervisor Pharmacy Installation",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "112",
+        "title": "Supervisor Outpatient Clinics",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "113",
+        "title": "Supervisor Medical Check Up, Telemedicine And Home Health Care (HHC)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "114",
+        "title": "Officer Legal Governance And Compliance",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "115",
+        "title": "Officer BOD Support And Corporate Comunication",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "116",
+        "title": "Officer Medis",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "117",
+        "title": "Officer Operasi",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "118",
+        "title": "Officer Finance And Risk Management",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "119",
+        "title": "Officer Treasury",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "120",
+        "title": "Officer Information And Communication Technology (ICT)",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "121",
+        "title": "Officer Cashier",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "122",
+        "title": "Officer Account",
+        "created_at": "2024-06-13 08:03:31",
+        "updated_at": "2024-06-13 08:03:31"
+    },
+    {
+        "id": "123",
+        "title": "Officer Finance KSO And EHC",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "124",
+        "title": "Officer Human Capital Management",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "125",
+        "title": "Officer Human Capital Operation ",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "126",
+        "title": "Officer General Affair (Korporat)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "127",
+        "title": "Officer Driver (Korporat)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "128",
+        "title": "Officer Security (Korporat)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "129",
+        "title": "Officer Cleaning Service (Korporat)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "130",
+        "title": "Officer Human Capital",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "131",
+        "title": "Officer Procurement",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "132",
+        "title": "Officer Secretary Hospital",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "133",
+        "title": "Officer HSE",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "134",
+        "title": "Officer Quality Manajemen",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "135",
+        "title": "Officer Cleaning Services ",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "136",
+        "title": "Officer Driver",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "137",
+        "title": "Officer Security",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "138",
+        "title": "Officer Laundry",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "139",
+        "title": "Officer Technique",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "140",
+        "title": "Officer Asset, Warehouse And Public Fasilities",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "141",
+        "title": "Officer Logistics",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "142",
+        "title": "Officer Laboratory",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "143",
+        "title": "Officer Radiology",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "144",
+        "title": "Officer Rehab Medik - Fisioterapis",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "145",
+        "title": "Officer Rehab Medik - Terapis Wicara",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "146",
+        "title": "Officer Rehab Medik - Terapis Okupasi",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "147",
+        "title": "Officer Nutrient",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "148",
+        "title": "Officer Medical Record",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "149",
+        "title": "Officer Medical Corresp. And Health Info",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "150",
+        "title": "Officer Administration Hospital",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "151",
+        "title": "Officer Casemix",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "152",
+        "title": "Officer Non Casemix",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "153",
+        "title": "Officer Hemodialysis",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "154",
+        "title": "Officer Emergency - Dokter Umum",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "155",
+        "title": "Officer Emergency - Perawat",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "156",
+        "title": "Officer Intensive Installation",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "157",
+        "title": "Officer Surgery And Anesthesia Installation",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "158",
+        "title": "Officer CSSD Installation",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "159",
+        "title": "Officer Pharmacy Installation Outpatient",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "160",
+        "title": "Officer Pharmacy Installation Inpatient",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "161",
+        "title": "Officer Pharmacy Planning",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "162",
+        "title": "Officer Pharmacy Warehouse",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "163",
+        "title": "Officer Inpatient",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "164",
+        "title": "Officer Outpatient Clinics, Telelemedicine And Home Helath Care (HHC)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "165",
+        "title": "Officer Outpatient Executive Clinics",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "166",
+        "title": "Officer Medical Check Up And Pediatric Clinic",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "167",
+        "title": "Officer Pharmacy Installation",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "168",
+        "title": "Officer Outpatient Clinics",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "169",
+        "title": "Officer Medical Check Up, Telemedicine And Home Health Care (HHC)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "170",
+        "title": "Officer Operational, Development KSO And External Hospital Care (EHC)",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "171",
+        "title": "Officer Klinik - Dokter Umum",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "172",
+        "title": "Officer Klinik - Dokter Gigi",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "173",
+        "title": "Officer Klinik - Perawat",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "174",
+        "title": "Officer Klinik - Bidan",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "175",
+        "title": "Officer Klinik - Rekam Medik",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "176",
+        "title": "Officer Klinik - Apoteker",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "177",
+        "title": "Officer Klinik - Tenaga Teknis Kefarmasian",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "178",
+        "title": "Officer Klinik - Dokter Umum",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "179",
+        "title": "Officer Klinik - Dokter Gigi",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "180",
+        "title": "Officer Klinik - Perawat",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "181",
+        "title": "Officer Klinik - Bidan",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "182",
+        "title": "Officer Klinik - Rekam Medik",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "183",
+        "title": "Officer Klinik - Apoteker",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "184",
+        "title": "Officer Klinik - Tenaga Teknis Kefarmasian",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "185",
+        "title": "Officer Klinik - Ahli Gizi",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "186",
+        "title": "Officer Klinik - Dokter Umum",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "187",
+        "title": "Officer Klinik - Dokter Gigi",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "188",
+        "title": "Officer Klinik - Perawat",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "189",
+        "title": "Officer Klinik - Bidan",
+        "created_at": "2024-06-13 08:03:32",
+        "updated_at": "2024-06-13 08:03:32"
+    },
+    {
+        "id": "190",
+        "title": "Supervisor Investment Planning & Monitoring",
+        "created_at": "2024-06-14 14:31:44",
+        "updated_at": "2024-06-14 14:31:44"
+    },
+    {
+        "id": "191",
+        "title": "Officer Klinik - Cashier",
+        "created_at": "2024-06-14 14:31:44",
+        "updated_at": "2024-06-14 14:31:44"
+    },
+    {
+        "id": "192",
+        "title": "Supervisor NICU",
+        "created_at": "2024-06-14 14:31:44",
+        "updated_at": "2024-06-14 14:31:44"
+    },
+    {
+        "id": "193",
+        "title": "Officer NICU",
+        "created_at": "2024-06-14 14:31:44",
+        "updated_at": "2024-06-14 14:31:44"
+    },
+    {
+        "id": "194",
+        "title": "Komisaris",
+        "created_at": "2024-10-21 09:07:41",
+        "updated_at": "2024-10-21 09:07:41"
+    },
+    {
+        "id": "195",
+        "title": "Organ Pendukung Komisaris",
+        "created_at": "2024-10-21 09:07:41",
+        "updated_at": "2024-10-21 09:07:41"
+    }
+]

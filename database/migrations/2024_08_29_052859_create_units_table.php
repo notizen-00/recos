@@ -11,12 +11,12 @@ class CreateUnitsTable extends Migration
     {
         Schema::create('units', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
-            $table->string('code');
-            $table->string('level');
-            $table->string('parent_id')->default(0);
+            $table->string('title');
+            $table->string('address');
+            $table->string('latitude');
+            $table->string('longitude');
+            $table->string('radius');
             $table->timestamps();
-            $table->softDeletes();
         });
     }
 
