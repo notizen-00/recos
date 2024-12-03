@@ -4,41 +4,64 @@ namespace App\Services;
 use App\Models\OutgoingMail;
 use App\Models\SubTypes;
 use App\Models\User;
+use App\Models\DetailDepartments;
+use App\Models\TrackingOutgoingMail;
 
 class OutgoingMailService
 {
-    protected $subTypeId;
+    protected int $subTypeId;
+
+    protected SubTypes $subType;
+
+    protected $sender;
+
+    protected $outgoing_mail;
 
     public function __construct(string $subTypeId)
     {
 
         $this->subTypeId = $subTypeId;
+
+        $this->sender = auth()->user();
+
+        $this->subType = SubTypes::findOrFail($this->subTypeId);
+        
+        $this->outgoing_mail = OutgoingMail::where('sub_type_id', $this->subTypeId);
+
     }
 
-    public function fetchDetails()
+    private function fetch_sender_detail_department()
     {
-        $sub_type = SubTypes::findOrFail($this->subTypeId);
-        $detail_department = User::with('detail_department')->get();
-
-        $detail_department_sign = $this->fetchSignByBod($this->subTypeId);
-
-        return [
-            'sub_type' => $sub_type,
-            'detail_department' => $detail_department,
-            'detail_department_sign' => $detail_department_sign,
-        ];
+        return DetailDepartment::findOrFail($this->sender->detail_department_id);
+        
     }
 
-    public static function fetchSignByBod()
+    public function get_send_to_verif()
     {
 
     }
+
+    public function get_sign_letter_list()
+    {
+
+    if ($this->subType->bod && $this->subType->bod != null) {
+
+        $bodArray = explode(',', $this->subType->bod);
+        return User::with('detail_department.bod')
+                    ->whereBodIn($bodArray) 
+                    ->get();
+    } else {
+        throw new \Exception('Column Bod Kosong');
+    }
+        
+    }
+
 
     public function get_nomor_surat()
     {
-        $latest_mail = OutgoingMail::where('sub_type_id', $this->subTypeId)
-            ->orderBy('id', 'desc')
-            ->first();
+        $latest_mail = $this->outgoing_mail
+                        ->orderBy('id', 'desc')
+                        ->first();
 
         if (!$latest_mail) {
             return 1;
@@ -49,9 +72,9 @@ class OutgoingMailService
 
     public function generate_nomor_surat($kode = '')
     {
-        $subtype = SubTypes::findOrFail($this->subTypeId);
 
-        $kode_surat = $subtype->letter_format;
+        $kode_surat = $this->subType->letter_format;
+
         if ($kode == '') {
             return $kode_surat . '-' . $this->get_nomor_surat() . '/RNM000000/' . date('Y') . '-SO';
         } else {

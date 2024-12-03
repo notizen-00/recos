@@ -20,6 +20,7 @@ const props = defineProps({
   sub_type: Object,
   detail_department: Object,
   priority: Object,
+  sign_mail_list: Object,
   classification: Object,
   orgSubjects: Object,
 });
@@ -37,8 +38,6 @@ const data = reactive({
   selectedId: [],
   isMultiple: false,
 });
-
-console.log(data.outgoing_mail);
 
 const order = (request) => {
   data.params.field = request;
@@ -111,6 +110,7 @@ const select = () => {
               <Create
                 :sub_types="props.sub_type"
                 :detail_department="props.detail_department"
+                :sign_mail_list="props.sign_mail_list"
                 :priority="props.priority"
                 :classification="props.classification"
                 v-if="props.sub_type.form_type == 1"

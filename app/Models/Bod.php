@@ -11,4 +11,9 @@ class Bod extends Model
     protected $fillable = [
         'title'
     ];
+
+    public function detail_department()
+    {
+        return $this->hasMany(DetailDepartment::class);
+    }
 }

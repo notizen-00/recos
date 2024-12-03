@@ -149,10 +149,7 @@ class OutgoingMailController extends Controller
     public function show(OutgoingMailShowRequest $request, OutgoingMailService $service, string $subTypeId)
     {
 
-        dd($service->generate_nomor_surat());
-
         $outgoing = OutgoingMail::query();
-
         $outgoing->where('sub_type_id', $subTypeId);
         $outgoing->where('user_id', auth()->user()->id);
 
@@ -163,9 +160,7 @@ class OutgoingMailController extends Controller
         $orgSubjects = OrgSubject::get();
         $detail_department = User::with('detail_department')
             ->get();
-
-        $detail_department_sign = $this->fetch_sign_by_bod($sub_type);
-
+            
         if ($request->has('search')) {
             $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
         }
@@ -191,6 +186,7 @@ class OutgoingMailController extends Controller
                 ->paginate($perPage),
             'sub_type' => $sub_type,
             'detail_department' => $detail_department,
+            'sign_mail_list' => $service->get_sign_letter_list(),
             'priority' => $priority,
             'classification' => $classification,
             'orgSubjects' => $orgSubjects,

@@ -76,4 +76,11 @@ class User extends Authenticatable
         return $this->belongsTo(DetailDepartment::class, 'detail_department_id');
     }
 
+    public function scopeWhereBodIn($query, array $bodArray)
+    {
+        return $query->whereHas('detail_department', function ($query) use ($bodArray) {
+            $query->whereIn('bod_id', $bodArray);
+        });
+    }
+
 }

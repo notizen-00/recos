@@ -14,8 +14,8 @@ class CreateOutgoingMailsTable extends Migration
             $table->foreignId('sub_type_id')->constrained('sub_types');
             $table->foreignId('classification_id')->constrained('classifications');
             $table->foreignId('priority_id')->constrained('priorities');
-            $table->string('no');
-            $table->string('full_number');
+            $table->string('no')->nullable();
+            $table->string('full_number')->nullable();
             $table->string('subject');
             $table->string('content')->nullable();
             $table->string('code');
