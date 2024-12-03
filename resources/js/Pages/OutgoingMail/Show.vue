@@ -231,10 +231,39 @@ const select = () => {
                       <div class="flex px-2 py-1">
                         <div class="flex flex-col justify-center">
                           <h6
-                            class="mb-0 text-sm leading-normal dark:text-white"
+                            v-if="Outgoing_mail.full_number == null"
+                            class="mb-0 text-xs leading-normal text-blue-500 dark:text-white"
                           >
-                            {{ Outgoing_mail.full_number }}
+                            <span
+                              v-if="
+                                Outgoing_mail.full_number
+                                  ? Outgoing_mail.full_number
+                                  : Outgoing_mail.tracking_outgoing_mails[0].to
+                                      .id != Outgoing_mail.sign_user_id
+                              "
+                              class="border-separate border-2 px-2 flex justify-center text-center"
+                              >Review</span
+                            >
+
+                            <span
+                              v-else
+                              class="border-separate border-2 px-2 flex justify-center text-center text-black"
+                              >Menunggu Persetujuan</span
+                            >
+                            <font-awesome-icon
+                              :icon="['fas', 'user-check']"
+                              class="fas fa-user"
+                            ></font-awesome-icon>
+                            {{
+                              Outgoing_mail.full_number
+                                ? Outgoing_mail.full_number
+                                : Outgoing_mail.tracking_outgoing_mails[0].to
+                                    .detail_department.title
+                            }}
                           </h6>
+                          <div class="text-green-500 text-md" v-else>
+                            {{ Outgoing_mail.full_number }}
+                          </div>
                         </div>
                       </div>
                     </td>

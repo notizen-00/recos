@@ -21,6 +21,7 @@ class OutgoingMail extends Model
         'mail_date',
         'mail_place',
         'sign_user',
+        'sign_user_id',
         'user_id',
         'attachment',
         'attachment_file',

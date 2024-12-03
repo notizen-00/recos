@@ -30,16 +30,6 @@ class OutgoingMailService
 
     }
 
-    private function fetch_sender_detail_department()
-    {
-        return DetailDepartment::findOrFail($this->sender->detail_department_id);
-        
-    }
-
-    public function get_send_to_verif()
-    {
-
-    }
 
     public function get_sign_letter_list()
     {
@@ -57,7 +47,7 @@ class OutgoingMailService
     }
 
 
-    public function get_nomor_surat()
+    private function get_nomor_surat()
     {
         $latest_mail = $this->outgoing_mail
                         ->orderBy('id', 'desc')
@@ -85,5 +75,16 @@ class OutgoingMailService
             }
         }
 
+    }
+
+    public function update_nomor_surat(OutgoingMail $outgoing)
+    {
+        $data = [
+            'no'=> $this->get_nomor_surat(),
+            'full_number' => $this->generate_nomor_surat()
+        ];
+
+
+        $outgoing->update($data);
     }
 }

@@ -56,7 +56,7 @@ class IncomingMailController extends Controller
         $sub_type = SubTypes::findOrFail($subTypeId);
         $priority = Priority::get();
         $classification = Classification::get();
-        $unit = User::with('unit')->get();
+        $user_department = User::with('detail_department.bod')->get();
         if ($request->has('search')) {
             $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
         }
@@ -70,9 +70,9 @@ class IncomingMailController extends Controller
         return Inertia::render('IncomingMail/Show', [
             'filters' => $request->all(['search', 'field', 'order']),
             'perPage' => (int) $perPage,
-            'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.unit', 'trackingOutgoingMails.sender.unit')->paginate($perPage),
+            'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department', 'trackingOutgoingMails.sender.detail_department')->paginate($perPage),
             'sub_type' => $sub_type,
-            'unit' => $unit,
+            'user_department' => $user_department,
             'priority' => $priority,
             'classification' => $classification,
         ]);

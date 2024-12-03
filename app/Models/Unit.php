@@ -11,8 +11,6 @@ class Unit extends Model
     public $timestamps = true;
     protected $table = 'units';
 
-    use SoftDeletes;
-
     protected $fillable = [
         'title',
         'address',
@@ -35,6 +33,11 @@ class Unit extends Model
         }
 
         return '-';
+    }
+
+    public function detail_department()
+    {
+        return $this->hasMany(DetailDepartment::class);
     }
 
     public function getCreatedAtAttribute()

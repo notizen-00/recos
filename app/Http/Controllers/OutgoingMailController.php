@@ -32,22 +32,25 @@ class OutgoingMailController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(OutgoingMailStoreRequest $request)
-    {
+    {   
+
+        $service = new OutgoingMailService($request->sub_type_id);
+
+
         DB::beginTransaction();
         try {
             $sub_type = SubTypes::findOrFail($request->sub_type_id);
             if ($sub_type->form_type == '1') {
                 $outgoingMail = OutgoingMail::create([
-                    'sub_type_id' => $request->sub_type_id,
+                    'sub_type_id' => $request->sub_type_id, 
                     'classification_id' => $request->classification['id'],
                     'priority_id' => $request->priority['id'],
-                    'no' => $this->get_nomor_surat($request->sub_type_id),
-                    'full_number' => $this->generate_nomor_surat($request->sub_type_id),
                     'subject' => $request->subject,
-                    'code' => $this->generate_nomor_surat($request->sub_type_id, 'get_kode'),
+                    'code' => $service->generate_nomor_surat('get_kode'),
                     'mail_place' => $request->mail_place,
                     'mail_date' => $request->mail_date,
                     'sign_user' => $request->sign_user['label'],
+                    'sign_user_id' => $request->sign_user['id'],
                     'user_id' => auth()->user()->id,
                 ]);
             } else {
@@ -106,10 +109,11 @@ class OutgoingMailController extends Controller
             if ($outgoingMail) {
                 TrackingOutgoingMail::create([
                     'outgoing_mail_id' => $outgoingMail->id,
-                    'unit_id' => auth()->user()->unit_id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
                     'sender_id' => auth()->user()->id,
                     'to' => $request->to['id'],
                     'status' => 1,
+                    'forward_date'=>now()
                 ]);
             }
 
@@ -213,7 +217,8 @@ class OutgoingMailController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            
+            
             $latest = TrackingOutgoingMail::where('outgoing_mail_id', $request->outgoing_mail_id)
                 ->latest()
                 ->first();
@@ -221,14 +226,38 @@ class OutgoingMailController extends Controller
             if ($latest) {
                 $latest->update(['read_at' => Carbon::now()]);
             }
-            TrackingOutgoingMail::create([
-                'outgoing_mail_id' => $request->outgoing_mail_id,
-                'detail_department_id' => auth()->user()->detail_department_pid,
-                'sender_id' => auth()->user()->id,
-                'to' => $request->to['id'],
-                'status' => $request->status['value'],
-                'note' => $request->note,
-            ]);
+
+            if(isset($request->is_confirm) === true){
+
+                $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
+
+                $outgoing_service = new OutgoingMailService($outgoing->sub_type_id);
+
+                $outgoing_service->update_nomor_surat($outgoing);
+        
+
+                TrackingOutgoingMail::create([
+
+                    'outgoing_mail_id' => $request->outgoing_mail_id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id' => auth()->user()->id,
+                    'to' => $request->to['id'],
+                    'status' => $request->status['value'],
+                    'note' => $request->note,
+                    'forward_date'=>now()
+                ]);
+            }else{
+                TrackingOutgoingMail::create([
+                    'outgoing_mail_id' => $request->outgoing_mail_id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id' => auth()->user()->id,
+                    'to' => $request->to['id'],
+                    'status' => $request->status['value'],
+                    'note' => $request->note,
+                    'forward_date'=>now()
+                ]);
+            }
+            
 
             DB::commit();
             return back()->with('success', __('app.label.created_successfully', ['name' => 'Verifikasi']));

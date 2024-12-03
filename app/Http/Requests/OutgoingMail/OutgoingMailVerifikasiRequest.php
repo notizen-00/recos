@@ -26,6 +26,7 @@ class OutgoingMailVerifikasiRequest extends FormRequest
             'to.id' => 'required|integer',
             'note' => 'nullable',
             'status.value' => 'required|boolean',
+            'is_confirmed' => 'nullable|boolean',
         ];
     }
 }

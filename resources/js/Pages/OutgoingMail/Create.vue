@@ -6,7 +6,7 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
 import { useForm, usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Multiselect from "vue-multiselect";
 import { getParentDepartmentHirarki } from "@/services/hirarki";
@@ -57,35 +57,48 @@ const createNewdetail_department = () => {
     onFinish: () => form.reset(),
   });
 };
+const buildToMailList = ref([]);
+const send_to_list = ref([]);
+const onSelectMailList = (value) => {
+  buildToMailList.value = getParentDepartmentHirarki(
+    props.sign_mail_list,
+    usePage().props.auth.detail_department.parent_id,
+    value.parent_id
+  );
+
+  console.log(buildToMailList.value);
+};
 
 const closeModal = () => {
   form.reset;
   isModalOpen.value = false;
 };
 
-const startingParentId = usePage().props.auth.detail_department.parent_id;
-const endingParentId = 1;
-
-console.log(
-  getParentDepartmentHirarki(
-    props.detail_department,
-    startingParentId,
-    endingParentId
-  )
+const buildSignMailList = getParentDepartmentHirarki(
+  props.sign_mail_list,
+  usePage().props.auth.detail_department.parent_id,
+  null
 );
 
-const detail_departments = props.detail_department?.map(
-  (detail_department) => ({
-    label:
-      detail_department.name +
-      " -- (" +
-      detail_department.detail_department.title +
-      ")",
-    id: detail_department.id,
-  })
+watch(
+  buildToMailList,
+  (newList) => {
+    form.to = "";
+    send_to_list.value = newList.map((detail_department) => ({
+      label:
+        detail_department.name +
+        " -- (" +
+        detail_department.detail_department.title +
+        " / " +
+        detail_department.detail_department.bod.title +
+        ")",
+      id: detail_department.id,
+    }));
+  },
+  { immediate: true }
 );
 
-const sign_mail_list = props.sign_mail_list.map((detail_department) => ({
+const sign_mail_list = buildSignMailList.map((detail_department) => ({
   label:
     detail_department.name +
     " -- (" +
@@ -94,6 +107,7 @@ const sign_mail_list = props.sign_mail_list.map((detail_department) => ({
     detail_department.detail_department.bod.title +
     ")",
   id: detail_department.id,
+  parent_id: detail_department.detail_department.parent_id,
 }));
 
 const priority = props.priority?.map((p) => ({
@@ -235,6 +249,7 @@ const classification = props.classification?.map((classification) => ({
         <multiselect
           v-model="form.sign_user"
           :options="sign_mail_list"
+          @select="onSelectMailList"
           :searchable="true"
           :show-labels="true"
           :allow-empty="false"
@@ -296,10 +311,12 @@ const classification = props.classification?.map((classification) => ({
 
         <multiselect
           v-model="form.to"
-          :options="detail_departments"
+          :options="send_to_list"
           :searchable="true"
           :show-labels="true"
           :allow-empty="false"
+          :disabled="!form.sign_user"
+          :class="{ 'cursor-not-allowed': !form.sign_user }"
           label="label"
           track-by="label"
           placeholder="-- Pilih User/detail_department --"
