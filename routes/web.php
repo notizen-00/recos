@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\ExportController;
 use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\OutgoingMailController;
 use App\Http\Controllers\InboxController;
@@ -47,6 +48,11 @@ Route::middleware('auth')->group(function () {
     Route::prefix('inbox')->name('inbox.')->controller(InboxController::class)->group(function () {
         Route::get('/', 'index')->name('index');
     });
+});
+
+Route::prefix('export')->name('export.')->controller(ExportController::class)->group(function () {
+    Route::get('/tte', 'tte')->name('tte');
+    Route::get('/umum', 'umum')->name('umum');
 });
 
 require __DIR__ . '/auth.php';
