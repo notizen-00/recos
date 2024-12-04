@@ -1,3 +1,4 @@
+@php use Carbon\Carbon; @endphp
 <style>
     @page {
         header: page-header;
@@ -43,7 +44,7 @@
 <div style="margin: 10px 5px 10px 50px">
     <table>
         <tr>
-            <td colspan="3">Jember, {{ $mail->mail_date }}</td>
+            <td colspan="3">Jember, {{ Carbon::create($mail->sign_date)->locale('id')->isoFormat('D MMMM Y')  }}</td>
         </tr>
         <tr>
             <td class="label-info">Nomor</td>

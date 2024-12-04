@@ -164,7 +164,7 @@
                 <td> {{ $mail->full_number }}</td>
                 <td style="text-align: right">
                     <p id="tls">Jember,
-                        {{ Carbon\Carbon::parse($mail->mail_date)->isoFormat('DD/MM/Y') }}
+                        {{ Carbon\Carbon::parse($mail->sign_date)->isoFormat('DD/MM/Y') }}
                     </p>
                 </td>
             </tr>
@@ -202,7 +202,7 @@
                     <td>Tanggal</td>
                     <td><span style="margin-left: 5px; margin-right: 5px">:</span> </td>
                     <td>
-                        {{ Carbon\Carbon::parse($mail->mail_date)->locale('id')->isoFormat('dddd, DD MMMM Y HH:mm') }} WIB
+                        {{ Carbon\Carbon::parse($mail->sign_date)->locale('id')->isoFormat('dddd, DD MMMM Y HH:mm') }} WIB
                     </td>
                     {{-- <td> {{ App\Services\IndonesianDate::changeDay(Carbon\Carbon::parse($date)->isoFormat('dddd')) }} ,
                          {{ Carbon\Carbon::parse($date)->isoFormat('DD') }}

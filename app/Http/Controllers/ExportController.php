@@ -13,7 +13,7 @@ class ExportController extends Controller
         if ($mailModel == 'outgoing') {
             $mail = OutgoingMail::query()->whereKey($mailId)
                 ->select('outgoing_mails.id', 'outgoing_mails.full_number', 'outgoing_mails.subject'
-                    ,'outgoing_mails.mail_date'
+                    ,'outgoing_mails.mail_date','outgoing_mails.sign_date'
                     , 'detail_departments.title as department_title'
                     , 'users.name as user_name', 'sub_types.name as sub_type_name')
                 //->whereRelation('subTypes', 'type_id', 2)
@@ -50,7 +50,7 @@ class ExportController extends Controller
         if ($mailModel == 'outgoing') {
             $mail = OutgoingMail::query()->whereKey($mailId)
                 ->select('outgoing_mails.id', 'outgoing_mails.full_number', 'outgoing_mails.subject'
-                    ,'outgoing_mails.mail_date','outgoing_mails.content','outgoing_mails.attachment'
+                    ,'outgoing_mails.mail_date','outgoing_mails.content','outgoing_mails.attachment','outgoing_mails.sign_date'
                     , 'detail_departments.title as department_title'
                     , 'users.name as user_name'
                     , 'sub_types.name as sub_type_name', 'sub_types.id as sub_type_id', 'sub_types.type_id as type_id')

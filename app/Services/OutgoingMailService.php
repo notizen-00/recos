@@ -25,7 +25,7 @@ class OutgoingMailService
         $this->sender = auth()->user();
 
         $this->subType = SubTypes::findOrFail($this->subTypeId);
-        
+
         $this->outgoing_mail = OutgoingMail::where('sub_type_id', $this->subTypeId);
 
     }
@@ -38,12 +38,12 @@ class OutgoingMailService
 
         $bodArray = explode(',', $this->subType->bod);
         return User::with('detail_department.bod')
-                    ->whereBodIn($bodArray) 
+                    ->whereBodIn($bodArray)
                     ->get();
     } else {
         throw new \Exception('Column Bod Kosong');
     }
-        
+
     }
 
 
@@ -81,7 +81,8 @@ class OutgoingMailService
     {
         $data = [
             'no'=> $this->get_nomor_surat(),
-            'full_number' => $this->generate_nomor_surat()
+            'full_number' => $this->generate_nomor_surat(),
+            'sign_date' => now()->toDateTimeString()
         ];
 
 
