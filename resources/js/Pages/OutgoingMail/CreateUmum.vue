@@ -1,6 +1,6 @@
 <script setup>
 import { useForm, usePage } from "@inertiajs/vue3";
-import { ref } from "vue";
+import { ref, watch } from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
@@ -18,6 +18,7 @@ const isModalOpen = ref(false);
 const props = defineProps({
     sub_types: Object,
     detail_department: Object,
+    sign_mail_list: Object,
     priority: Object,
     classification: Object,
     orgSubjects: Object,
@@ -78,6 +79,55 @@ const closeModal = () => {
 const customLabel = ({ name, id }) => {
     return name;
 };
+
+const buildToMailList = ref([]);
+const send_to_list = ref([]);
+const onSelectMailList = (value) => {
+    buildToMailList.value = getParentDepartmentHirarki(
+        props.sign_mail_list,
+        usePage().props.auth.detail_department.parent_id,
+        value.parent_id
+    );
+
+    console.log(buildToMailList.value);
+};
+
+const buildSignMailList = getParentDepartmentHirarki(
+    props.sign_mail_list,
+    usePage().props.auth.detail_department.parent_id,
+    null
+);
+
+watch(
+    buildToMailList,
+    (newList) => {
+        form.to = "";
+        send_to_list.value = newList.map((detail_department) => ({
+            label:
+                detail_department.name +
+                " -- (" +
+                detail_department.detail_department.title +
+                " / " +
+                detail_department.detail_department.bod.title +
+                ")",
+            id: detail_department.id,
+        }));
+    },
+    { immediate: true }
+);
+
+const sign_mail_list = buildSignMailList.map((detail_department) => ({
+    label:
+        detail_department.name +
+        " -- (" +
+        detail_department.detail_department.title +
+        " / " +
+        detail_department.detail_department.bod.title +
+        ")",
+    id: detail_department.id,
+    parent_id: detail_department.detail_department.parent_id,
+}));
+
 const detail_departments = props.detail_department?.map(
     (detail_department) => ({
         label:
@@ -196,8 +246,9 @@ console.log(orgSubjects);
 
                 <multiselect
                     v-model="form.sign_user"
-                    :options="detail_departmentParents"
+                    :options="sign_mail_list"
                     :searchable="true"
+                    @select="onSelectMailList"
                     :show-labels="true"
                     :allow-empty="false"
                     label="label"
@@ -358,10 +409,12 @@ console.log(orgSubjects);
 
                     <multiselect
                         v-model="form.to"
-                        :options="detail_departments"
+                        :options="send_to_list"
                         :searchable="true"
                         :show-labels="true"
                         :allow-empty="false"
+                        :disabled="!form.sign_user"
+                        :class="{ 'cursor-not-allowed': !form.sign_user }"
                         label="label"
                         track-by="label"
                         class="mx-3"
