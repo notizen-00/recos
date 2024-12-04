@@ -12,6 +12,7 @@ import { QuillEditor } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
+import { getParentDepartmentHirarki } from "@/services/hirarki";
 
 const isModalOpen = ref(false);
 const props = defineProps({
@@ -88,19 +89,22 @@ const detail_departments = props.detail_department?.map(
     })
 );
 
-const detail_departmentParents = props.detail_department
-    ?.filter(
-        (detail_department) =>
-            detail_department.detail_department.parent_id == 0
-    )
-    .map((detail_department) => ({
+const buildParentHirarki = getParentDepartmentHirarki(
+    props.detail_department,
+    usePage().props.auth.detail_department.parent_id,
+    null
+);
+
+const detail_departmentParents = buildParentHirarki.map(
+    (detail_department) => ({
         label:
             detail_department.name +
             " -- (" +
             detail_department.detail_department.title +
             ")",
         id: detail_department.id,
-    }));
+    })
+);
 
 const priority = props.priority?.map((p) => ({
     name: p.name,
