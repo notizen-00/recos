@@ -53,6 +53,7 @@ Route::middleware('auth')->group(function () {
 Route::prefix('export')->name('export.')->controller(ExportController::class)->group(function () {
     Route::get('/tte/{mailModel}/{mailId}', 'tte')->name('tte');
     Route::get('/umum/{outgoingMailId}', 'umum')->name('umum');
+    Route::get('/{mailModel}/{mailId}', 'show')->name('show');
 });
 
 require __DIR__ . '/auth.php';

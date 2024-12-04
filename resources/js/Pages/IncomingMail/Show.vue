@@ -73,6 +73,7 @@ const select = () => {
     data.isMultiple = false;
   }
 };
+
 </script>
 <template>
   <Head :title="props.sub_type.name" />
@@ -306,6 +307,13 @@ const select = () => {
                     <td
                       class="flex gap-5 justify-center items-center p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
                     >
+
+                        <a target="_blank" :href="route('export.show', ['outgoing', Outgoing_mail.id])" v-if="Outgoing_mail.full_number"
+                            class="inline-block px-6 py-1.5 font-bold text-center text-white uppercase align-middle transition-all rounded-lg cursor-pointer bg-emerald-500 leading-normal text-xs ease-in tracking-tight-rem shadow-xs bg-150 bg-x-25 hover:-translate-y-px active:opacity-85 hover:shadow-md"
+                        >
+                            Download
+                        </a>
+
                       <Verifikasi
                         v-if="
                           Outgoing_mail.tracking_outgoing_mails[0].to.id ==
