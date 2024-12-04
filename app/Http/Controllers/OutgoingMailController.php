@@ -32,17 +32,16 @@ class OutgoingMailController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(OutgoingMailStoreRequest $request)
-    {   
+    {
 
         $service = new OutgoingMailService($request->sub_type_id);
-
 
         DB::beginTransaction();
         try {
             $sub_type = SubTypes::findOrFail($request->sub_type_id);
             if ($sub_type->form_type == '1') {
                 $outgoingMail = OutgoingMail::create([
-                    'sub_type_id' => $request->sub_type_id, 
+                    'sub_type_id' => $request->sub_type_id,
                     'classification_id' => $request->classification['id'],
                     'priority_id' => $request->priority['id'],
                     'subject' => $request->subject,
@@ -65,6 +64,7 @@ class OutgoingMailController extends Controller
                     'mail_place' => '',
                     'mail_date' => $request->mail_date,
                     'sign_user' => $request->sign_user['label'],
+                    'sign_user_id' => $request->sign_user['id'],
                     'user_id' => auth()->user()->id,
                     'attachment' => $request->attachment,
                     'content' => $request->content,
@@ -113,7 +113,7 @@ class OutgoingMailController extends Controller
                     'sender_id' => auth()->user()->id,
                     'to' => $request->to['id'],
                     'status' => 1,
-                    'forward_date'=>now()
+                    'forward_date' => now(),
                 ]);
             }
 
@@ -164,7 +164,7 @@ class OutgoingMailController extends Controller
         $orgSubjects = OrgSubject::get();
         $detail_department = User::with('detail_department')
             ->get();
-            
+
         if ($request->has('search')) {
             $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
         }
@@ -217,8 +217,7 @@ class OutgoingMailController extends Controller
     {
         DB::beginTransaction();
         try {
-            
-            
+
             $latest = TrackingOutgoingMail::where('outgoing_mail_id', $request->outgoing_mail_id)
                 ->latest()
                 ->first();
@@ -227,14 +226,13 @@ class OutgoingMailController extends Controller
                 $latest->update(['read_at' => Carbon::now()]);
             }
 
-            if(isset($request->is_confirm) === true){
+            if (isset($request->is_confirm) === true) {
 
                 $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
 
                 $outgoing_service = new OutgoingMailService($outgoing->sub_type_id);
 
                 $outgoing_service->update_nomor_surat($outgoing);
-        
 
                 TrackingOutgoingMail::create([
 
@@ -244,9 +242,9 @@ class OutgoingMailController extends Controller
                     'to' => $request->to['id'],
                     'status' => $request->status['value'],
                     'note' => $request->note,
-                    'forward_date'=>now()
+                    'forward_date' => now(),
                 ]);
-            }else{
+            } else {
                 TrackingOutgoingMail::create([
                     'outgoing_mail_id' => $request->outgoing_mail_id,
                     'detail_department_id' => auth()->user()->detail_department->id,
@@ -254,10 +252,9 @@ class OutgoingMailController extends Controller
                     'to' => $request->to['id'],
                     'status' => $request->status['value'],
                     'note' => $request->note,
-                    'forward_date'=>now()
+                    'forward_date' => now(),
                 ]);
             }
-            
 
             DB::commit();
             return back()->with('success', __('app.label.created_successfully', ['name' => 'Verifikasi']));
