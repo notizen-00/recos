@@ -21,7 +21,7 @@
         <tr>
             <td style="width: 9%;text-align: left;"><img height="90" width="250"></td>
             <td style="width: 33%;margin-top:10px; text-align: left;"><img height="110" width="260" src="{{ public_path('assets/img/logornm.png') }}"/></td>
-            <td style="width: 58%;margin-top:10px; text-align: right; color: #004b8c; " height="80"> <b>MEMORANDUM<br></br><br></br></td>
+            <td style="width: 58%;margin-top:10px; text-align: right; color: #004b8c; " height="80"> <b>{{ strtoupper($mail->sub_type_name) }}</b><br><br></td>
             <td style="width: 9%;text-align: right;"> </td>
 
         </tr>
@@ -43,12 +43,12 @@
 <div style="margin: 10px 5px 10px 50px">
     <table>
         <tr>
-            <td colspan="3">Jember, 13-07-2023</td>
+            <td colspan="3">Jember, {{ $mail->mail_date }}</td>
         </tr>
         <tr>
             <td class="label-info">Nomor</td>
             <td>:</td>
-            <td>953/RNM03000/2023-S8</td>
+            <td>{{ $mail->full_number }}</td>
         </tr>
         <tr>
             <td></td>
@@ -56,12 +56,12 @@
         <tr>
             <td>Kepada</td>
             <td>:</td>
-            <td>Direktur</td>
+            <td>{{ $mail->outgoingRecipients->pluck('title')->implode(', ') }}</td>
         </tr>
         <tr>
             <td>Dari</td>
             <td>:</td>
-            <td>SEVP Business Support</td>
+            <td>{{ $mail->department_title }}</td>
         </tr>
         <tr>
             <td></td>
@@ -69,45 +69,32 @@
         <tr>
             <td>Lampiran</td>
             <td>:</td>
-            <td>1 (satu) bendel</td>
+            <td>{{ $mail->attachment }}</td>
         </tr>
         <tr>
             <td>Perihal</td>
             <td>:</td>
-            <td>Pelaporan Tidak Memperpanjang Kontrak dan Penggantian Tenaga drg. Lady</td>
+            <td>{{ $mail->subject }}</td>
         </tr>
     </table>
 
     <div  style="margin-top:25px">
-        Menindaklanjuti :
-        1. Memorandum Director Klinik nomor : 73/RNM04500/2023-S0 tanggal 03 Juli 2023 perihal Pelaporan
-        Tidak Memperpanjang Perjanjian Kerjasama dan Permohonan Tenaga Pengganti.
-        2. Notulen Rapat tanggal 04 Juli 2023 perihal Rapat Koordinasi Pembahasan Pelaporan Tidak
-        Memperpanjang Kontrak drg. Lady Ayu Budiarti
-        Bersama ini kami sampaikan sebagai berikut :
-        1. Dokter gigi pelaksana (drg. Lady Ayu Budiarti) DPP Kalibaru mengajukan tidak memperpanjang
-        terhitung mulai tanggal 28 Juni 2023.
-        2. Mengusulkan penggantian tenaga dokter gigi PWT DPP Kalibaru dengan mengacu pedoman yang
-        berlaku.
-        3. Dalam rangka menjaga kelancaran pelayanan, kami merekomendasikan drg. Lady Ayu Budiarti
-        untuk menjadi dokter gigi part timer di DPP Kalibaru sampai dengan terpenuhinya Dokter Gigi
-        pengganti.
-        Demikian atas persetujuannya diucapkan terimakasih.
+        {!! $mail->content !!}
     </div>
 
     <table style="margin-top:25px" class="ttd">
         <tr>
-            <td ><strong>SEVP Business Support,</strong></td>
+            <td ><strong>{{ $mail->department_title }},</strong></td>
         </tr>
         <tr>
             <td >
-                <barcode code="123123232132" type="QR" disableborder="1" size="0.9" />
+                <barcode code="{{ route('export.tte', ['outgoing', $mail->id]) }}" type="QR" disableborder="1" size="0.9" />
             </td>
         </tr>
         <tr>
             <td><strong>
                 <u>
-                    dr. Niluh Hendrawanti, M.Mkes, M. Kes
+                    {{ $mail->user_name }}
                 </u>
                 </strong></td>
         </tr>

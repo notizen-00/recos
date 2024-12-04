@@ -2,25 +2,33 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\IncomingMail;
+use App\Models\OutgoingMail;
 use Illuminate\Http\Request;
 use Mccarlosen\LaravelMpdf\Facades\LaravelMpdf as Mpdf;
 
 class ExportController extends Controller
 {
-    public function tte(){
-        $data = [
-            'title' => 'aaa',
-            'date' => now()->toDateTimeString(),
-            'id' => 1,
-            'perihal' => 'lorem ipsum',
-            'senior_name' => 'aaa',
-            'senior_position' => 'aaa',
-            'signer_position' => 'aaa',
-            'signer_name' => 'aaa',
-        ];
-        //return 1;
+    public function tte($mailModel, $mailId){
+        if ($mailModel == 'outgoing') {
+            $model = new OutgoingMail();
+        } elseif ($mailModel == 'incoming') {
+            $model = new IncomingMail();
+        } else {
+            abort(404);
+        }
 
-        $pdf = Mpdf::loadView('export.tte', $data,[], [
+        $mail = $model::query()->whereKey($mailId)
+            ->select('outgoing_mails.*', 'detail_departments.title as department_title'
+                , 'users.name as user_name', 'sub_types.name as sub_type_name')
+            //->whereRelation('subTypes', 'type_id', 2)
+            ->join('users', 'users.id', '=', 'outgoing_mails.sign_user_id')
+            ->join('detail_departments', 'detail_departments.id', '=', 'users.detail_department_id')
+            ->join('sub_types', 'sub_types.id', '=', 'outgoing_mails.sub_type_id')
+            ->where('sub_types.type_id', 2)
+            ->firstOrFail();
+
+        $pdf = Mpdf::loadView('export.tte', compact('mail'),[], [
             'title' => 'Ekspor Tanda Tangan Elektronik ',
             'mode' => 'utf-8',
             'format' => 'A4',
@@ -32,21 +40,29 @@ class ExportController extends Controller
         ]);
 
 
-        return $pdf->stream('document.pdf');
+        return $pdf->stream('ekspor_tte.pdf');
     }
 
-    public function umum()
+    public function umum($outgoingMailId)
     {
-        $data = [
-            'title' => 'aaa',
-            'date' => now()->toDateTimeString(),
-            'id' => 1,
-            'perihal' => 'lorem ipsum',
-            'senior_name' => 'aaa',
-            'senior_position' => 'aaa',
-            'signer_position' => 'aaa',
-            'signer_name' => 'aaa',
-        ];
+        $mail = OutgoingMail::query()->whereKey($outgoingMailId)
+            ->select('outgoing_mails.*', 'detail_departments.title as department_title'
+                , 'users.name as user_name', 'sub_types.name as sub_type_name')
+            //->whereRelation('subTypes', 'type_id', 2)
+            ->join('users', 'users.id', '=', 'outgoing_mails.sign_user_id')
+            ->join('detail_departments', 'detail_departments.id', '=', 'users.detail_department_id')
+            ->join('sub_types', 'sub_types.id', '=', 'outgoing_mails.sub_type_id')
+            ->where('sub_types.type_id', 2)
+            ->with(['outgoingRecipients' => fn($query) =>
+                $query->select('outgoing_recipients.id', 'outgoing_recipients.outgoing_mail_id'
+                    , 'detail_departments.title')
+                    ->where('recipient_type', 'to')
+                    ->join('users', 'users.id', '=', 'outgoing_recipients.recipient_id')
+                    ->join('detail_departments', 'detail_departments.id', '=', 'users.detail_department_id')
+            ])
+            ->firstOrFail();
+
+        $data = compact('mail');
         $pdf = Mpdf::loadView('export.umum', $data,[], [
             'title' => 'Ekspor Surat Memorandum ',
             'mode' => 'utf-8',
@@ -57,6 +73,6 @@ class ExportController extends Controller
             'margin_right' => 0,
             'orientation' => 'P'
         ]);
-        return $pdf->stream('document.pdf');
+        return $pdf->stream('ekspor_surat_memorandum.pdf');
     }
 }

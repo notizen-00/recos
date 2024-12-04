@@ -43,4 +43,9 @@ class OutgoingMail extends Model
         return $this->hasMany(TrackingOutgoingMail::class);
     }
 
+    public function outgoingRecipients(): \Illuminate\Database\Eloquent\Relations\HasMany
+    {
+        return $this->hasMany(OutgoingRecipient::class);
+    }
+
 }

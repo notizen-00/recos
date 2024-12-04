@@ -51,8 +51,8 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::prefix('export')->name('export.')->controller(ExportController::class)->group(function () {
-    Route::get('/tte', 'tte')->name('tte');
-    Route::get('/umum', 'umum')->name('umum');
+    Route::get('/tte/{mailModel}/{mailId}', 'tte')->name('tte');
+    Route::get('/umum/{outgoingMailId}', 'umum')->name('umum');
 });
 
 require __DIR__ . '/auth.php';
