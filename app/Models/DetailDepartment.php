@@ -21,4 +21,14 @@ class DetailDepartment extends Model
     {
         return $this->hasMany(User::class);
     }
+
+    public function bod()
+    {
+        return $this->belongsTo(Bod::class);
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class);
+    }
 }

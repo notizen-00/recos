@@ -13,6 +13,7 @@ use App\Models\Priority;
 use App\Models\SubTypes;
 use App\Models\TrackingOutgoingMail;
 use App\Models\User;
+use App\Services\OutgoingMailService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -21,6 +22,7 @@ use Throwable;
 
 class OutgoingMailController extends Controller
 {
+
     public function index()
     {
         //
@@ -30,44 +32,47 @@ class OutgoingMailController extends Controller
      * Store a newly created resource in storage.
      */
     public function store(OutgoingMailStoreRequest $request)
-    {
+    {   
+
+        $service = new OutgoingMailService($request->sub_type_id);
+
+
         DB::beginTransaction();
         try {
             $sub_type = SubTypes::findOrFail($request->sub_type_id);
             if ($sub_type->form_type == '1') {
                 $outgoingMail = OutgoingMail::create([
-                    'sub_type_id'       => $request->sub_type_id,
+                    'sub_type_id' => $request->sub_type_id, 
                     'classification_id' => $request->classification['id'],
-                    'priority_id'       => $request->priority['id'],
-                    'no'                => $this->get_nomor_surat($request->sub_type_id),
-                    'full_number'       => $this->generate_nomor_surat($request->sub_type_id),
-                    'subject'           => $request->subject,
-                    'code'              => $this->generate_nomor_surat($request->sub_type_id, 'get_kode'),
-                    'mail_place'        => $request->mail_place,
-                    'mail_date'         => $request->mail_date,
-                    'sign_user'         => $request->sign_user['label'],
-                    'user_id'           => auth()->user()->id,
+                    'priority_id' => $request->priority['id'],
+                    'subject' => $request->subject,
+                    'code' => $service->generate_nomor_surat('get_kode'),
+                    'mail_place' => $request->mail_place,
+                    'mail_date' => $request->mail_date,
+                    'sign_user' => $request->sign_user['label'],
+                    'sign_user_id' => $request->sign_user['id'],
+                    'user_id' => auth()->user()->id,
                 ]);
             } else {
                 $outgoingMail = OutgoingMail::create([
-                    'sub_type_id'       => $request->sub_type_id,
+                    'sub_type_id' => $request->sub_type_id,
                     'classification_id' => $request->classification['id'],
-                    'priority_id'       => $request->priority['id'],
-                    'no'                => $this->get_nomor_surat($request->sub_type_id),
-                    'full_number'       => $this->generate_nomor_surat($request->sub_type_id),
-                    'subject'           => $request->subject,
-                    'code'              => $this->generate_nomor_surat($request->sub_type_id, 'get_kode'),
-                    'mail_place'        => '',
-                    'mail_date'         => $request->mail_date,
-                    'sign_user'         => $request->sign_user['label'],
-                    'user_id'           => auth()->user()->id,
-                    'attachment'        => $request->attachment,
-                    'content'           => $request->content,
-                    'org_subject_id'    => $request->org_subject_id['id'],
+                    'priority_id' => $request->priority['id'],
+                    'no' => $this->get_nomor_surat($request->sub_type_id),
+                    'full_number' => $this->generate_nomor_surat($request->sub_type_id),
+                    'subject' => $request->subject,
+                    'code' => $this->generate_nomor_surat($request->sub_type_id, 'get_kode'),
+                    'mail_place' => '',
+                    'mail_date' => $request->mail_date,
+                    'sign_user' => $request->sign_user['label'],
+                    'user_id' => auth()->user()->id,
+                    'attachment' => $request->attachment,
+                    'content' => $request->content,
+                    'org_subject_id' => $request->org_subject_id['id'],
                 ]);
 
-                $fileName = $outgoingMail->id.'.pdf';
-                $filePath = $request->attachment_file->storeAs('files/attachments/'.$request->sub_type_id, $fileName);
+                $fileName = $outgoingMail->id . '.pdf';
+                $filePath = $request->attachment_file->storeAs('files/attachments/' . $request->sub_type_id, $fileName);
 
                 OutgoingMail::where('id', $outgoingMail->id)
                     ->update(['attachment_file' => $filePath]);
@@ -75,28 +80,28 @@ class OutgoingMailController extends Controller
                 foreach ($request->recipients ?: [] as $recipient) {
                     $dataRecipient = User::findOrFail($recipient['id']);
                     OutgoingRecipient::create([
-                        'outgoing_mail_id'  => $outgoingMail->id,
-                        'recipient_id'      => $recipient['id'],
+                        'outgoing_mail_id' => $outgoingMail->id,
+                        'recipient_id' => $recipient['id'],
                         'recipient_unit_id' => $dataRecipient->unit_id,
-                        'sender_id'         => auth()->user()->id,
-                        'recipient_type'    => 'to',
-                        'status'            => '0',
-                        'status_read'       => '0',
-                        'read_at'           => DB::raw('NULL'),
+                        'sender_id' => auth()->user()->id,
+                        'recipient_type' => 'to',
+                        'status' => '0',
+                        'status_read' => '0',
+                        'read_at' => DB::raw('NULL'),
                     ]);
                 }
 
                 foreach ($request->cc ?: [] as $cc) {
                     $dataCc = User::findOrFail($cc['id']);
                     OutgoingRecipient::create([
-                        'outgoing_mail_id'  => $outgoingMail->id,
-                        'recipient_id'      => $cc['id'],
+                        'outgoing_mail_id' => $outgoingMail->id,
+                        'recipient_id' => $cc['id'],
                         'recipient_unit_id' => $dataCc->unit_id,
-                        'sender_id'         => auth()->user()->id,
-                        'recipient_type'    => 'cc',
-                        'status'            => '0',
-                        'status_read'       => '0',
-                        'read_at'           => DB::raw('NULL'),
+                        'sender_id' => auth()->user()->id,
+                        'recipient_type' => 'cc',
+                        'status' => '0',
+                        'status_read' => '0',
+                        'read_at' => DB::raw('NULL'),
                     ]);
                 }
             }
@@ -104,10 +109,11 @@ class OutgoingMailController extends Controller
             if ($outgoingMail) {
                 TrackingOutgoingMail::create([
                     'outgoing_mail_id' => $outgoingMail->id,
-                    'unit_id'          => auth()->user()->unit_id,
-                    'sender_id'        => auth()->user()->id,
-                    'to'               => $request->to['id'],
-                    'status'           => 1,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id' => auth()->user()->id,
+                    'to' => $request->to['id'],
+                    'status' => 1,
+                    'forward_date'=>now()
                 ]);
             }
 
@@ -117,7 +123,7 @@ class OutgoingMailController extends Controller
         } catch (Throwable $th) {
             DB::rollback();
             return back()->with('error',
-                __('app.label.created_error', ['name' => __('app.label.role')]).$th->getMessage().' '.$th->getLine());
+                __('app.label.created_error', ['name' => __('app.label.role')]) . $th->getMessage() . ' ' . $th->getLine());
         }
     }
 
@@ -133,36 +139,6 @@ class OutgoingMailController extends Controller
      * Display a listing of the resource.
      */
 
-    private function get_nomor_surat($sub_type_id)
-    {
-        $latest_mail = OutgoingMail::where('sub_type_id', $sub_type_id)
-            ->orderBy('id', 'desc')
-            ->first();
-
-        if (!$latest_mail) {
-            return 1;
-        }
-
-        return $latest_mail->no + 1;
-    }
-
-    private function generate_nomor_surat($sub_type_id, $kode = '')
-    {
-        $subtype = SubTypes::findOrFail($sub_type_id);
-
-        $kode_surat = $subtype->letter_format;
-        if ($kode == '') {
-            return $kode_surat.'-'.$this->get_nomor_surat($sub_type_id).'/RNM000000/'.date('Y').'-SO';
-        } else {
-            if ($kode == 'get_kode') {
-                return $kode_surat;
-            } else {
-                return '';
-            }
-        }
-
-    }
-
     /**
      * Update the specified resource in storage.
      */
@@ -174,26 +150,28 @@ class OutgoingMailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OutgoingMailShowRequest $request, string $subTypeId)
+    public function show(OutgoingMailShowRequest $request, OutgoingMailService $service, string $subTypeId)
     {
-        $outgoing = OutgoingMail::query();
 
+        $outgoing = OutgoingMail::query();
         $outgoing->where('sub_type_id', $subTypeId);
         $outgoing->where('user_id', auth()->user()->id);
 
         $sub_type = SubTypes::findOrFail($subTypeId);
+
         $priority = Priority::get();
         $classification = Classification::get();
         $orgSubjects = OrgSubject::get();
-        $unit = User::with('unit')
+        $detail_department = User::with('detail_department')
             ->get();
+            
         if ($request->has('search')) {
-            $outgoing->where('name', 'LIKE', "%".$request->search."%");
+            $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
         }
 
         if ($request->has([
             'field',
-            'order'
+            'order',
         ])) {
             $outgoing->orderBy($request->field, $request->order);
         }
@@ -201,20 +179,21 @@ class OutgoingMailController extends Controller
         $perPage = $request->has('perPage') ? $request->perPage : 10;
 
         return Inertia::render('OutgoingMail/Show', [
-            'filters'        => $request->all([
+            'filters' => $request->all([
                 'search',
                 'field',
-                'order'
+                'order',
             ]),
-            'perPage'        => (int) $perPage,
-            'outgoing_mail'  => $outgoing->with('subTypes', 'trackingOutgoingMails.to.unit',
-                'trackingOutgoingMails.sender.unit')
+            'perPage' => (int) $perPage,
+            'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department',
+                'trackingOutgoingMails.sender.detail_department')
                 ->paginate($perPage),
-            'sub_type'       => $sub_type,
-            'unit'           => $unit,
-            'priority'       => $priority,
+            'sub_type' => $sub_type,
+            'detail_department' => $detail_department,
+            'sign_mail_list' => $service->get_sign_letter_list(),
+            'priority' => $priority,
             'classification' => $classification,
-            'orgSubjects'    => $orgSubjects,
+            'orgSubjects' => $orgSubjects,
         ]);
     }
 
@@ -238,7 +217,8 @@ class OutgoingMailController extends Controller
     {
         DB::beginTransaction();
         try {
-
+            
+            
             $latest = TrackingOutgoingMail::where('outgoing_mail_id', $request->outgoing_mail_id)
                 ->latest()
                 ->first();
@@ -246,21 +226,45 @@ class OutgoingMailController extends Controller
             if ($latest) {
                 $latest->update(['read_at' => Carbon::now()]);
             }
-            TrackingOutgoingMail::create([
-                'outgoing_mail_id' => $request->outgoing_mail_id,
-                'unit_id'          => auth()->user()->unit_id,
-                'sender_id'        => auth()->user()->id,
-                'to'               => $request->to['id'],
-                'status'           => $request->status['value'],
-                'note'             => $request->note,
-            ]);
+
+            if(isset($request->is_confirm) === true){
+
+                $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
+
+                $outgoing_service = new OutgoingMailService($outgoing->sub_type_id);
+
+                $outgoing_service->update_nomor_surat($outgoing);
+        
+
+                TrackingOutgoingMail::create([
+
+                    'outgoing_mail_id' => $request->outgoing_mail_id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id' => auth()->user()->id,
+                    'to' => $request->to['id'],
+                    'status' => $request->status['value'],
+                    'note' => $request->note,
+                    'forward_date'=>now()
+                ]);
+            }else{
+                TrackingOutgoingMail::create([
+                    'outgoing_mail_id' => $request->outgoing_mail_id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id' => auth()->user()->id,
+                    'to' => $request->to['id'],
+                    'status' => $request->status['value'],
+                    'note' => $request->note,
+                    'forward_date'=>now()
+                ]);
+            }
+            
 
             DB::commit();
             return back()->with('success', __('app.label.created_successfully', ['name' => 'Verifikasi']));
         } catch (Throwable $th) {
             DB::rollback();
             return back()->with('error',
-                __('app.label.created_error', ['name' => __('app.label.role')]).$th->getMessage());
+                __('app.label.created_error', ['name' => __('app.label.role')]) . $th->getMessage());
         }
     }
 }

@@ -38,7 +38,7 @@ class HandleInertiaRequests extends Middleware
             ...parent::share($request),
             'auth' => [
                 'user' => $request->user(),
-                'detail_department' => DetailDepartment::find($request->user() ? $request->user()->detail_department_id : ''),
+                'detail_department' => DetailDepartment::with('unit','bod')->find($request->user() ? $request->user()->detail_department_id : 0),
                 'can' => $request->user() ? $request->user()->getPermissionArray() : [],
             ],
             'route' => [

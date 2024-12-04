@@ -110,9 +110,20 @@ watchEffect(() => {
                                 </th>
                                 <th
                                     class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
-                                    @click="order('name')"
+                                    @click="order('letter_format')"
                                 >
                                     Format Nomor Surat
+                                </th>
+                                <th
+                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                    @click="order('form_type')"
+                                >
+                                    Tipe TTD
+                                </th>
+                                <th
+                                    class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
+                                >
+                                    Sign Rule BOD
                                 </th>
 
                                 <th
@@ -182,6 +193,42 @@ watchEffect(() => {
                                                 class="mb-0 text-sm leading-normal dark:text-white"
                                             >
                                                 {{ type.letter_format }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td
+                                    class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent"
+                                >
+                                    <div class="flex px-2 py-1">
+                                        <div
+                                            class="flex flex-col justify-center"
+                                        >
+                                            <h6
+                                                class="mb-0 text-sm leading-normal dark:text-white"
+                                            >
+                                                {{
+                                                    type.form_type == 1
+                                                        ? "Internal"
+                                                        : "BSRE"
+                                                }}
+                                            </h6>
+                                        </div>
+                                    </div>
+                                </td>
+
+                                <td
+                                    class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent"
+                                >
+                                    <div class="flex px-2 py-1">
+                                        <div
+                                            class="flex flex-col justify-center"
+                                        >
+                                            <h6
+                                                class="mb-0 text-sm leading-normal dark:text-white"
+                                            >
+                                                {{ type.bod }}
                                             </h6>
                                         </div>
                                     </div>
