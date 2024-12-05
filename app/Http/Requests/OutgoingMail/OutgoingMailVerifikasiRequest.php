@@ -23,7 +23,7 @@ class OutgoingMailVerifikasiRequest extends FormRequest
     {
         return [
             'outgoing_mail_id' => 'required|integer',
-            'to.id' => 'required|integer',
+            'to.id' => 'required_if:status.value,1|integer',
             'note' => 'nullable',
             'status.value' => 'required|boolean',
             'is_confirmed' => 'nullable|boolean',

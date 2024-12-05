@@ -9,26 +9,28 @@ import { getParentDepartmentHirarki } from "@/services/hirarki";
 const isModalEditOpen = ref(false);
 
 const props = defineProps({
-  outgoing_mail: Object,
-  user_department: Object,
+    outgoing_mail: Object,
+    user_department: Object,
 });
 
 const isConfirm = props.outgoing_mail.full_number
-  ? true
-  : props.outgoing_mail.tracking_outgoing_mails[0].to.id ==
-    props.outgoing_mail.sign_user_id;
+    ? true
+    : props.outgoing_mail.tracking_outgoing_mails[0].to.id ==
+      props.outgoing_mail.sign_user_id;
+
+const isDone = props.outgoing_mail.tracking_outgoing_mails[0].status != 2;
 </script>
 
 <template>
-  <Confirm
-    v-if="isConfirm"
-    :outgoing_mail="props.outgoing_mail"
-    :user_department="props.user_department"
-  />
+    <Confirm
+        v-if="isConfirm && isDone"
+        :outgoing_mail="props.outgoing_mail"
+        :user_department="props.user_department"
+    />
 
-  <Review
-    v-else
-    :outgoing_mail="props.outgoing_mail"
-    :user_department="props.user_department"
-  />
+    <Review
+        v-else-if="isDone"
+        :outgoing_mail="props.outgoing_mail"
+        :user_department="props.user_department"
+    />
 </template>

@@ -238,20 +238,37 @@ class OutgoingMailController extends Controller
                     'detail_department_id' => auth()->user()->detail_department->id,
                     'sender_id' => auth()->user()->id,
                     'to' => $request->to['id'],
-                    'status' => $request->status['value'],
+                    'status' => 2,
                     'note' => $request->note,
                     'forward_date' => now(),
                 ]);
             } else {
-                TrackingOutgoingMail::create([
-                    'outgoing_mail_id' => $request->outgoing_mail_id,
-                    'detail_department_id' => auth()->user()->detail_department->id,
-                    'sender_id' => auth()->user()->id,
-                    'to' => $request->to['id'],
-                    'status' => $request->status['value'],
-                    'note' => $request->note,
-                    'forward_date' => now(),
-                ]);
+
+                if ($request->status['value'] == 0) {
+                    $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
+
+                    TrackingOutgoingMail::create([
+                        'outgoing_mail_id' => $request->outgoing_mail_id,
+                        'detail_department_id' => auth()->user()->detail_department->id,
+                        'sender_id' => auth()->user()->id,
+                        'to' => $outgoing->user_id,
+                        'status' => $request->status['value'],
+                        'note' => $request->note,
+                        'forward_date' => now(),
+
+                    ]);
+                } else if ($request->status['value'] == 1) {
+                    TrackingOutgoingMail::create([
+                        'outgoing_mail_id' => $request->outgoing_mail_id,
+                        'detail_department_id' => auth()->user()->detail_department->id,
+                        'sender_id' => auth()->user()->id,
+                        'to' => $request->to['id'],
+                        'status' => $request->status['value'],
+                        'note' => $request->note,
+                        'forward_date' => now(),
+                    ]);
+                }
+
             }
 
             DB::commit();

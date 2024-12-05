@@ -244,7 +244,7 @@ const select = () => {
                                                             Outgoing_mail.full_number ==
                                                             null
                                                         "
-                                                        class="mb-0 text-xs leading-normal text-blue-500 dark:text-white"
+                                                        class="mb-0 text-xs leading-normal border-blue-500 text-blue-500 dark:text-white"
                                                     >
                                                         <span
                                                             v-if="
@@ -252,20 +252,35 @@ const select = () => {
                                                                     ? Outgoing_mail.full_number
                                                                     : Outgoing_mail
                                                                           .tracking_outgoing_mails[0]
-                                                                          .to
-                                                                          .id !=
-                                                                      Outgoing_mail.sign_user_id
+                                                                          .status ==
+                                                                      1
                                                             "
                                                             class="border-separate border-2 px-2 flex justify-center text-center"
-                                                            >Review</span
                                                         >
+                                                            Review
+                                                        </span>
+
+                                                        <span
+                                                            v-else-if="
+                                                                Outgoing_mail.full_number
+                                                                    ? Outgoing_mail.full_number
+                                                                    : Outgoing_mail
+                                                                          .tracking_outgoing_mails[0]
+                                                                          .status ==
+                                                                      0
+                                                            "
+                                                            class="border-separate border-2 border-red-400 rounded-3 px-2 flex justify-center text-center text-red-500"
+                                                        >
+                                                            Revisi
+                                                        </span>
 
                                                         <span
                                                             v-else
                                                             class="border-separate border-2 px-2 flex justify-center text-center text-black"
-                                                            >Menunggu
-                                                            Persetujuan</span
                                                         >
+                                                            Menunggu Persetujuan
+                                                        </span>
+
                                                         <font-awesome-icon
                                                             :icon="[
                                                                 'fas',
