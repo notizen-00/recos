@@ -1,17 +1,18 @@
 <script setup>
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout.vue";
-import { Head, router, usePage } from "@inertiajs/vue3";
+import { Head, Link, router, usePage } from "@inertiajs/vue3";
 import { reactive, watch } from "vue";
 import { cloneDeep, debounce, pickBy } from "lodash";
 import Create from "@/Pages/OutgoingMail/Create.vue";
 import Tracking from "@/Pages/OutgoingMail/Tracking.vue";
+import Detail from "@/Pages/OutgoingMail/Detail.vue";
 import DeleteBulk from "@/Pages/OutgoingMail/DeleteBulk.vue";
 import SearchBar from "@/Components/SearchBar.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Pagination from "@/Components/Pagination.vue";
 import CreateUmum from "@/Pages/OutgoingMail/CreateUmum.vue";
-
+import PdfViewer from "@/Components/PdfViewer.vue";
 const page = usePage();
 const props = defineProps({
     filters: Object,
@@ -176,7 +177,15 @@ const select = () => {
                                         <th
                                             class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70"
                                         >
-                                            Ditetapkan Di
+                                            <div
+                                                v-if="
+                                                    props.sub_type.form_type ==
+                                                    1
+                                                "
+                                            >
+                                                Ditetapkan Di
+                                            </div>
+                                            <div v-else>Lampiran</div>
                                         </th>
 
                                         <th
@@ -334,12 +343,32 @@ const select = () => {
                                                     class="flex flex-col justify-center"
                                                 >
                                                     <h6
+                                                        v-if="
+                                                            Outgoing_mail.mail_place !=
+                                                            ''
+                                                        "
                                                         class="mb-0 text-sm leading-normal dark:text-white"
                                                     >
                                                         {{
                                                             Outgoing_mail.mail_place
                                                         }}
                                                     </h6>
+                                                    <div v-else>
+                                                        <Link
+                                                            class="text-info"
+                                                            :href="`/outgoing_mail/attachment/${Outgoing_mail.id}`"
+                                                            ><span
+                                                                class="text-blue-500 border-collapse border-blue-500 border-2 px-2 rounded-6 text-sm"
+                                                                ><font-awesome-icon
+                                                                    :icon="[
+                                                                        'fas',
+                                                                        'file-pdf',
+                                                                    ]"
+                                                                ></font-awesome-icon>
+                                                                Lihat</span
+                                                            ></Link
+                                                        >
+                                                    </div>
                                                 </div>
                                             </div>
                                         </td>
@@ -370,6 +399,22 @@ const select = () => {
                                         <td
                                             class="flex gap-5 justify-center items-center p-2 align-middle bg-transparent whitespace-nowrap shadow-transparent"
                                         >
+                                            <Detail
+                                                :outgoing_mail="Outgoing_mail"
+                                                :sub_types="props.sub_type"
+                                                :detail_department="
+                                                    props.detail_department
+                                                "
+                                                :priority="props.priority"
+                                                :sign_mail_list="
+                                                    props.sign_mail_list
+                                                "
+                                                :classification="
+                                                    props.classification
+                                                "
+                                                :orgSubjects="props.orgSubjects"
+                                            />
+
                                             <Tracking
                                                 :outgoing_mail="Outgoing_mail"
                                             />

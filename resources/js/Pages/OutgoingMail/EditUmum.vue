@@ -203,7 +203,7 @@ console.log(orgSubjects);
         @click="openModal"
     >
         <i class="fa fa-plus mr-1"></i>
-        Tambah Data
+        Edit Data
     </div>
     <Modal :show="isModalOpen" @close="closeModal" maxWidth="4xl">
         <div class="mb-8 mx-3">

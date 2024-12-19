@@ -83,4 +83,9 @@ class User extends Authenticatable
         });
     }
 
+    public function outgoing_recipient()
+    {
+        return $this->hasMany(OutgoingRecipient::class, 'recipient_id');
+    }
+
 }

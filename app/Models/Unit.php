@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Unit extends Model
 {
@@ -38,6 +37,11 @@ class Unit extends Model
     public function detail_department()
     {
         return $this->hasMany(DetailDepartment::class);
+    }
+
+    public function OutgoingRecipient()
+    {
+        return $this->hasMany(OutgoingRecipient::class, 'recipient_unit_id');
     }
 
     public function getCreatedAtAttribute()

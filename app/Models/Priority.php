@@ -15,4 +15,8 @@ class Priority extends Model
 
     protected $dates = ['deleted_at'];
 
+    public function outgoing_mail()
+    {
+        return $this->hasMany(OutgoingMail::class);
+    }
 }

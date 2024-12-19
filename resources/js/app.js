@@ -9,9 +9,9 @@ import { usePage } from '@inertiajs/vue3';
 
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import { library } from "@fortawesome/fontawesome-svg-core";
-import { faPhone,faHome,faCog,faBuilding,faList,faSignIn, faSignOut,faUser, faRightFromBracket, faUsers,faPaperPlane, faEnvelope,faBell, faEye, faEdit, faPersonCircleCheck, faUserCheck } from "@fortawesome/free-solid-svg-icons";
+import { faPhone,faHome,faCog,faBuilding,faList,faSignIn, faSignOut,faUser, faRightFromBracket, faUsers,faPaperPlane, faEnvelope,faBell, faEye, faEdit, faPersonCircleCheck, faUserCheck,faRectangleList, faFilePdf } from "@fortawesome/free-solid-svg-icons";
 
-library.add(faPhone,faHome,faCog,faBuilding,faList,faSignIn,faSignOut,faUser,faRightFromBracket,faUsers,faPaperPlane,faEnvelope,faBell,faEye,faEdit,faPersonCircleCheck,faUserCheck);
+library.add(faPhone,faHome,faCog,faBuilding,faList,faSignIn,faSignOut,faUser,faRightFromBracket,faUsers,faPaperPlane,faEnvelope,faBell,faEye,faEdit,faPersonCircleCheck,faUserCheck,faRectangleList,faFilePdf);
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 

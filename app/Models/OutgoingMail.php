@@ -26,7 +26,7 @@ class OutgoingMail extends Model
         'user_id',
         'attachment',
         'attachment_file',
-        'org_subject_id'
+        'org_subject_id',
     ];
     protected $table = 'outgoing_mails';
 
@@ -37,6 +37,21 @@ class OutgoingMail extends Model
     public function subTypes()
     {
         return $this->belongsTo(SubTypes::class);
+    }
+
+    public function priority()
+    {
+        return $this->belongsTo(Priority::class);
+    }
+
+    public function classification()
+    {
+        return $this->belongsTo(Classification::class);
+    }
+
+    public function orgSubject()
+    {
+        return $this->belongsTo(OrgSubject::class);
     }
 
     public function trackingOutgoingMails()

@@ -1,9 +1,9 @@
 <?php
 
 use App\Http\Controllers\ExportController;
+use App\Http\Controllers\InboxController;
 use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\OutgoingMailController;
-use App\Http\Controllers\InboxController;
 use App\Http\Controllers\PermissionController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
@@ -30,6 +30,8 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/outgoing-mail', OutgoingMailController::class)->except('create', 'edit');
     Route::post('/outgoing_mail/verifikasi', [OutgoingMailController::class, 'verifikasi'])->name('outgoing-mail.verifikasi');
+    Route::post('/outgoing_mail/upload_foto', [OutgoingMailController::class, 'upload_foto']);
+    Route::get('/outgoing_mail/attachment/{id}', [OutgoingMailController::class, 'view_attachment']);
 
     Route::resource('/incoming-mail', IncomingMailController::class)->except('create', 'edit');
 

@@ -184,7 +184,7 @@ class OutgoingMailController extends Controller
             ]),
             'perPage' => (int) $perPage,
             'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department',
-                'trackingOutgoingMails.sender.detail_department')
+                'trackingOutgoingMails.sender.detail_department', 'priority', 'classification', 'outgoingRecipients', 'outgoingRecipients.recipient.detail_department', 'orgSubject')
                 ->paginate($perPage),
             'sub_type' => $sub_type,
             'detail_department' => $detail_department,
@@ -279,4 +279,42 @@ class OutgoingMailController extends Controller
                 __('app.label.created_error', ['name' => __('app.label.role')]) . $th->getMessage());
         }
     }
+
+    public function upload_foto(Request $request)
+    {
+        $request->validate([
+            'image' => 'required|image|mimes:jpeg,png,jpg,gif|max:2048', // Validasi file
+        ]);
+
+        try {
+            // Menyimpan file ke direktori storage/foto_konten
+            $filePath = $request->file('image')->store('foto_konten', 'public');
+
+            // Mengembalikan path gambar yang dapat diakses oleh Quill Editor
+            $imageUrl = asset('storage/' . $filePath);
+
+            return response()->json([
+                'success' => true,
+                'url' => $imageUrl,
+            ]);
+        } catch (Throwable $th) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Terjadi kesalahan saat mengunggah gambar: ' . $th->getMessage(),
+            ], 500);
+        }
+    }
+
+    public function view_attachment($id)
+    {
+
+        $outgoing_mail = OutgoingMail::findOrFail($id);
+
+        $filename = $outgoing_mail->attachment_file;
+
+        return Inertia::render('OutgoingMail/AttachmentView', [
+            'filename' => $filename,
+        ]);
+    }
+
 }

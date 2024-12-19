@@ -21,11 +21,21 @@ class OutgoingRecipient extends Model
         'recipient_type',
         'status',
         'status_read',
-        'read_at'
+        'read_at',
     ];
 
     public function outgoingMail()
     {
         return $this->belongsTo(OutgoingMail::class, 'outgoing_mail_id', 'id');
+    }
+
+    public function unit()
+    {
+        return $this->belongsTo(Unit::class, 'recipient_unit_id');
+    }
+
+    public function recipient()
+    {
+        return $this->belongsTo(User::class, 'recipient_id');
     }
 }
