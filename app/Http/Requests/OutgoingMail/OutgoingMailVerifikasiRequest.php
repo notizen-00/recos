@@ -26,7 +26,10 @@ class OutgoingMailVerifikasiRequest extends FormRequest
             'to.id' => 'required_if:status.value,1|integer',
             'note' => 'nullable',
             'status.value' => 'required|boolean',
+            'attachment' => 'nullable',
+            'attachment_file' => 'nullable|required_if:form_type,2|file|mimes:pdf|max:10240',
             'is_confirmed' => 'nullable|boolean',
+            'content' => 'nullable',
         ];
     }
 }

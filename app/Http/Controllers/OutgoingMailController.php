@@ -224,6 +224,29 @@ class OutgoingMailController extends Controller
                 $latest->update(['read_at' => Carbon::now()]);
             }
 
+            $outgoing_mail = OutgoingMail::findOrFail($request->outgoing_mail_id);
+
+            $shouldUpdate = false;
+
+            if ($request->hasFile('attachment_file')) {
+                $filePath = $request->file('attachment_file')->store('files', 'public');
+                $outgoing_mail->attachment = $filePath;
+                $shouldUpdate = true;
+            }
+
+            if ($request->filled('content')) {
+                $outgoing_mail->content = $request->content;
+                $shouldUpdate = true;
+            }
+
+            if ($request->filled('attachment')) {
+                $outgoing_mail->attachment = $request->attachment;
+                $shouldUpdate = true;
+            }
+
+            if ($shouldUpdate) {
+                $outgoing_mail->save();
+            }
             if (isset($request->is_confirm) === true) {
 
                 $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);

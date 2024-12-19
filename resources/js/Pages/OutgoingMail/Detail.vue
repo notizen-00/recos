@@ -132,44 +132,6 @@ watch(
     { immediate: true }
 );
 
-const detail_departments = props.detail_department?.map(
-    (detail_department) => ({
-        label:
-            detail_department.name +
-            " -- (" +
-            detail_department.detail_department.title +
-            ")",
-        id: detail_department.id,
-    })
-);
-
-const buildParentHirarki = getParentDepartmentHirarki(
-    props.detail_department,
-    usePage().props.auth.detail_department.parent_id,
-    null
-);
-
-const detail_departmentParents = buildParentHirarki.map(
-    (detail_department) => ({
-        label:
-            detail_department.name +
-            " -- (" +
-            detail_department.detail_department.title +
-            ")",
-        id: detail_department.id,
-    })
-);
-console.log(props.outgoing_mail.outgoing_recipients);
-const classification = props.classification?.map((classification) => ({
-    name: classification.name,
-    id: classification.id,
-}));
-
-const orgSubjects = props.orgSubjects?.map((org) => ({
-    name: org.name,
-    id: org.id,
-}));
-
 if (props.outgoing_mail?.outgoing_recipients) {
     toRecipients.value = props.outgoing_mail.outgoing_recipients
         .filter((recipient) => recipient.recipient_type === "to")

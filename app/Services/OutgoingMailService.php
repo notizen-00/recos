@@ -4,8 +4,6 @@ namespace App\Services;
 use App\Models\OutgoingMail;
 use App\Models\SubTypes;
 use App\Models\User;
-use App\Models\DetailDepartments;
-use App\Models\TrackingOutgoingMail;
 
 class OutgoingMailService
 {
@@ -30,28 +28,26 @@ class OutgoingMailService
 
     }
 
-
     public function get_sign_letter_list()
     {
 
-    if ($this->subType->bod && $this->subType->bod != null) {
+        if ($this->subType->bod && $this->subType->bod != null) {
 
-        $bodArray = explode(',', $this->subType->bod);
-        return User::with('detail_department.bod')
-                    ->whereBodIn($bodArray)
-                    ->get();
-    } else {
-        throw new \Exception('Column Bod Kosong');
+            $bodArray = explode(',', $this->subType->bod);
+            return User::with('detail_department.bod')
+                ->whereBodIn($bodArray)
+                ->get();
+        } else {
+            throw new \Exception('Column Bod Kosong');
+        }
+
     }
-
-    }
-
 
     private function get_nomor_surat()
     {
         $latest_mail = $this->outgoing_mail
-                        ->orderBy('id', 'desc')
-                        ->first();
+            ->orderBy('id', 'desc')
+            ->first();
 
         if (!$latest_mail) {
             return 1;
@@ -80,11 +76,10 @@ class OutgoingMailService
     public function update_nomor_surat(OutgoingMail $outgoing)
     {
         $data = [
-            'no'=> $this->get_nomor_surat(),
+            'no' => $this->get_nomor_surat(),
             'full_number' => $this->generate_nomor_surat(),
-            'sign_date' => now()->toDateTimeString()
+            'sign_date' => now()->toDateTimeString(),
         ];
-
 
         $outgoing->update($data);
     }

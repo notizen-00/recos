@@ -7,16 +7,20 @@ import SelectInput from "@/Components/SelectInput.vue";
 import Modal from "@/Components/Modal.vue";
 import Multiselect from "vue-multiselect";
 import TextInput from "@/Components/TextInput.vue";
+import FileInput from "@/Components/FileInput.vue";
+import EditUmum from "@/Pages/OutgoingMail/EditUmum.vue";
 import { useForm } from "@inertiajs/vue3";
 import { ref, watchEffect } from "vue";
 import { usePage } from "@inertiajs/vue3";
 import { getParentDepartmentHirarki } from "@/services/hirarki";
+import { QuillEditor } from "@vueup/vue-quill";
 
 const isModalEditOpen = ref(false);
 
 const props = defineProps({
     outgoing_mail: Object,
     user_department: Object,
+    detail_department: Object,
 });
 
 const form = useForm({
@@ -24,6 +28,9 @@ const form = useForm({
     note: "",
     status: "",
     to: "",
+    attachment: props.outgoing_mail.attachment,
+    content: props.outgoing_mail.content,
+    attachment_file: null,
 });
 
 const isHiding = ref(false);
@@ -101,10 +108,77 @@ const onSelectStatus = (value) => {
     <Modal :show="isModalEditOpen" @close="closeModal" maxWidth="4xl">
         <div class="mb-5 mx-6">
             <h5 class="dark:text-slate-200">
-                Verifikasi Surat : {{ props.outgoing_mail.full_number }}
+                <font-awesome-icon :icon="['fas', 'edit']" /> Verifikasi &
+                Update : #{{ props.outgoing_mail.subject }}
             </h5>
         </div>
+        <!-- <EditUmum
+            v-if="props.outgoing_mail"
+            :detail_department="props.detail_department"
+            :outgoing_mail="props.outgoing_mail"
+        /> -->
+
         <form @submit.prevent="verifikasiSurat" class="m-5">
+            <div class="w-full flex justify-between mt-2">
+                <div class="w-1/2">
+                    <InputLabel
+                        for="Lampiran"
+                        value="Lampiran"
+                        :isRequired="true"
+                    />
+
+                    <TextInput
+                        id="Lampiran"
+                        type="text"
+                        class="mt-1 block w-full"
+                        v-model="form.attachment"
+                        autofocus
+                        autocomplete="Lampiran"
+                        placeholder="Lampiran .."
+                    />
+
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.attachment"
+                    />
+                </div>
+                <div class="w-1/2">
+                    <InputLabel
+                        class="mx-3"
+                        for="File Lampiran"
+                        value="File Lampiran"
+                        :isRequired="true"
+                    />
+
+                    <FileInput
+                        id="File Lampiran"
+                        class="mt-1 block w-full mx-3"
+                        accept=".pdf"
+                        v-model="form.attachment_file"
+                    />
+
+                    <InputError
+                        class="mt-2"
+                        :message="form.errors.attachment_file"
+                    />
+                </div>
+            </div>
+
+            <div class="mt-2">
+                <InputLabel for="isi" value="Isi Konten" :isRequired="true" />
+
+                <QuillEditor
+                    v-model:content="form.content"
+                    @update:content="(content) => (form.content = content)"
+                    contentType="html"
+                    theme="snow"
+                    toolbar="full"
+                    :modules="module"
+                    style="min-height: 120px"
+                />
+
+                <InputError class="mt-2" :message="form.errors.content" />
+            </div>
             <div>
                 <InputLabel for="catatan" value="Catatan " :isRequired="true" />
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IncomingMail\IncomingMailShowRequest;
 use App\Models\Classification;
+use App\Models\OrgSubject;
 use App\Models\OutgoingMail;
 use App\Models\Priority;
 use App\Models\SubTypes;
@@ -49,13 +50,19 @@ class IncomingMailController extends Controller
             ->whereHas('trackingOutgoingMails', function ($query) {
                 $query->where('to', auth()->user()->id);
             })
+            ->orWhereHas('outgoingRecipients', function ($query) {
+                $query->where('recipient_id', auth()->user()->id);
+            })
             ->with(['trackingOutgoingMails' => function ($query) {
                 $query->where('to', auth()->user()->id);
-            }]);
+            }], 'ougoingRecipients');
 
         $sub_type = SubTypes::findOrFail($subTypeId);
         $priority = Priority::get();
         $classification = Classification::get();
+        $detail_department = User::with('detail_department')
+            ->get();
+        $orgSubjects = OrgSubject::get();
         $user_department = User::with('detail_department.bod')->get();
         if ($request->has('search')) {
             $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
@@ -70,11 +77,14 @@ class IncomingMailController extends Controller
         return Inertia::render('IncomingMail/Show', [
             'filters' => $request->all(['search', 'field', 'order']),
             'perPage' => (int) $perPage,
-            'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department', 'trackingOutgoingMails.sender.detail_department')->paginate($perPage),
+            'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department',
+                'trackingOutgoingMails.sender.detail_department', 'priority', 'classification', 'outgoingRecipients', 'outgoingRecipients.recipient.detail_department', 'orgSubject')->paginate($perPage),
             'sub_type' => $sub_type,
             'user_department' => $user_department,
             'priority' => $priority,
             'classification' => $classification,
+            'orgSubjects' => $orgSubjects,
+            'detail_department' => $detail_department,
         ]);
     }
 

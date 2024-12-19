@@ -11,6 +11,7 @@ const isModalEditOpen = ref(false);
 const props = defineProps({
     outgoing_mail: Object,
     user_department: Object,
+    detail_department: Object,
 });
 
 const isConfirm = props.outgoing_mail.full_number
@@ -26,11 +27,13 @@ const isDone = props.outgoing_mail.tracking_outgoing_mails[0].status != 2;
         v-if="isConfirm && isDone"
         :outgoing_mail="props.outgoing_mail"
         :user_department="props.user_department"
+        :detail_department="props.detail_department"
     />
 
     <Review
         v-else-if="isDone"
         :outgoing_mail="props.outgoing_mail"
         :user_department="props.user_department"
+        :detail_department="props.detail_department"
     />
 </template>
