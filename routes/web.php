@@ -1,5 +1,10 @@
 <?php
 
+<<<<<<< Updated upstream
+=======
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ExternalMailController;
+>>>>>>> Stashed changes
 use App\Http\Controllers\IncomingMailController;
 use App\Http\Controllers\OutgoingMailController;
 use App\Http\Controllers\PermissionController;
@@ -42,6 +47,21 @@ Route::middleware('auth')->group(function () {
 
     Route::resource('/permission', PermissionController::class)->except('create', 'show', 'edit');
     Route::post('/permission/destroy-bulk', [PermissionController::class, 'destroyBulk'])->name('permission.destroy-bulk');
+<<<<<<< Updated upstream
+=======
+
+    Route::prefix('inbox')->name('inbox.')->controller(InboxController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
+    });
+
+    Route::resource('/external-mail', ExternalMailController::class)->except('create', 'edit');
+});
+
+Route::prefix('export')->name('export.')->controller(ExportController::class)->group(function () {
+    Route::get('/tte/{mailModel}/{mailId}', 'tte')->name('tte');
+    Route::get('/umum/{outgoingMailId}', 'umum')->name('umum');
+    Route::get('/{mailModel}/{mailId}', 'show')->name('show');
+>>>>>>> Stashed changes
 });
 
 require __DIR__ . '/auth.php';

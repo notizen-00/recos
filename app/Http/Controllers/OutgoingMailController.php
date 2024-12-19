@@ -56,6 +56,106 @@ class OutgoingMailController extends Controller
     }
 
     /**
+<<<<<<< Updated upstream
+=======
+     * Store a newly created resource in storage.
+     */
+    public function store(OutgoingMailStoreRequest $request)
+    {
+
+        $service = new OutgoingMailService($request->sub_type_id);
+
+        DB::beginTransaction();
+        try {
+            $sub_type = SubTypes::findOrFail($request->sub_type_id);
+            if ($sub_type->form_type == '1') {
+                $outgoingMail = OutgoingMail::create([
+                    'sub_type_id'       => $request->sub_type_id,
+                    'classification_id' => $request->classification['id'],
+                    'priority_id'       => $request->priority['id'],
+                    'subject'           => $request->subject,
+                    'code'              => $service->generate_nomor_surat('get_kode'),
+                    'mail_place'        => $request->mail_place,
+                    'mail_date'         => $request->mail_date,
+                    'sign_user'         => $request->sign_user['label'],
+                    'sign_user_id'      => $request->sign_user['id'],
+                    'user_id'           => auth()->user()->id,
+                ]);
+            } else {
+                $outgoingMail = OutgoingMail::create([
+                    'sub_type_id'       => $request->sub_type_id,
+                    'classification_id' => $request->classification['id'],
+                    'priority_id'       => $request->priority['id'],
+                    'subject'           => $request->subject,
+                    'code'              => $service->generate_nomor_surat($request->sub_type_id, 'get_kode'),
+                    'mail_place'        => '',
+                    'mail_date'         => $request->mail_date,
+                    'sign_user'         => $request->sign_user['label'],
+                    'sign_user_id'      => $request->sign_user['id'],
+                    'user_id'           => auth()->user()->id,
+                    'attachment'        => $request->attachment,
+                    'content'           => $request->content,
+                    'org_subject_id'    => $request->org_subject_id['id'],
+                ]);
+
+                $fileName = $outgoingMail->id.'.pdf';
+                $filePath = $request->attachment_file->storeAs('files/attachments/'.$request->sub_type_id, $fileName);
+
+                OutgoingMail::where('id', $outgoingMail->id)
+                    ->update(['attachment_file' => $filePath]);
+
+                foreach ($request->recipients ?: [] as $recipient) {
+                    $dataRecipient = User::findOrFail($recipient['id']);
+                    OutgoingRecipient::create([
+                        'outgoing_mail_id'  => $outgoingMail->id,
+                        'recipient_id'      => $recipient['id'],
+                        'recipient_unit_id' => $dataRecipient->detail_department_id,
+                        'sender_id'         => auth()->user()->id,
+                        'recipient_type'    => 'to',
+                        'status'            => '0',
+                        'status_read'       => '0',
+                        'read_at'           => DB::raw('NULL'),
+                    ]);
+                }
+
+                foreach ($request->cc ?: [] as $cc) {
+                    $dataCc = User::findOrFail($cc['id']);
+                    OutgoingRecipient::create([
+                        'outgoing_mail_id'  => $outgoingMail->id,
+                        'recipient_id'      => $cc['id'],
+                        'recipient_unit_id' => $dataCc->detail_department_id,
+                        'sender_id'         => auth()->user()->id,
+                        'recipient_type'    => 'cc',
+                        'status'            => '0',
+                        'status_read'       => '0',
+                        'read_at'           => DB::raw('NULL'),
+                    ]);
+                }
+            }
+
+            if ($outgoingMail) {
+                TrackingOutgoingMail::create([
+                    'outgoing_mail_id'     => $outgoingMail->id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id'            => auth()->user()->id,
+                    'to'                   => $request->to['id'],
+                    'status'               => 1,
+                    'forward_date'         => now(),
+                ]);
+            }
+
+            DB::commit();
+            return back()->with('success',
+                __('app.label.created_successfully', ['name' => $outgoingMail->full_number]));
+        } catch (Throwable $th) {
+            DB::rollback();
+            return back()->with('error',
+                __('app.label.created_error', ['name' => __('app.label.role')]).$th->getMessage().' '.$th->getLine());
+        }
+    }
+
+    /**
+>>>>>>> Stashed changes
      * Show the form for creating a new resource.
      */
     public function create()
@@ -118,7 +218,7 @@ class OutgoingMailController extends Controller
         $classification = Classification::get();
         $unit = User::with('unit')->get();
         if ($request->has('search')) {
-            $outgoing->where('name', 'LIKE', "%" . $request->search . "%");
+            $outgoing->where('name', 'LIKE', "%".$request->search."%");
         }
 
         if ($request->has(['field', 'order'])) {
@@ -128,6 +228,7 @@ class OutgoingMailController extends Controller
         $perPage = $request->has('perPage') ? $request->perPage : 10;
 
         return Inertia::render('OutgoingMail/Show', [
+<<<<<<< Updated upstream
             'filters' => $request->all(['search', 'field', 'order']),
             'perPage' => (int) $perPage,
             'outgoing_mail' => $outgoing->with('subTypes', 'trackingOutgoingMails.to.unit', 'trackingOutgoingMails.sender.unit')->paginate($perPage),
@@ -135,6 +236,23 @@ class OutgoingMailController extends Controller
             'unit' => $unit,
             'priority' => $priority,
             'classification' => $classification,
+=======
+            'filters'           => $request->all([
+                'search',
+                'field',
+                'order',
+            ]),
+            'perPage'           => (int) $perPage,
+            'outgoing_mail'     => $outgoing->with('subTypes', 'trackingOutgoingMails.to.detail_department',
+                'trackingOutgoingMails.sender.detail_department')
+                ->paginate($perPage),
+            'sub_type'          => $sub_type,
+            'detail_department' => $detail_department,
+            'sign_mail_list'    => $service->get_sign_letter_list(),
+            'priority'          => $priority,
+            'classification'    => $classification,
+            'orgSubjects'       => $orgSubjects,
+>>>>>>> Stashed changes
         ]);
     }
 
@@ -172,6 +290,7 @@ class OutgoingMailController extends Controller
             if ($latest) {
                 $latest->update(['read_at' => Carbon::now()]);
             }
+<<<<<<< Updated upstream
             TrackingOutgoingMail::create([
                 'outgoing_mail_id' => $request->outgoing_mail_id,
                 'unit_id' => auth()->user()->unit_id,
@@ -180,12 +299,68 @@ class OutgoingMailController extends Controller
                 'status' => $request->status['value'],
                 'note' => $request->note,
             ]);
+=======
+
+            if (isset($request->is_confirm) === true) {
+
+                $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
+
+                $outgoing_service = new OutgoingMailService($outgoing->sub_type_id);
+
+                $outgoing_service->update_nomor_surat($outgoing);
+
+                TrackingOutgoingMail::create([
+
+                    'outgoing_mail_id'     => $request->outgoing_mail_id,
+                    'detail_department_id' => auth()->user()->detail_department->id,
+                    'sender_id'            => auth()->user()->id,
+                    'to'                   => $request->to['id'],
+                    'status'               => 2,
+                    'note'                 => $request->note,
+                    'forward_date'         => now(),
+                ]);
+            } else {
+
+                if ($request->status['value'] == 0) {
+                    $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
+
+                    TrackingOutgoingMail::create([
+                        'outgoing_mail_id'     => $request->outgoing_mail_id,
+                        'detail_department_id' => auth()->user()->detail_department->id,
+                        'sender_id'            => auth()->user()->id,
+                        'to'                   => $outgoing->user_id,
+                        'status'               => $request->status['value'],
+                        'note'                 => $request->note,
+                        'forward_date'         => now(),
+
+                    ]);
+                } else {
+                    if ($request->status['value'] == 1) {
+                        TrackingOutgoingMail::create([
+                            'outgoing_mail_id'     => $request->outgoing_mail_id,
+                            'detail_department_id' => auth()->user()->detail_department->id,
+                            'sender_id'            => auth()->user()->id,
+                            'to'                   => $request->to['id'],
+                            'status'               => $request->status['value'],
+                            'note'                 => $request->note,
+                            'forward_date'         => now(),
+                        ]);
+                    }
+                }
+
+            }
+>>>>>>> Stashed changes
 
             DB::commit();
             return back()->with('success', __('app.label.created_successfully', ['name' => 'Verifikasi']));
         } catch (\Throwable $th) {
             DB::rollback();
+<<<<<<< Updated upstream
             return back()->with('error', __('app.label.created_error', ['name' => __('app.label.role')]) . $th->getMessage());
+=======
+            return back()->with('error',
+                __('app.label.created_error', ['name' => __('app.label.role')]).$th->getMessage());
+>>>>>>> Stashed changes
         }
     }
 }

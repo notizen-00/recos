@@ -31,5 +31,10 @@ class DatabaseSeeder extends Seeder
         $this->call(ClassificationSeeder::class);
         $this->call(PrioritySeeder::class);
         $this->call(TypeSeeder::class);
+<<<<<<< Updated upstream
+=======
+        $this->call(OrgSubjectsSeeder::class);
+        $this->call(ExternalTypeSeeder::class);
+>>>>>>> Stashed changes
     }
 }
