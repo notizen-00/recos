@@ -70,10 +70,10 @@ class OutgoingMailController extends Controller
                 ]);
 
                 $fileName = $outgoingMail->id . '.pdf';
-                $filePath = $request->attachment_file->storeAs('files/attachments/' . $request->sub_type_id, $fileName);
+                $filePath = $request->attachment_file->storeAs('public/files/attachments/' . $request->sub_type_id, $fileName);
 
                 OutgoingMail::where('id', $outgoingMail->id)
-                    ->update(['attachment_file' => $filePath]);
+                    ->update(['attachment_file' => 'files/attachments/' . $request->sub_type_id . '/' . $fileName]);
 
                 foreach ($request->recipients ?: [] as $recipient) {
                     $dataRecipient = User::findOrFail($recipient['id']);

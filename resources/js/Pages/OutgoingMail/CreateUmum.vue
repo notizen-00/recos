@@ -16,6 +16,7 @@ import { getParentDepartmentHirarki } from "@/services/hirarki";
 import ImageUploader from "quill-image-uploader";
 import QuillBetterTable from "quill-better-table";
 import "quill-better-table/dist/quill-better-table.css";
+
 const isModalOpen = ref(false);
 const props = defineProps({
     sub_types: Object,
@@ -54,7 +55,7 @@ const form = useForm({
     sub_type_id: props.sub_types.id,
     form_type: props.sub_types.form_type,
     nomor: "Nomor Generate Otomatis !",
-    mail_date: "",
+    mail_date: new Date().toISOString().split("T")[0],
     detail_department_id: usePage().props.auth.detail_department.name,
     to: "",
     priority: "",
@@ -240,6 +241,7 @@ console.log(orgSubjects);
                     <TextInput
                         id="Tanggal"
                         type="date"
+                        readonly
                         class="mt-1 block w-full mx-3"
                         v-model="form.mail_date"
                         autofocus
