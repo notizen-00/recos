@@ -8,6 +8,9 @@ import DeleteBulk from "@/Pages/OutgoingMail/DeleteBulk.vue";
 import SearchBar from "@/Components/SearchBar.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Create from "@/Pages/ExternalMail/Create.vue";
+import ViewFile from "@/Pages/ExternalMail/ViewFile.vue";
+import BlueButton from "@/Components/BlueButton.vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const page = usePage();
 const props = defineProps({
@@ -161,8 +164,12 @@ const select = () => {
                     Dari Eksternal
                   </th>
                   <th
-                      class="px-6 py-3 font-semibold capitalize align-middle bg-transparent border-b border-collapse border-solid shadow-none dark:border-white/40 dark:text-white tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
                     File PDF
+                  </th>
+                  <th
+                      class="px-6 py-3 font-bold text-left uppercase align-middle bg-transparent border-b border-collapse shadow-none dark:border-white/40 dark:text-white text-xxs border-b-solid tracking-none whitespace-nowrap text-slate-400 opacity-70">
+                    Aksi
                   </th>
                 </tr>
                 </thead>
@@ -178,61 +185,32 @@ const select = () => {
                         v-model="data.selectedId"
                     />
                   </td>
-                  <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent">
-                    <div class="flex px-2 py-1">
-                      <div
-                          class="flex flex-col justify-center">
-                        <h6
-                            class="mb-0 text-sm leading-normal dark:text-white">
-                          {{ externalMail.agenda_number }}
-                        </h6>
-                      </div>
-                    </div>
+                  <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent text-center">
+                    <span class="text-sm">{{ externalMail.agenda_number }}</span>
                   </td>
                   <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent">
-                    <div class="flex px-2 py-1">
-                      <div class="flex flex-col justify-center">
-                        <h6 class="mb-0 text-sm leading-normal dark:text-white">
-                          {{ externalMail.letter_number }}
-                        </h6>
-                      </div>
-                    </div>
+                    <span class="text-sm">{{ externalMail.letter_number }}</span>
                   </td>
                   <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent">
-                    <div class="flex px-2 py-1">
-                      <div class="flex flex-col justify-center">
-                        <h6 class="mb-0 text-sm leading-normal dark:text-white">
-                          {{ externalMail.letter_date }}
-                        </h6>
-                      </div>
-                    </div>
+                    <span class="text-sm">{{ externalMail.letter_date }}</span>
                   </td>
                   <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent">
-                    <div class="flex px-2 py-1">
-                      <div class="flex flex-col justify-center">
-                        <h6 class="mb-0 text-sm leading-normal dark:text-white">
-                          {{ externalMail.subject }}
-                        </h6>
-                      </div>
-                    </div>
+                    <span class="text-sm">{{ externalMail.subject }}</span>
                   </td>
                   <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent">
-                    <div class="flex px-2 py-1">
-                      <div class="flex flex-col justify-center">
-                        <h6 class="mb-0 text-sm leading-normal dark:text-white">
-                          {{ externalMail.from_user }}
-                        </h6>
-                      </div>
-                    </div>
+                    <span class="text-sm">{{ externalMail.from_user }}</span>
+                  </td>
+                  <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent text-center">
+                    <span class="text-sm">{{ externalMail.from_ext }}</span>
                   </td>
                   <td class="py-2 pr-12 align-middle bg-transparent dark:border-0 whitespace-nowrap shadow-transparent">
-                    <div class="flex px-2 py-1">
-                      <div class="flex flex-col justify-center">
-                        <h6 class="mb-0 text-sm leading-normal dark:text-white">
-                          {{ externalMail.from_ext }}
-                        </h6>
-                      </div>
-                    </div>
+                    <ViewFile :file_pdf="externalMail.file_pdf"/>
+                  </td>
+                  <td>
+                    <BlueButton>
+                      <font-awesome-icon :icon="['fas', 'magnifying-glass']"/>
+                      Disposisi
+                    </BlueButton>
                   </td>
                 </tr>
                 </tbody>

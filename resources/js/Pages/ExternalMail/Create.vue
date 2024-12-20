@@ -12,6 +12,7 @@ import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import '@vuepic/vue-datepicker/dist/main.css'
+import PurpleButton from "@/Components/PurpleButton.vue";
 
 const isModalOpen = ref(false);
 
@@ -176,13 +177,11 @@ console.log(externalTypes)
 </script>
 
 <template>
-  <div
-      class="cursor-pointer text-sm uppercase font-semibold dark:bg-slate-700 bg-slate-500 px-5 py-2 text-slate-50 rounded-lg"
-      @click="openModal"
-  >
-    <i class="fa fa-plus mr-1"></i>
+  <PurpleButton
+      @click="openModal">
+    <font-awesome-icon :icon="['fas', 'plus']"/>
     Tambah Data
-  </div>
+  </PurpleButton>
   <Modal :show="isModalOpen" @close="closeModal" maxWidth="4xl">
     <div class="mb-8 mx-3">
       <h5 class="dark:text-slate-200">

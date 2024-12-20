@@ -149,4 +149,16 @@ class ExternalMailController extends Controller
     {
         //
     }
+
+    public function viewFile($id)
+    {
+
+        $externalMail = ExternalMail::findOrFail($id);
+
+        $filename = $externalMail->file_pdf;
+
+        return Inertia::render('ExternalMail/ViewFile', [
+            'filename' => $filename,
+        ]);
+    }
 }
