@@ -34,6 +34,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PrioritySeeder::class);
         $this->call(TypeSeeder::class);
         $this->call(OrgSubjectsSeeder::class);
-     
+        $this->call(ExternalTypeSeeder::class);
     }
 }

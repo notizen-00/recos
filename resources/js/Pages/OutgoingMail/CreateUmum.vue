@@ -1,55 +1,350 @@
 <script setup>
-import { useForm, usePage } from "@inertiajs/vue3";
-import { ref, watch } from "vue";
+import {useForm, usePage} from "@inertiajs/vue3";
+import {ref, watch} from "vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
-import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import Modal from "@/Components/Modal.vue";
 import Multiselect from "vue-multiselect";
 import FileInput from "@/Components/FileInput.vue";
-import { QuillEditor, Quill } from "@vueup/vue-quill";
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
-import { getParentDepartmentHirarki } from "@/services/hirarki";
-import ImageUploader from "quill-image-uploader";
-import QuillBetterTable from "quill-better-table";
-import "quill-better-table/dist/quill-better-table.css";
+import {getParentDepartmentHirarki} from "@/services/hirarki";
+import {Ckeditor} from "@ckeditor/ckeditor5-vue";
+// import ClassicEditor from "@ckeditor/ckeditor5-build-classic";
+import {
+  Alignment,
+  Autoformat,
+  AutoImage,
+  AutoLink,
+  Autosave,
+  BalloonToolbar,
+  Base64UploadAdapter,
+  BlockQuote,
+  Bold,
+  Bookmark,
+  ClassicEditor,
+  Code,
+  Essentials,
+  FindAndReplace,
+  FontBackgroundColor,
+  FontColor,
+  FontFamily,
+  FontSize,
+  GeneralHtmlSupport,
+  Heading,
+  Highlight,
+  HorizontalLine,
+  ImageBlock,
+  ImageCaption,
+  ImageInline,
+  ImageInsert,
+  ImageInsertViaUrl,
+  ImageResize,
+  ImageStyle,
+  ImageTextAlternative,
+  ImageToolbar,
+  ImageUpload,
+  Indent,
+  IndentBlock,
+  Italic,
+  Link,
+  LinkImage,
+  List,
+  ListProperties,
+  Mention,
+  PageBreak,
+  Paragraph,
+  PasteFromOffice,
+  RemoveFormat,
+  SpecialCharacters,
+  SpecialCharactersArrows,
+  SpecialCharactersCurrency,
+  SpecialCharactersEssentials,
+  SpecialCharactersLatin,
+  SpecialCharactersMathematical,
+  SpecialCharactersText,
+  Strikethrough,
+  Style,
+  Subscript,
+  Superscript,
+  Table,
+  TableCaption,
+  TableCellProperties,
+  TableColumnResize,
+  TableProperties,
+  TableToolbar,
+  TextTransformation,
+  TodoList,
+  Underline
+} from 'ckeditor5';
+import 'ckeditor5/ckeditor5.css';
+
+
+const script = document.createElement("script");
+script.src = "https://cdn.ckeditor.com/ckeditor5/36.0.1/full/ckeditor.js";
+
+ClassicEditor.defaultConfig = {
+  toolbar: {
+    items: [
+      'heading',
+      'style',
+      '|',
+      'fontSize',
+      'fontFamily',
+      'fontColor',
+      'fontBackgroundColor',
+      '|',
+      'bold',
+      'italic',
+      'underline',
+      '|',
+      'link',
+      'insertImage',
+      'insertTable',
+      'highlight',
+      'blockQuote',
+      '|',
+      'alignment',
+      '|',
+      'bulletedList',
+      'numberedList',
+      'todoList',
+      'outdent',
+      'indent'
+    ],
+    shouldNotGroupWhenFull: false
+  },
+  plugins: [
+    Alignment,
+    Autoformat,
+    AutoImage,
+    AutoLink,
+    Autosave,
+    BalloonToolbar,
+    Base64UploadAdapter,
+    BlockQuote,
+    Bold,
+    Bookmark,
+    Code,
+    Essentials,
+    FindAndReplace,
+    FontBackgroundColor,
+    FontColor,
+    FontFamily,
+    FontSize,
+    GeneralHtmlSupport,
+    Heading,
+    Highlight,
+    HorizontalLine,
+    ImageBlock,
+    ImageCaption,
+    ImageInline,
+    ImageInsert,
+    ImageInsertViaUrl,
+    ImageResize,
+    ImageStyle,
+    ImageTextAlternative,
+    ImageToolbar,
+    ImageUpload,
+    Indent,
+    IndentBlock,
+    Italic,
+    Link,
+    LinkImage,
+    List,
+    ListProperties,
+    Mention,
+    PageBreak,
+    Paragraph,
+    PasteFromOffice,
+    RemoveFormat,
+    SpecialCharacters,
+    SpecialCharactersArrows,
+    SpecialCharactersCurrency,
+    SpecialCharactersEssentials,
+    SpecialCharactersLatin,
+    SpecialCharactersMathematical,
+    SpecialCharactersText,
+    Strikethrough,
+    Style,
+    Subscript,
+    Superscript,
+    Table,
+    TableCaption,
+    TableCellProperties,
+    TableColumnResize,
+    TableProperties,
+    TableToolbar,
+    TextTransformation,
+    TodoList,
+    Underline
+  ],
+  balloonToolbar: ['bold', 'italic', '|', 'link', 'insertImage', '|', 'bulletedList', 'numberedList'],
+  fontFamily: {
+    supportAllValues: true
+  },
+  fontSize: {
+    options: [10, 12, 14, 16, 18, 20, 22],
+    supportAllValues: true,
+  },
+  heading: {
+    options: [
+      {
+        model: 'paragraph',
+        title: 'Paragraph',
+        class: 'ck-heading_paragraph',
+      },
+      {
+        model: 'heading1',
+        view: 'h1',
+        title: 'Heading 1',
+        class: 'ck-heading_heading1'
+      },
+      {
+        model: 'heading2',
+        view: 'h2',
+        title: 'Heading 2',
+        class: 'ck-heading_heading2'
+      },
+      {
+        model: 'heading3',
+        view: 'h3',
+        title: 'Heading 3',
+        class: 'ck-heading_heading3'
+      },
+      {
+        model: 'heading4',
+        view: 'h4',
+        title: 'Heading 4',
+        class: 'ck-heading_heading4'
+      },
+      {
+        model: 'heading5',
+        view: 'h5',
+        title: 'Heading 5',
+        class: 'ck-heading_heading5'
+      },
+      {
+        model: 'heading6',
+        view: 'h6',
+        title: 'Heading 6',
+        class: 'ck-heading_heading6'
+      }
+    ]
+  },
+  htmlSupport: {
+    allow: [
+      {
+        name: /^.*$/,
+        styles: true,
+        attributes: true,
+        classes: true
+      }
+    ]
+  },
+  image: {
+    toolbar: [
+      'toggleImageCaption',
+      'imageTextAlternative',
+      '|',
+      'imageStyle:inline',
+      'imageStyle:wrapText',
+      'imageStyle:breakText',
+      '|',
+      'resizeImage'
+    ]
+  },
+  link: {
+    addTargetToExternalLinks: true,
+    defaultProtocol: 'https://',
+    decorators: {
+      toggleDownloadable: {
+        mode: 'manual',
+        label: 'Downloadable',
+        attributes: {
+          download: 'file'
+        }
+      }
+    }
+  },
+  list: {
+    properties: {
+      styles: true,
+      startIndex: true,
+      reversed: true
+    }
+  },
+  menuBar: {
+    isVisible: true
+  },
+  style: {
+    definitions: [
+      {
+        name: 'Article category',
+        element: 'h3',
+        classes: ['category']
+      },
+      {
+        name: 'Title',
+        element: 'h2',
+        classes: ['document-title']
+      },
+      {
+        name: 'Subtitle',
+        element: 'h3',
+        classes: ['document-subtitle']
+      },
+      {
+        name: 'Info box',
+        element: 'p',
+        classes: ['info-box']
+      },
+      {
+        name: 'Side quote',
+        element: 'blockquote',
+        classes: ['side-quote']
+      },
+      {
+        name: 'Marker',
+        element: 'span',
+        classes: ['marker']
+      },
+      {
+        name: 'Spoiler',
+        element: 'span',
+        classes: ['spoiler']
+      },
+      {
+        name: 'Code (dark)',
+        element: 'pre',
+        classes: ['fancy-code', 'fancy-code-dark']
+      },
+      {
+        name: 'Code (bright)',
+        element: 'pre',
+        classes: ['fancy-code', 'fancy-code-bright']
+      }
+    ]
+  },
+  table: {
+    contentToolbar: ['tableColumn', 'tableRow', 'mergeTableCells', 'tableProperties', 'tableCellProperties']
+  },
+  licenseKey: 'GPL'
+}
 
 const isModalOpen = ref(false);
 const props = defineProps({
-    sub_types: Object,
-    detail_department: Object,
-    sign_mail_list: Object,
-    priority: Object,
-    classification: Object,
-    orgSubjects: Object,
+  sub_types: Object,
+  detail_department: Object,
+  sign_mail_list: Object,
+  priority: Object,
+  classification: Object,
+  orgSubjects: Object,
 });
 
-const module = {
-    name: "imageUploader",
-    module: ImageUploader,
-    options: {
-        upload: (file) => {
-            return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append("image", file);
-
-                axios
-                    .post("/outgoing_mail/upload_foto", formData)
-                    .then((res) => {
-                        console.log(res);
-                        resolve(res.data.url);
-                    })
-                    .catch((err) => {
-                        reject("Upload failed");
-                        console.error("Error:", err);
-                    });
-            });
-        },
-    },
-};
 const form = useForm({
     subject: "",
     sub_type_id: props.sub_types.id,
@@ -196,7 +491,6 @@ const orgSubjects = props.orgSubjects?.map((org) => ({
     name: org.name,
     id: org.id,
 }));
-console.log(orgSubjects);
 </script>
 <template>
     <div
@@ -224,7 +518,7 @@ console.log(orgSubjects);
                         readonly
                         disabled
                         type="text"
-                        class="mt-1 cursor-not-allowed dark:bg-slate-500 bg-slate-800 block w-1/2 text-white"
+                        class="mt-1 cursor-not-allowed dark:bg-slate-500 bg-slate-800 block w-1/2 text-red-500"
                         autofocus
                         autocomplete="nomor"
                         v-model="form.nomor"
@@ -346,25 +640,25 @@ console.log(orgSubjects);
             <div class="mt-2">
                 <InputLabel for="isi" value="Isi" :isRequired="true" />
 
-                <QuillEditor
-                    v-model:content="form.content"
-                    @update:content="(content) => (form.content = content)"
-                    contentType="html"
-                    theme="snow"
-                    toolbar="full"
-                    :modules="module"
-                    style="min-height: 120px"
-                />
-
-                <InputError class="mt-2" :message="form.errors.content" />
-            </div>
-            <div class="w-full flex justify-between mt-2">
-                <div class="w-1/2">
-                    <InputLabel
-                        for="Klasifikasi"
-                        value="Klasifikasi"
-                        :isRequired="true"
-                    />
+        <!--        <QuillEditor-->
+        <!--            v-model:content="form.content"-->
+        <!--            @update:content="(content) => (form.content = content)"-->
+        <!--            contentType="html"-->
+        <!--            theme="snow"-->
+        <!--            style="min-height: 120px"-->
+        <!--            toolbar="full"-->
+        <!--        />-->
+        <!--        <ckeditor :editor="ClassicEditor" v-model:content="form.content"></ckeditor>-->
+        <ckeditor :editor="ClassicEditor" v-model="form.content"></ckeditor>
+        <InputError class="mt-2" :message="form.errors.content"/>
+      </div>
+      <div class="w-full flex justify-between mt-2">
+        <div class="w-1/2">
+          <InputLabel
+              for="Klasifikasi"
+              value="Klasifikasi"
+              :isRequired="true"
+          />
 
                     <multiselect
                         v-model="form.classification"

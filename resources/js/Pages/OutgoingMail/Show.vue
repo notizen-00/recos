@@ -132,8 +132,7 @@ const select = () => {
                     <div class="flex-auto px-5 pt-0 pb-2">
                         <div class="p-0 overflow-x-auto">
                             <table
-                                class="items-center w-full mb-5 align-top border-collapse dark:border-white/40 text-slate-500"
-                            >
+                                class="items-center w-full mb-5 align-top border-collapse dark:border-white/40 text-slate-500">
                                 <thead class="align-bottom">
                                     <tr>
                                         <th
