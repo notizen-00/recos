@@ -15,11 +15,11 @@ class PrioritySeeder extends Seeder
         //
 
         $segera = Priority::create([
-            'name' => 'segera',
+            'name' => 'Segera',
         ]);
 
         $biasa = Priority::create([
-            'name' => 'biasa',
+            'name' => 'Biasa',
         ]);
     }
 }

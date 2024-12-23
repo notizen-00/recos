@@ -32,7 +32,6 @@ const form = useForm({
   classification: "",
   priority: "",
   description: "",
-  unit_id: "",
   from_user: "",
   from_ext: "",
   forwarded_to: "",
@@ -196,12 +195,11 @@ console.log(externalTypes)
 
           <TextInput
               readonly
-              disabled
               id="agenda_number"
               type="text"
               autofocus
               autocomplete="agenda_number"
-              class="mt-1 cursor-not-allowed dark:bg-slate-500 bg-slate-800 block w-1/2 text-red-500"
+              class="mt-1 cursor-not-allowed block w-1/2 text-red-500"
               v-model="form.agenda_number"
           />
           <InputError class="mt-2" :message="form.errors.agenda_number"/>

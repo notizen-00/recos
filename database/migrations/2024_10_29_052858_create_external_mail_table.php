@@ -23,16 +23,28 @@ class CreateExternalMailTable extends Migration
             $table->date('letter_date');
             $table->string('subject');
             $table->string('from_user');
-            $table->foreignId('from_user_id')
-                ->constrained('users');
-            $table->foreignId('from_user_unit_id')
-                ->constrained('units');
+            $table->unsignedBigInteger('from_user_id')
+                ->nullable();
+            $table->foreign('from_user_id')
+                ->references('id')
+                ->on('users')
+                ->onDelete('restrict');
+//            $table->foreignId('from_user_id')
+//                ->constrained('users');
+            $table->unsignedBigInteger('from_user_departments_id')
+                ->nullable();
+            $table->foreign('from_user_departments_id')
+                ->references('id')
+                ->on('detail_departments')
+                ->onDelete('restrict');
+//            $table->foreignId('from_user_departments_id')
+//                ->constrained('detail_departments');
             $table->string('from_ext');
             $table->string('forwarded_to');
             $table->string('forwarded_to_id')
                 ->constrained('users');
-            $table->string('forwarded_to_unit_id')
-                ->constrained('units');
+            $table->string('forwarded_to_departments_id')
+                ->constrained('detail_departments');
             $table->string('forwarded_date');
             $table->string('description');
             $table->longText('file_pdf')

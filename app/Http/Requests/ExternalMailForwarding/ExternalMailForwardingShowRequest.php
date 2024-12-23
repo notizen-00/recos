@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Http\Requests\ExternalMail;
+namespace App\Http\Requests\ExternalMailForwarding;
 
 use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
-class ExternalMailShowRequest extends FormRequest
+class ExternalMailForwardingShowRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.

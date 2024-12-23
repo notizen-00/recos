@@ -22,6 +22,7 @@ class ExternalMailController extends Controller
     public function index(ExternalMailShowRequest $request)
     {
         $externalMail = ExternalMail::query();
+        $externalMail->where('user_id', auth()->user()->id);
 
         $externalTypes = ExternalTypes::get();
         $priority = Priority::get();
@@ -37,7 +38,7 @@ class ExternalMailController extends Controller
             'field',
             'order'
         ])) {
-            $externalMail->where($request->field, $request->order);
+            $externalMail->orderBy($request->field, $request->order);
         }
 
         $perPage = $request->has('perPage') ? (int) $request->perPage : 10;
@@ -64,7 +65,9 @@ class ExternalMailController extends Controller
     {
         DB::begintransaction();
         try {
-            $dataFromUser = User::findOrFail($request->from_user['id']);
+            if ($request->from_user['id'] != "EXT") {
+                $dataFromUser = User::findOrFail($request->from_user['id']);
+            }
             $dataForwardedTo = User::findOrFail($request->forwarded_to['id']);
             $countExternalMail = ExternalMail::count();
             $agendaNumber = $countExternalMail + 1;
@@ -75,25 +78,25 @@ class ExternalMailController extends Controller
             $forwardedDate = Carbon::parse($request->forwarded_date)
                 ->format('Y-m-d');
             $externalMail = ExternalMail::create([
-                'classification_id'    => $request->classification['id'],
-                'priority_id'          => $request->priority['id'],
-                'external_type_id'     => $request->external_type['id'],
-                'agenda_number'        => $agendaNumber,
-                'agenda_date'          => $agendaDate,
-                'letter_number'        => $request->letter_number,
-                'letter_date'          => $letterDate,
-                'subject'              => $request->subject,
-                'from_user'            => $request->from_user['label'],
-                'from_user_id'         => $request->from_user['id'],
-                'from_user_unit_id'    => $dataFromUser->detail_department_id,
-                'from_ext'             => $request->from_ext,
-                'forwarded_to'         => $request->forwarded_to['label'],
-                'forwarded_to_id'      => $request->forwarded_to['id'],
-                'forwarded_to_unit_id' => $dataForwardedTo->detail_department_id,
-                'forwarded_date'       => $forwardedDate,
-                'description'          => $request->description,
-                'status'               => '0',
-                'user_id'              => auth()->user()->id,
+                'classification_id'           => $request->classification['id'],
+                'priority_id'                 => $request->priority['id'],
+                'external_type_id'            => $request->external_type['id'],
+                'agenda_number'               => $agendaNumber,
+                'agenda_date'                 => $agendaDate,
+                'letter_number'               => $request->letter_number,
+                'letter_date'                 => $letterDate,
+                'subject'                     => $request->subject,
+                'from_user'                   => $request->from_user['label'],
+                'from_user_id'                => $request->from_user['id'] == "EXT" ? null : $request->from_user['id'],
+                'from_user_departments_id'    => $request->from_user['id'] == "EXT" ? null : $dataFromUser->detail_department_id,
+                'from_ext'                    => $request->from_ext,
+                'forwarded_to'                => $request->forwarded_to['label'],
+                'forwarded_to_id'             => $request->forwarded_to['id'],
+                'forwarded_to_departments_id' => $dataForwardedTo->detail_department_id,
+                'forwarded_date'              => $forwardedDate,
+                'description'                 => $request->description,
+                'status'                      => '0',
+                'user_id'                     => auth()->user()->id,
             ]);
 
             $folder = 'files/external/'.date('dmY');
@@ -104,8 +107,7 @@ class ExternalMailController extends Controller
                 ->update(['file_pdf' => $folder.'/'.$fileName]);
 
             DB::commit();
-            return back()->with('success',
-                __('app.label.created_successfully', ['name' => $externalMail->agenda_number]));
+            return back()->with('success', __('app.label.created_successfully', ['name' => 'Surat Masuk Eksternal']));
         } catch (Throwable $th) {
             DB::rollback();
             return back()->with('error',

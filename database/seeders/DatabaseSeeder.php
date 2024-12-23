@@ -35,5 +35,6 @@ class DatabaseSeeder extends Seeder
         $this->call(TypeSeeder::class);
         $this->call(OrgSubjectsSeeder::class);
         $this->call(ExternalTypeSeeder::class);
+        $this->call(FollowUpTypeSeeder::class);
     }
 }

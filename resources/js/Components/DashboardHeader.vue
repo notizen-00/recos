@@ -124,10 +124,10 @@ const user = computed(() => page.props.auth.user);
                                 >
                                     <div class="flex py-1">
                                         <div class="my-auto">
-                                            <img
-                                                src="'/assets/img/team-2.jpg"
-                                                class="inline-flex items-center justify-center mr-4 text-sm text-white h-9 w-9 max-w-none rounded-xl"
-                                            />
+<!--                                            <img-->
+                                          <!--                                                src="'/assets/img/team-2.jpg"-->
+                                          <!--                                                class="inline-flex items-center justify-center mr-4 text-sm text-white h-9 w-9 max-w-none rounded-xl"-->
+                                          <!--                                            />-->
                                         </div>
                                         <div
                                             class="flex flex-col justify-center"
