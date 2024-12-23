@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DispositionController;
 use App\Http\Controllers\ExportController;
 use App\Http\Controllers\ExternalMailController;
 use App\Http\Controllers\ExternalMailForwardingController;
@@ -21,7 +22,7 @@ Route::get('/', function () {
 })
     ->middleware([
         'auth',
-        'verified'
+        'verified',
     ])
     ->name('dashboard');
 
@@ -31,7 +32,7 @@ Route::middleware('auth')
             ->except('create', 'edit');
         Route::post('/user/destroy-bulk', [
             UserController::class,
-            'destroyBulk'
+            'destroyBulk',
         ])
             ->name('user.destroy-bulk');
 
@@ -39,7 +40,7 @@ Route::middleware('auth')
             ->except('create', 'edit');
         Route::post('/unit/destroy-bulk', [
             UnitController::class,
-            'destroyBulk'
+            'destroyBulk',
         ])
             ->name('unit.destroy-bulk');
 
@@ -47,7 +48,7 @@ Route::middleware('auth')
             ->except('create', 'edit');
         Route::post('/type/destroy-bulk', [
             TypeController::class,
-            'destroyBulk'
+            'destroyBulk',
         ])
             ->name('type.destroy-bulk');
 
@@ -55,19 +56,22 @@ Route::middleware('auth')
             ->except('create', 'edit');
         Route::post('/outgoing_mail/verifikasi', [
             OutgoingMailController::class,
-            'verifikasi'
+            'verifikasi',
         ])
             ->name('outgoing-mail.verifikasi');
         Route::post('/outgoing_mail/upload_foto', [
             OutgoingMailController::class,
-            'upload_foto'
+            'upload_foto',
         ]);
         Route::get('/outgoing_mail/attachment/{id}', [
             OutgoingMailController::class,
-            'view_attachment'
+            'view_attachment',
         ]);
 
         Route::resource('/incoming-mail', IncomingMailController::class)
+            ->except('create', 'edit');
+
+        Route::resource('/disposition', DispositionController::class)
             ->except('create', 'edit');
 
         Route::resource('/sub-type', SubTypeController::class)
@@ -75,17 +79,17 @@ Route::middleware('auth')
 
         Route::get('/profile', [
             ProfileController::class,
-            'edit'
+            'edit',
         ])
             ->name('profile.edit');
         Route::patch('/profile', [
             ProfileController::class,
-            'update'
+            'update',
         ])
             ->name('profile.update');
         Route::delete('/profile', [
             ProfileController::class,
-            'destroy'
+            'destroy',
         ])
             ->name('profile.destroy');
 
@@ -93,7 +97,7 @@ Route::middleware('auth')
             ->except('create', 'show', 'edit');
         Route::post('/role/destroy-bulk', [
             RoleController::class,
-            'destroyBulk'
+            'destroyBulk',
         ])
             ->name('role.destroy-bulk');
 
@@ -101,7 +105,7 @@ Route::middleware('auth')
             ->except('create', 'show', 'edit');
         Route::post('/permission/destroy-bulk', [
             PermissionController::class,
-            'destroyBulk'
+            'destroyBulk',
         ])
             ->name('permission.destroy-bulk');
 
@@ -117,7 +121,7 @@ Route::middleware('auth')
             ->except('create', 'edit');
         Route::get('/external-mail/view-file/{id}', [
             ExternalMailController::class,
-            'viewFile'
+            'viewFile',
         ]);
 
         Route::resource('/external-mail-forwarding', ExternalMailForwardingController::class)
@@ -138,4 +142,4 @@ Route::prefix('export')
             ->name('show');
     });
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
