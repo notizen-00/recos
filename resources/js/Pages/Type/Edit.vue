@@ -3,11 +3,12 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import SelectInput from "@/Components/SelectInput.vue";
 import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { useForm } from "@inertiajs/vue3";
-import { ref, watchEffect } from "vue";
+import {useForm} from "@inertiajs/vue3";
+import {ref, watchEffect} from "vue";
+import YellowButton from "@/Components/YellowButton.vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isModalEditOpen = ref(false);
 
@@ -48,28 +49,28 @@ watchEffect(() => {
 </script>
 
 <template>
-  <div class="text-slate-400 text-sm cursor-pointer" @click="openModal">
-    Edit
-  </div>
-
+  <YellowButton
+      @click="openModal">
+    <font-awesome-icon :icon="['fas', 'pencil']"/>&nbsp;Edit
+  </YellowButton>
   <Modal :show="isModalEditOpen" @close="closeModal">
     <div class="mb-5 mx-6">
       <h5 class="dark:text-slate-200">Edit Tipe Surat</h5>
     </div>
     <form @submit.prevent="updateType" class="m-5">
       <div>
-        <InputLabel for="name" value="Name" :isRequired="true" />
+        <InputLabel for="name" value="Name" :isRequired="true"/>
 
         <TextInput
-          id="name"
-          type="text"
-          class="mt-1 block w-full"
-          v-model="form.name"
-          autofocus
-          autocomplete="name"
+            id="name"
+            type="text"
+            class="mt-1 block w-full"
+            v-model="form.name"
+            autofocus
+            autocomplete="name"
         />
 
-        <InputError class="mt-2" :message="form.errors.name" />
+        <InputError class="mt-2" :message="form.errors.name"/>
       </div>
 
       <div class="mt-6 flex justify-start">

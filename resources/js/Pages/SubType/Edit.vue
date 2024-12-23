@@ -6,13 +6,13 @@ import SecondaryButton from "@/Components/SecondaryButton.vue";
 import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
 import {useForm} from "@inertiajs/vue3";
-import {ref} from "vue";
-import PurpleButton from "@/Components/PurpleButton.vue";
+import {ref, watchEffect} from "vue";
 import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 import SelectInput from "@/Components/SelectInput.vue";
 import Multiselect from "vue-multiselect";
+import YellowButton from "@/Components/YellowButton.vue";
 
-const isModalOpen = ref(false);
+const isModalEditOpen = ref(false);
 
 const props = defineProps({
   type: Object,
@@ -25,18 +25,17 @@ const form = useForm({
   form_type: "",
   ttd_type: "",
   bod: "",
-  type_id: props.type?.id,
+  type_id: props.type?.type_id,
 });
 
 const openModal = () => {
-  isModalOpen.value = true;
+  isModalEditOpen.value = true;
   form.reset();
 };
 
-const createNewSubType = () => {
-  form.post(route("sub-type.store"), {
+const updateSubType = () => {
+  form.put(route("sub-type.update", props.type.id), {
     preserveScroll: true,
-    preserveState: true,
     onSuccess: () => {
       closeModal();
       // form.reset();
@@ -48,28 +47,45 @@ const createNewSubType = () => {
 
 const closeModal = () => {
   form.reset;
-  isModalOpen.value = false;
+  isModalEditOpen.value = false;
 };
 
 const bods = props.listBod?.map((el) => ({
   label: el.title,
   id: el.id,
 }))
+
+watchEffect(() => {
+  if (isModalEditOpen.value) {
+    form.errors = {};
+    form.type_id = props.type?.type_id;
+    form.name = props.type?.name;
+    form.letter_format = props.type?.letter_format;
+    form.form_type = props.type?.form_type;
+    form.ttd_type = props.type?.ttd_type;
+
+    let bod = [];
+    props.type?.bod.split(',').forEach((item) => {
+      let bodx = bods.find(el => el.id == item) || '';
+      bod.push(bodx);
+    });
+    form.bod = bod;
+  }
+});
 </script>
 
 <template>
-  <PurpleButton
+  <YellowButton
       @click="openModal">
-    <font-awesome-icon :icon="['fas', 'plus']"/>
-    Tambah Data
-  </PurpleButton>
-  <Modal :show="isModalOpen" @close="closeModal">
+    <font-awesome-icon :icon="['fas', 'pencil']"/>&nbsp;Edit
+  </YellowButton>
+  <Modal :show="isModalEditOpen" @close="closeModal">
     <div class="mb-8 mx-6">
       <h5 class="dark:text-slate-200">
-        Tambah SubType : {{ props.type?.name }}
+        Edit SubType : {{ props.type?.name }}
       </h5>
     </div>
-    <form @submit.prevent="createNewSubType" class="m-5">
+    <form @submit.prevent="updateSubType" class="m-5">
       <div>
         <InputLabel for="name" value="Name" :isRequired="true"/>
 

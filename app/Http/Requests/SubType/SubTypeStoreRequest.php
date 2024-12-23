@@ -2,7 +2,7 @@
 
 namespace App\Http\Requests\SubType;
 
-use App\Models\SubTypes;
+use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 
 class SubTypeStoreRequest extends FormRequest
@@ -18,14 +18,17 @@ class SubTypeStoreRequest extends FormRequest
     /**
      * Get the validation rules that apply to the request.
      *
-     * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
+     * @return array<string, ValidationRule|array<mixed>|string>
      */
     public function rules(): array
     {
         return [
-            'name' => 'required|string|max:50|unique:' . SubTypes::class,
-            'letter_format' => 'required|string|max:50',
-            'type_id' => 'required|integer|max:3',
+            'name'          => 'required|string|max:50|',
+            'letter_format' => 'required | string | max:50',
+            'bod'           => 'required',
+            'form_type'     => 'required',
+            'ttd_type'      => 'required',
+            'type_id'       => 'required | integer | max:3',
         ];
     }
 }

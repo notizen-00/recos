@@ -151,7 +151,7 @@ class UnitController extends Controller implements HasMiddleware
             return back()->with('success', __('app.label.updated_successfully', ['name' => $unit->title]));
         } catch (Throwable $th) {
             DB::rollback();
-            return back()->with('error', __('app.label.updated_error', ['name' => $unit->name]).$th->getMessage());
+            return back()->with('error', __('app.label.updated_error', ['name' => $unit->title]).$th->getMessage());
         }
     }
 
@@ -160,6 +160,21 @@ class UnitController extends Controller implements HasMiddleware
      */
     public function destroy(string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $nSub = DetailDepartment::where('parent_id', $id)
+                ->count();
+            if ($nSub == 0) {
+                $unit = DetailDepartment::findOrFail($id);
+                $unit->delete();
+                DB::commit();
+                return back()->with('success', __('app.label.deleted_successfully', ['name' => $unit->title]));
+            } else {
+                return back()->with('success', __('app.label.deleted_error', ['name' => $unit->title]));
+            }
+        } catch (Throwable $th) {
+            DB::rollback();
+            return back()->with('error', __('app.label.updated_error', ['name' => $unit->title]).$th->getMessage());
+        }
     }
 }

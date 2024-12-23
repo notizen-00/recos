@@ -2,59 +2,69 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Models\Types;
-use Inertia\Inertia;
-use Illuminate\Support\Arr;
-use Illuminate\Validation\Rules;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Http\RedirectResponse;
-use Illuminate\Routing\Controllers\Middleware;
-use Illuminate\Routing\Controllers\HasMiddleware;
 use App\Http\Requests\Type\TypeIndexRequest;
 use App\Http\Requests\Type\TypeStoreRequest;
+use App\Models\Bod;
+use App\Models\SubTypes;
+use App\Models\Types;
+use Illuminate\Routing\Controllers\Middleware;
+use Illuminate\Support\Facades\DB;
+use Inertia\Inertia;
+use Throwable;
+
 class TypeController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
 
-        public static function middleware(): array
+    public static function middleware(): array
     {
         return [
-            new Middleware('permission:create type', only: ['create', 'store']),
-            new Middleware('permission:read type', only: [ 'show']),
-            new Middleware('permission:update type', only: ['edit', 'update']),
-            new Middleware('permission:delete type', only: ['index', 'delete', 'deleteBulk']),
-            
+            new Middleware('permission:create type', only: [
+                'create',
+                'store'
+            ]),
+            new Middleware('permission:read type', only: ['show']),
+            new Middleware('permission:update type', only: [
+                'edit',
+                'update'
+            ]),
+            new Middleware('permission:delete type', only: [
+                'index',
+                'delete',
+                'deleteBulk'
+            ]),
+
         ];
     }
+
     public function index(TypeIndexRequest $request)
     {
-            $type = Types::query();
+        $type = Types::query();
 
         if ($request->has('search')) {
-            $type->where('name', 'LIKE', "%" . $request->search . "%");
+            $type->where('name', 'LIKE', "%".$request->search."%");
         }
-        if ($request->has(['field', 'order'])) {
+        if ($request->has([
+            'field',
+            'order'
+        ])) {
             $type->orderBy($request->field, $request->order);
         }
         $perPage = $request->has('perPage') ? $request->perPage : 10;
 
         return Inertia::render('Type/Index', [
-            'filters' => $request->all(['search', 'field', 'order']),
+            'filters' => $request->all([
+                'search',
+                'field',
+                'order'
+            ]),
             'perPage' => (int) $perPage,
-            'types' => $type->with('subTypes')->paginate($perPage),
+            'types'   => $type->with('subTypes')
+                ->paginate($perPage),
 
         ]);
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        
     }
 
     /**
@@ -65,29 +75,60 @@ class TypeController extends Controller
         DB::beginTransaction();
         try {
             $type = Types::create([
-                'name' => $request->name,       
+                'name' => $request->name,
             ]);
-            
+
             DB::commit();
             return back()->with('success', __('app.label.created_successfully', ['name' => $type->name]));
-        } catch (\Throwable $th) {
+        } catch (Throwable $th) {
             DB::rollback();
-            return back()->with('error', __('app.label.created_error', ['name' => __('app.label.unit')]) . $th->getMessage());
+            return back()->with('error',
+                __('app.label.created_error', ['name' => __('app.label.unit')]).$th->getMessage());
         }
     }
 
     /**
+     * Show the form for creating a new resource.
+     */
+    public function create() {}
+
+    /**
      * Display the specified resource.
      */
-   public function show(string $id)
-{
+    public function show(TypeIndexRequest $request, string $id)
+    {
+        $type = Types::with('subTypes')
+            ->findOrFail($id);
+        $subType = SubTypes::query();
+        $subType->where('type_id', $id);
 
-    $type = Types::with('subTypes')->findOrFail($id);
-    
-    return Inertia::render('Type/Show', [
-        'type' => $type,
-    ]);
-}
+        if ($request->has('search')) {
+            $subType->where('name', 'LIKE', "%".$request->search."%");
+        }
+
+        if ($request->has([
+            'field',
+            'order'
+        ])) {
+            $subType->orderBy($request->field, $request->order);
+        }
+
+        $perPage = $request->has('perPage') ? $request->perPage : 10;
+        $bod = Bod::get();
+
+        return Inertia::render('Type/Show', [
+            'filters'  => $request->all([
+                'search',
+                'field',
+                'order'
+            ]),
+            'perPage'  => (int) $perPage,
+            'subTypes' => $subType->paginate($perPage),
+            'id'       => $id,
+            'type'     => $type,
+            'bod'      => $bod,
+        ]);
+    }
 
     /**
      * Show the form for editing the specified resource.
@@ -100,9 +141,21 @@ class TypeController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(TypeStoreRequest $request, string $id)
     {
-        //
+        DB::beginTransaction();
+        try {
+            $type = Types::findOrFail($id);
+            $type->update([
+                'name' => $request->name,
+            ]);
+            DB::commit();
+            return back()->with('success', __('app.label.created_successfully', ['name' => $type->name]));
+        } catch (Throwable $th) {
+            DB::rollback();
+            return back()->with('error',
+                __('app.label.created_error', ['name' => __('app.label.unit')]).$th->getMessage());
+        }
     }
 
     /**
@@ -113,10 +166,10 @@ class TypeController extends Controller
         try {
             $type = Types::findOrFail($id);
             $type->delete();
-            
-               return back()->with('success', __('app.label.deleted_successfully', ['name' => $type->name]));
-           } catch (\Throwable $th) {
-               return back()->with('error', __('app.label.deleted_error') . $th->getMessage());
-           }
+
+            return back()->with('success', __('app.label.deleted_successfully', ['name' => $type->name]));
+        } catch (Throwable $th) {
+            return back()->with('error', __('app.label.deleted_error').$th->getMessage());
+        }
     }
 }

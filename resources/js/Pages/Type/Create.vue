@@ -3,11 +3,12 @@ import InputError from "@/Components/InputError.vue";
 import InputLabel from "@/Components/InputLabel.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
-import SelectInput from "@/Components/SelectInput.vue";
 import Modal from "@/Components/Modal.vue";
 import TextInput from "@/Components/TextInput.vue";
-import { useForm } from "@inertiajs/vue3";
-import { ref, watchEffect, watch } from "vue";
+import {useForm} from "@inertiajs/vue3";
+import {ref} from "vue";
+import PurpleButton from "@/Components/PurpleButton.vue";
+import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 
 const isModalOpen = ref(false);
 
@@ -42,13 +43,11 @@ const closeModal = () => {
 </script>
 
 <template>
-  <div
-    class="cursor-pointer text-sm uppercase font-semibold bg-slate-700 px-5 py-2 text-slate-50 rounded-lg"
-    @click="openModal"
-  >
-    <i class="fa fa-plus mr-1"></i>
+  <PurpleButton
+      @click="openModal">
+    <font-awesome-icon :icon="['fas', 'plus']"/>
     Tambah Data
-  </div>
+  </PurpleButton>
 
   <Modal :show="isModalOpen" @close="closeModal">
     <div class="mb-8 mx-6">
@@ -56,19 +55,19 @@ const closeModal = () => {
     </div>
     <form @submit.prevent="createNewUnit" class="m-5">
       <div>
-        <InputLabel for="name" value="Name" :isRequired="true" />
+        <InputLabel for="name" value="Name" :isRequired="true"/>
 
         <TextInput
-          id="name"
-          type="text"
-          class="mt-1 block w-full"
-          v-model="form.name"
-          autofocus
-          autocomplete="name"
-          placeholder="Nama Tipe"
+            id="name"
+            type="text"
+            class="mt-1 block w-full"
+            v-model="form.name"
+            autofocus
+            autocomplete="name"
+            placeholder="Nama Tipe"
         />
 
-        <InputError class="mt-2" :message="form.errors.name" />
+        <InputError class="mt-2" :message="form.errors.name"/>
       </div>
 
       <div class="mt-6 flex justify-start">

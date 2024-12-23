@@ -8,16 +8,16 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 class SubTypes extends Model
 {
 
+    public $timestamps = true;
     protected $table = 'sub_types';
-
-    protected $fillable =
-        [
+    protected $fillable = [
         'type_id',
         'name',
         'letter_format',
+        'form_type',
+        'ttd_type',
+        'bod'
     ];
-
-    public $timestamps = true;
 
     use SoftDeletes;
 

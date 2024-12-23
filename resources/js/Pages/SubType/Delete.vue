@@ -9,7 +9,7 @@ import {FontAwesomeIcon} from "@fortawesome/vue-fontawesome";
 const confirmingUnitDeletion = ref(false);
 
 const props = defineProps({
-  unit: Object,
+  type: Object,
 });
 
 const form = useForm({});
@@ -19,7 +19,7 @@ const confirmUnitDeletion = () => {
 };
 
 const deleteUnit = () => {
-  form.delete(route("unit.destroy", props.unit?.id), {
+  form.delete(route("sub-type.destroy", props.type.id), {
     preserveScroll: true,
     onSuccess: () => closeModal(),
     onError: () => passwordInput.value.focus(),
@@ -29,7 +29,6 @@ const deleteUnit = () => {
 
 const closeModal = () => {
   confirmingUnitDeletion.value = false;
-
   form.reset();
 };
 </script>
@@ -47,7 +46,7 @@ const closeModal = () => {
         </h2>
 
         <p class="mt-1 text-sm text-gray-600 dark:text-slate-200">
-          Data tidak dapat dihapus jika sudah memiliki sub parent
+          Data tidak dapat dihapus jika sudah memiliki data surat
         </p>
 
         <div class="mt-6 flex justify-end">

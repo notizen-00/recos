@@ -249,7 +249,7 @@ const select = () => {
                         :listUnit="props.listUnit"
                     />
                     <Delete
-                        :unit="(data.unit = unit)"
+                        :unit="unit"
                     />
                   </td>
                 </tr>
