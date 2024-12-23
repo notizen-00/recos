@@ -13,6 +13,7 @@ use App\Models\Priority;
 use App\Models\SubTypes;
 use App\Models\TrackingOutgoingMail;
 use App\Models\User;
+use App\Services\LetterService;
 use App\Services\OutgoingMailService;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -34,8 +35,9 @@ class OutgoingMailController extends Controller
     public function store(OutgoingMailStoreRequest $request)
     {
 
-        $service = new OutgoingMailService($request->sub_type_id);
+        $service = new OutgoingMailService($request->sub_type_id, $request->sign_user['id']);
 
+        dd($service->generate_nomor_surat());
         DB::beginTransaction();
         try {
             $sub_type = SubTypes::findOrFail($request->sub_type_id);
@@ -148,7 +150,7 @@ class OutgoingMailController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(OutgoingMailShowRequest $request, OutgoingMailService $service, string $subTypeId)
+    public function show(OutgoingMailShowRequest $request, LetterService $service, string $subTypeId)
     {
 
         $outgoing = OutgoingMail::query();
@@ -251,7 +253,7 @@ class OutgoingMailController extends Controller
 
                 $outgoing = OutgoingMail::findOrFail($request->outgoing_mail_id);
 
-                $outgoing_service = new OutgoingMailService($outgoing->sub_type_id);
+                $outgoing_service = new OutgoingMailService($outgoing->sub_type_id, $outgoing->sign_user_id);
 
                 $outgoing_service->update_nomor_surat($outgoing);
 

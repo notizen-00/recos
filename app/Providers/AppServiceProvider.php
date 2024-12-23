@@ -2,7 +2,7 @@
 
 namespace App\Providers;
 
-use App\Services\OutgoingMailService;
+use App\Services\LetterService;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -12,9 +12,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        $this->app->bind(OutgoingMailService::class, function ($app) {
+        $this->app->bind(LetterService::class, function ($app) {
             $subTypeId = request()->route('outgoing_mail');
-            return new OutgoingMailService($subTypeId);
+            return new LetterService($subTypeId);
         });
     }
 
