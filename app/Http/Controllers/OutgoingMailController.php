@@ -37,7 +37,6 @@ class OutgoingMailController extends Controller
 
         $service = new OutgoingMailService($request->sub_type_id, $request->sign_user['id']);
 
-        dd($service->generate_nomor_surat());
         DB::beginTransaction();
         try {
             $sub_type = SubTypes::findOrFail($request->sub_type_id);
@@ -60,7 +59,7 @@ class OutgoingMailController extends Controller
                     'classification_id' => $request->classification['id'],
                     'priority_id' => $request->priority['id'],
                     'subject' => $request->subject,
-                    'code' => $service->generate_nomor_surat($request->sub_type_id, 'get_kode'),
+                    'code' => $service->generate_nomor_surat('get_kode'),
                     'mail_place' => '',
                     'mail_date' => $request->mail_date,
                     'sign_user' => $request->sign_user['label'],
@@ -123,7 +122,7 @@ class OutgoingMailController extends Controller
         } catch (Throwable $th) {
             DB::rollback();
             return back()->with('error',
-                __('app.label.created_error', ['name' => __('app.label.role')]) . $th->getMessage() . ' ' . $th->getLine());
+                __('app.label.created_error', ['name' => 'Error Creating Outgoing Mail']) . $th->getMessage() . ' ' . $th->getLine());
         }
     }
 

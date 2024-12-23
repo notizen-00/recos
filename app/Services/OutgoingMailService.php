@@ -25,7 +25,7 @@ class OutgoingMailService
 
         $this->sender = auth()->user();
 
-        $this->sign_user = User::with('detail_department')->where('id', $user_sign_id);
+        $this->sign_user = User::with('detail_department')->where('id', $user_sign_id)->first();
 
         $this->subType = SubTypes::findOrFail($this->subTypeId);
 
@@ -33,38 +33,23 @@ class OutgoingMailService
 
     }
 
-    public function get_sign_letter_list()
-    {
-
-        if ($this->subType->bod && $this->subType->bod != null) {
-
-            $bodArray = explode(',', $this->subType->bod);
-            return User::with('detail_department.bod')
-                ->whereBodIn($bodArray)
-                ->get();
-        } else {
-            throw new \Exception('Column Bod Kosong');
-        }
-
-    }
-
     private function get_org_subject($org_subject)
     {
         $subject = OrgSubject::where('name', $org_subject)->first();
 
-        return $subject->code;
+        if ($org_subject == null) {
+            return 'S0';
+        } else {
+            return $subject->code;
+        }
+
     }
 
     private function get_kode_organisasi()
     {
 
-        $code = $this->sign_user->detail_department->kode_organisasi;
+        return $this->sign_user->detail_department->kode_organisasi != null ? $this->sign_user->detail_department->kode_organisasi : 'RNM000000';
 
-        if ($code == null) {
-            return 'RNM000000';
-        } else {
-            return $this->sign_user->detail_department->kode_organisasi;
-        }
     }
 
     private function get_nomor_surat()
@@ -88,11 +73,9 @@ class OutgoingMailService
         $kode_organisasi = $this->get_kode_organisasi();
 
         if ($kode == '') {
-            if ($org_subject == null) {
-                return $kode_surat . '-' . $this->get_nomor_surat() . '/' . $kode_organisasi . '/' . date('Y') . '-SO';
-            } else {
-                return $kode_surat . '-' . $this->get_nomor_surat() . '/' . $kode_organisasi . '/' . date('Y') . '-' . $org_kode;
-            }
+
+            return $kode_surat . '-' . $this->get_nomor_surat() . '/' . $kode_organisasi . '/' . date('Y') . '-' . $org_kode;
+
         } else {
             if ($kode == 'get_kode') {
                 return $kode_surat;
@@ -105,9 +88,13 @@ class OutgoingMailService
 
     public function update_nomor_surat(OutgoingMail $outgoing)
     {
+
+        $subject_id = $outgoing->org_subject_id;
+        $subject = OrgSubject::findOrFail($subject_id);
+
         $data = [
             'no' => $this->get_nomor_surat(),
-            'full_number' => $this->generate_nomor_surat(),
+            'full_number' => $this->generate_nomor_surat('', $subject->name),
             'sign_date' => now()->toDateTimeString(),
         ];
 

@@ -16,6 +16,7 @@ import { getParentDepartmentHirarki } from "@/services/hirarki";
 import ImageUploader from "quill-image-uploader";
 import QuillBetterTable from "quill-better-table";
 import "quill-better-table/dist/quill-better-table.css";
+import "ckeditor5/ckeditor5.css";
 const isModalOpen = ref(false);
 const props = defineProps({
     sub_types: Object,
