@@ -31,4 +31,14 @@ class DetailDepartment extends Model
     {
         return $this->belongsTo(Unit::class);
     }
+
+    public function functiondep()
+    {
+        return $this->belongsTo(FunctionDepartment::class);
+    }
+
+    public function parentdep()
+    {
+        return $this->belongsTo(DetailDepartment::class, 'parent_id', 'id');
+    }
 }
