@@ -6,17 +6,219 @@ import TextInput from "@/Components/TextInput.vue";
 import InputError from "@/Components/InputError.vue";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 import Modal from "@/Components/Modal.vue";
-import Multiselect from "vue-multiselect";
-import FileInput from "@/Components/FileInput.vue";
-import { QuillEditor, Quill } from "@vueup/vue-quill";
+
 import "@vueup/vue-quill/dist/vue-quill.snow.css";
 import SecondaryButton from "@/Components/SecondaryButton.vue";
 import PrimaryButton from "@/Components/PrimaryButton.vue";
 import { getParentDepartmentHirarki } from "@/services/hirarki";
-import ImageUploader from "quill-image-uploader";
-import QuillBetterTable from "quill-better-table";
-import "quill-better-table/dist/quill-better-table.css";
+
+import { Ckeditor } from "@ckeditor/ckeditor5-vue";
+import {
+    Alignment,
+    Autoformat,
+    AutoImage,
+    AutoLink,
+    Autosave,
+    BalloonToolbar,
+    Base64UploadAdapter,
+    BlockQuote,
+    Bold,
+    Bookmark,
+    ClassicEditor,
+    Code,
+    Essentials,
+    FindAndReplace,
+    FontBackgroundColor,
+    FontColor,
+    FontFamily,
+    FontSize,
+    GeneralHtmlSupport,
+    Heading,
+    Highlight,
+    HorizontalLine,
+    ImageBlock,
+    ImageCaption,
+    ImageInline,
+    ImageInsert,
+    ImageInsertViaUrl,
+    ImageResize,
+    ImageStyle,
+    ImageTextAlternative,
+    ImageToolbar,
+    ImageUpload,
+    Indent,
+    IndentBlock,
+    Italic,
+    Link,
+    LinkImage,
+    List,
+    ListProperties,
+    Mention,
+    PageBreak,
+    Paragraph,
+    PasteFromOffice,
+    RemoveFormat,
+    SpecialCharacters,
+    SpecialCharactersArrows,
+    SpecialCharactersCurrency,
+    SpecialCharactersEssentials,
+    SpecialCharactersLatin,
+    SpecialCharactersMathematical,
+    SpecialCharactersText,
+    Strikethrough,
+    Style,
+    Subscript,
+    Superscript,
+    Table,
+    TableCaption,
+    TableCellProperties,
+    TableColumnResize,
+    TableProperties,
+    TableToolbar,
+    TextTransformation,
+    TodoList,
+    Underline,
+} from "ckeditor5";
 import "ckeditor5/ckeditor5.css";
+
+const script = document.createElement("script");
+script.src = "https://cdn.ckeditor.com/ckeditor5/36.0.1/full/ckeditor.js";
+
+ClassicEditor.defaultConfig = {
+    toolbar: {
+        items: [
+            "heading",
+            "style",
+            "|",
+            "fontSize",
+            "fontFamily",
+            "fontColor",
+            "fontBackgroundColor",
+            "|",
+            "bold",
+            "italic",
+            "underline",
+            "|",
+            "link",
+            "insertImage",
+            "insertTable",
+            "highlight",
+            "blockQuote",
+            "|",
+            "alignment",
+            "|",
+            "bulletedList",
+            "numberedList",
+            "todoList",
+            "outdent",
+            "indent",
+        ],
+        shouldNotGroupWhenFull: false,
+    },
+    plugins: [
+        Alignment,
+        Autoformat,
+        AutoImage,
+        AutoLink,
+        Autosave,
+        BalloonToolbar,
+        Base64UploadAdapter,
+        BlockQuote,
+        Bold,
+        Bookmark,
+        Code,
+        Essentials,
+        FindAndReplace,
+        FontBackgroundColor,
+        FontColor,
+        FontFamily,
+        FontSize,
+        GeneralHtmlSupport,
+        Heading,
+        Highlight,
+        HorizontalLine,
+        ImageBlock,
+        ImageCaption,
+        ImageInline,
+        ImageInsert,
+        ImageInsertViaUrl,
+        ImageResize,
+        ImageStyle,
+        ImageTextAlternative,
+        ImageToolbar,
+        ImageUpload,
+        Indent,
+        IndentBlock,
+        Italic,
+        Link,
+        LinkImage,
+        List,
+        ListProperties,
+        Mention,
+        PageBreak,
+        Paragraph,
+        PasteFromOffice,
+        RemoveFormat,
+        SpecialCharacters,
+        SpecialCharactersArrows,
+        SpecialCharactersCurrency,
+        SpecialCharactersEssentials,
+        SpecialCharactersLatin,
+        SpecialCharactersMathematical,
+        SpecialCharactersText,
+        Strikethrough,
+        Style,
+        Subscript,
+        Superscript,
+        Table,
+        TableCaption,
+        TableCellProperties,
+        TableColumnResize,
+        TableProperties,
+        TableToolbar,
+        TextTransformation,
+        TodoList,
+        Underline,
+    ],
+    isReadOnly: true, // Set mode readonly default
+    balloonToolbar: [
+        "bold",
+        "italic",
+        "|",
+        "link",
+        "insertImage",
+        "|",
+        "bulletedList",
+        "numberedList",
+    ],
+    fontFamily: {
+        supportAllValues: true,
+    },
+    fontSize: {
+        options: [10, 12, 14, 16, 18, 20, 22],
+        supportAllValues: true,
+    },
+    licenseKey: "GPL",
+};
+
+ClassicEditor.create(document.querySelector("#editor"))
+    .then((editor) => {
+        // Pantau perubahan readonly
+        editor.on("change:isReadOnly", (evt, propertyName, isReadOnly) => {
+            const toolbarElement = editor.ui.view.toolbar.element;
+            toolbarElement.style.display = isReadOnly ? "none" : "flex";
+        });
+
+        // Contoh toggle mode readonly
+        document
+            .querySelector("#toggle-readonly")
+            .addEventListener("click", () => {
+                editor.isReadOnly = !editor.isReadOnly;
+            });
+    })
+    .catch((error) => {
+        console.error(error);
+    });
 const isModalOpen = ref(false);
 const props = defineProps({
     sub_types: Object,
@@ -27,30 +229,6 @@ const props = defineProps({
     orgSubjects: Object,
     outgoing_mail: Object,
 });
-
-const module = {
-    name: "imageUploader",
-    module: ImageUploader,
-    options: {
-        upload: (file) => {
-            return new Promise((resolve, reject) => {
-                const formData = new FormData();
-                formData.append("image", file);
-
-                axios
-                    .post("/outgoing_mail/upload_foto", formData)
-                    .then((res) => {
-                        console.log(res);
-                        resolve(res.data.url);
-                    })
-                    .catch((err) => {
-                        reject("Upload failed");
-                        console.error("Error:", err);
-                    });
-            });
-        },
-    },
-};
 
 const toRecipients = ref([]);
 const ccRecipients = ref([]);
@@ -297,7 +475,17 @@ console.log(props.outgoing_mail.outgoing_recipients);
         <div class="mt-2">
             <InputLabel for="isi" value="Isi Konten" :isRequired="true" />
 
-            <div v-html="props.outgoing_mail.content" class="mx-auto"></div>
+            <!-- <div v-html="props.outgoing_mail.content" class="mx-auto"></div> -->
+
+            <ckeditor
+                :editor="ClassicEditor"
+                readonly
+                :config="{
+                    toolbar: [],
+                    isReadOnly: true,
+                }"
+                v-model="props.outgoing_mail.content"
+            ></ckeditor>
 
             <InputError class="mt-2" :message="form.errors.content" />
         </div>
@@ -357,4 +545,4 @@ console.log(props.outgoing_mail.outgoing_recipients);
     </Modal>
 </template>
 
-<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
+<!-- <style src="vue-multiselect/dist/vue-multiselect.min.css"></style> -->
