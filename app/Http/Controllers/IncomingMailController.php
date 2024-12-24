@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Requests\IncomingMail\IncomingMailShowRequest;
 use App\Models\Classification;
+use App\Models\FollowUpTypes;
 use App\Models\OrgSubject;
 use App\Models\OutgoingMail;
 use App\Models\Priority;
@@ -60,8 +61,9 @@ class IncomingMailController extends Controller
         $sub_type = SubTypes::findOrFail($subTypeId);
         $priority = Priority::get();
         $classification = Classification::get();
-        $detail_department = User::with('detail_department')
+        $detail_department = User::with('detail_department.bod')
             ->get();
+        $followUpTypes = FollowUpTypes::get();
         $orgSubjects = OrgSubject::get();
         $user_department = User::with('detail_department.bod')->get();
         if ($request->has('search')) {
@@ -84,6 +86,7 @@ class IncomingMailController extends Controller
             'priority' => $priority,
             'classification' => $classification,
             'orgSubjects' => $orgSubjects,
+            'followUpTypes' => $followUpTypes,
             'detail_department' => $detail_department,
         ]);
     }

@@ -14,6 +14,7 @@ import SearchBar from "@/Components/SearchBar.vue";
 import SelectInput from "@/Components/SelectInput.vue";
 import Checkbox from "@/Components/Checkbox.vue";
 import Pagination from "@/Components/Pagination.vue";
+import Disposisi from "@/Pages/IncomingMail/Disposisi.vue";
 const page = usePage();
 const props = defineProps({
     filters: Object,
@@ -25,6 +26,7 @@ const props = defineProps({
     priority: Object,
     classification: Object,
     orgSubjects: Object,
+    followUpTypes: Object,
 });
 
 const data = reactive({
@@ -75,6 +77,14 @@ const select = () => {
     } else {
         data.isMultiple = false;
     }
+};
+
+const shouldDisplayDisposisi = (outgoingRecipients) => {
+    return outgoingRecipients.some(
+        (recipient) =>
+            recipient.recipient_id === page.props.auth.user.id &&
+            recipient.recipient_type === "to"
+    );
 };
 </script>
 <template>
@@ -441,6 +451,21 @@ const select = () => {
                                             <Tracking
                                                 :outgoing_mail="Outgoing_mail"
                                             />
+                                            <Disposisi
+                                                v-if="
+                                                    shouldDisplayDisposisi(
+                                                        Outgoing_mail.outgoing_recipients
+                                                    )
+                                                "
+                                                :userDepartment="
+                                                    detail_department
+                                                "
+                                                :followUpTypes="
+                                                    props.followUpTypes
+                                                "
+                                                :outgoing_mail="Outgoing_mail"
+                                            />
+
                                             <!-- <a
                                                 class="text-green-400 text-sm cursor-pointer"
                                                 :href="
